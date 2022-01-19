@@ -6,7 +6,7 @@ const App = () => {
     <View style={{flex:1,
                   justifyContent: 'center',
                   alignItems: 'center'}}>
-      <Text>Hello kkk</Text>
+      <Text>Hello</Text>
     </View>
   )
 }
