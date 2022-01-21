@@ -14,17 +14,17 @@ const Stack = createNativeStackNavigator();
 const App = () =>{
   return(
       <NavigationContainer >
-      <Stack.Navigator screenOptions={{ 
-        headerStyle: { backgroundColor: '#FFB23E'},
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold', }}}>
-        <Stack.Screen name="Login" component={Login}/>
-        <Stack.Screen name="Home" component={Home} />
-        <Stack.Screen name="Scanner" component={Scanner}  />
-        <Stack.Screen name="Production" component={ProductionOrder}/>
-        <Stack.Screen name="History" component={History}/>
-      </Stack.Navigator>
+        <Stack.Navigator screenOptions={{ 
+          headerStyle: { backgroundColor: '#FFB23E'},
+            headerTintColor: '#fff',
+            headerTitleStyle: { fontWeight: 'bold',}
+            }}>
+          <Stack.Screen name="Login" component={Login} />
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Scanner" component={Scanner}  />
+          <Stack.Screen name="Production" component={ProductionOrder}/>
+          <Stack.Screen name="History" component={History}/>
+        </Stack.Navigator>
     </NavigationContainer>
 
   );
