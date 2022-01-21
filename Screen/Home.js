@@ -1,23 +1,15 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
-import { Button, Image } from 'react-native-elements';
+import { Button, Image, Card } from 'react-native-elements';
 
 
 const Home = ({navigation}) => {
   return (
-    <View style={ styles.container }>
-
+    <ScrollView style={ styles.container }>
       <View>
-      <Text style={styles.stext}>
-        Home
-        </Text>
-
-        <Image
-      source={{uri:'https://icon-library.com/images/users-icon-png/users-icon-png-17.jpg'}}
-      style={{width:100,height:100}}
-      containerStyle={{marginLeft:'auto', marginRight:'auto'}}
-      />
+        
       </View>
+
     <Button
         title= "Scan QR code"
         onPress={() => navigation.navigate('Scanner')}
@@ -36,13 +28,13 @@ const Home = ({navigation}) => {
         containerStyle = {{marginVertical: 10}} 
       />
        <Button
-        title="Logout"
+        title="Log"
         onPress={() => navigation.navigate('Login')}
         containerStyle = {{marginVertical: 10}} 
       />
 
 
-    </View>
+    </ScrollView>
   );
 };
 

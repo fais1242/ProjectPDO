@@ -19,7 +19,6 @@ const App = () =>{
             headerTintColor: '#fff',
             headerTitleStyle: { fontWeight: 'bold',}
             }}>
-          <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Home" component={Home} />
           <Stack.Screen name="Scanner" component={Scanner}  />
           <Stack.Screen name="Production" component={ProductionOrder}/>
