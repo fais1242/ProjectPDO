@@ -36,8 +36,8 @@ const Home = ({navigation}) => {
         containerStyle = {{marginVertical: 10}} 
       />
        <Button
-        title="Login"
-        onPress={() => Login}
+        title="Logout"
+        onPress={() => navigation.navigate('Login')}
         containerStyle = {{marginVertical: 10}} 
       />
 

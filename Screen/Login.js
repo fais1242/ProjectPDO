@@ -1,11 +1,16 @@
 import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import React from 'react';
+import { Button, Image } from 'react-native-elements';
 
-const Login = () => {
+const Login = ({navigation}) => {
   return (
    <View style = {styles.container}>
         <Text>
-          Login
+        <Button
+        title="Go to Home"
+        onPress={() => navigation.navigate('Home')}
+        containerStyle = {{marginVertical: 10}} 
+      />
         </Text>
   </View>
   );
