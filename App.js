@@ -7,57 +7,28 @@ import Scanner from './Screen/Scanner';
 import ProductionOrder from './Screen/ProductionOrder';
 import History from './Screen/History';
 import Login from './Screen/Login';
-
-function HomeScreen({ navigation }) {
-  return (
-    <View style={ styles.container }>
-
-    <ScrollView>
-
-      <View>
-      <Text style={styles.stext}>
-        Home
-        </Text>
-
-        <Image
-      source={{uri:'https://icon-library.com/images/users-icon-png/users-icon-png-17.jpg'}}
-      style={{width:100,height:100}}
-      containerStyle={{marginLeft:'auto', marginRight:'auto'}}
-      />
-
-      </View>
-
-    <Button
-        title= "Scan QR code"
-        onPress={() => navigation.navigate('Scanner')}
-        containerStyle = {{marginVertical: 10}}   
-      />
-
-       <Button
-        title="Production Order"
-        onPress={() => navigation.navigate('Production')}
-        containerStyle = {{marginVertical: 10}}
-      />
-
-      <Button
-        title="History"
-        onPress={() => navigation.navigate('History')}
-        containerStyle = {{marginVertical: 10}} 
-      />
-       <Button
-        title="Login"
-        onPress={() => Login}
-        containerStyle = {{marginVertical: 10}} 
-      />
-
-    </ScrollView>
-
-    </View>
-    
-  );
-}
+import Home from './Screen/Home';
 
 const Stack = createNativeStackNavigator();
+
+const App = () =>{
+  return(
+      <NavigationContainer >
+      <Stack.Navigator screenOptions={{
+        headerStyle: { backgroundColor: '#FFB23E'},
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          }}}>
+        <Stack.Screen name="Home" component={Home} />
+        <Stack.Screen name="Scanner" component={Scanner}  />
+        <Stack.Screen name="Production" component={ProductionOrder}/>
+        <Stack.Screen name="History" component={History}/>
+      </Stack.Navigator>
+    </NavigationContainer>
+
+  );
+};
 
 const styles = StyleSheet.create ({
   container:{
@@ -76,18 +47,5 @@ const styles = StyleSheet.create ({
   }
 });
 
-function App() {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen name="Login" component={Login} />
-        <Stack.Screen name="Home" component={HomeScreen} />
-        <Stack.Screen name="Scanner" component={Scanner}  />
-        <Stack.Screen name="Production" component={ProductionOrder}/>
-        <Stack.Screen name="History" component={History}/>
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
 
 export default App;

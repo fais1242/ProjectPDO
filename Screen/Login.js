@@ -1,12 +1,21 @@
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet, SafeAreaView } from 'react-native';
 import React from 'react';
 
-function Login() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>History</Text>
-      </View>
-    );
-  }
+const Login = () => {
+  return (
+   <View style = {styles.container}>
+        <Text>
+          Login
+        </Text>
+  </View>
+  );
+};
 
-export default  Login
+const styles = StyleSheet.create({
+  container: {
+    flex:1, 
+    backgroundColor: '#FFB23E'
+  },
+});
+
+export default Login;

@@ -2,12 +2,12 @@ import { View, Text } from 'react-native';
 import React from 'react';
 
 
-function History() {
-    return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>History</Text>
-      </View>
-    );
-  }
+const History = () => {
+  return (
+    <View>
+      <Text>home</Text>
+    </View>
+  );
+};
 
-export default  History
+export default History;
