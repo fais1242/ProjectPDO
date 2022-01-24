@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
-import { Button, Image, Card } from 'react-native-elements';
-import { color } from 'react-native-elements/dist/helpers';
+import { Button, Image, Card, Divider } from 'react-native-elements';
+
 
 
 
@@ -9,31 +9,37 @@ const Home = ({navigation}) => {
   return (
     <ScrollView style={ styles.container }>
 
-      <Card containerStyle={{borderRadius:5,marginBottom:10}}>
+      <Divider color='white'width={1.5}/>
+
+      <Card containerStyle={{borderRadius:5, marginBottom:10}}>
 
         <View style ={{flex:1, flexDirection:'row'}}>
 
           <View style={{flex:3,}}>
-            <Text>
+            <Text style={styles.textshow}>
               Name :
             </Text>
-            <Text>
+            <Text style={styles.textshow}>
               Company:
             </Text>
-            <Text>
+            <Text style={styles.textshow}>
               Email:
             </Text>
-            <Text>
+            <Text style={styles.textshow}>
               Phone:
             </Text>
             
           </View>
 
-          <View style ={{flex:1, flexDirection:'row-reverse', justifyContent:'center',alignItems:'center'}}>
-
+          <View style ={{
+            flex:1, 
+            flexDirection:'row-reverse', 
+            justifyContent:'center', 
+            alignItems:'center'
+            }}>
             <Image 
               source={{uri:'https://icon-library.com/images/users-icon-png/users-icon-png-17.jpg'}}
-              style={{width:50,height:50}}
+              style={{width:50, height:50}}
             />
 
           </View>
@@ -41,48 +47,39 @@ const Home = ({navigation}) => {
        </View>
       </Card>
     <View style = {{
+      flex:1,
       flexDirection:'row',
-      paddingRight:5,
-      paddingLeft:5
     }}>
     <Button
         title= "Scan QR code"
         onPress={() => navigation.navigate('Scanner')}
         containerStyle = {{marginVertical: 10, marginHorizontal:10}}  
-        buttonStyle={{width:160, height:200, borderRadius:10}}
-        
+        buttonStyle={styles.butstyle}
+        titleStyle={styles.textshow}
       />
 
-  
 
        <Button
         title="Production Order"
         onPress={() => navigation.navigate('Production')}
-        containerStyle = {{marginVertical: 10}}
-        buttonStyle={{width:160, height:200, borderRadius:10}}
+        containerStyle = {{marginVertical: 10, marginHorizontal:10}}
+        buttonStyle={styles.butstyle}
+        titleStyle={styles.textshow}
       />
 
     </View>
 
      <View style = {{
+      flex:1,
       flexDirection:'row',
-      paddingRight:5,
-      paddingLeft:5
+      marginBottom:30
     }}>
     <Button
         title= "History"
         onPress={() => navigation.navigate('History')}
         containerStyle = {{marginVertical: 10, marginHorizontal:10}}  
-        buttonStyle={{width:160, height:200, borderRadius:10}}
-      />
-
-       <Button
-        title="Log"
-        onPress={() => navigation.navigate('Log')}
-        type='outline'
-        containerStyle = {{marginVertical: 10}}
-        buttonStyle={{width:160, height:200, borderRadius:10, backgroundColor:'white',}}
-        titleStyle={{color:'black'}}
+        buttonStyle={styles.butstyle}
+        titleStyle={styles.textshow}
       />
       
     </View>
@@ -103,8 +100,19 @@ const styles = StyleSheet.create ({
     fontWeight: 'bold',
     fontSize: 30,
     marginBottom:20,
-    marginLeft:'auto', marginRight:'auto'
+    marginLeft:'auto', 
+    marginRight:'auto'
   },
+  butstyle:{
+    width:160, 
+    height:200, 
+    borderRadius:10, 
+    backgroundColor:'white',
+  },
+  textshow:{
+    fontSize:20, 
+    color:'black'
+  }
 });
 
 export default Home;

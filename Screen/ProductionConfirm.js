@@ -1,31 +1,24 @@
-import { View, Text, ScrollView, StyleSheet } from 'react-native';
+import { View, Text, ScrollView, StyleSheet, InputAccessoryView } from 'react-native';
 import { Button, Image, Card, Divider, Icon} from 'react-native-elements';
 import React from 'react';
 
+const ProductionConfirm = () => {
+  return (
+    <ScrollView style={styles.container}>
+        <Divider color='white' width={1.5}/>
+        <Card containerStyle={{borderRadius:10, marginBottom:10}}>
 
+        <View style={{flex:1}}>
+            <Text style={styles.stext}>
+                Output Production Quantity
+            </Text>
 
-const  ProductionOrder = ({navigation}) => {
-    return (
-     <ScrollView style={styles.container}>
-       <Divider color='white'width={1.5}/>
-
-       <Card containerStyle={{borderRadius:10, marginBottom:10}}>
-
-        <View style={{flex:1, flexDirection:'row'}}>
-
-        <Icon
-          style={{marginTop:10}}
-          name='filetext1'
-          type='antdesign'
-          size={40}
-          
-         />
         <Card containerStyle={styles.cardstyle}
         
         />
         </View>
 
-        <View style={{flex:1, flexDirection:'row',  marginLeft:40}}>
+        <View style={{flex:1, flexDirection:'row'}}>
 
 
 
@@ -35,32 +28,20 @@ const  ProductionOrder = ({navigation}) => {
         </View>
 
         <View style={{flex:1, flexDirection:'row'}}>
-        <Icon
-          style={{marginTop:10}}
-          name='inbox'
-          type='antdesign'
-          size={40}
-          
-         />
+        
         <Card containerStyle={styles.cardstyle}
         
         />
         </View>
 
         <View style={{flex:1, flexDirection:'row'}}>
-        <Icon
-          style={{marginTop:10}}
-          name='calendar'
-          type='antdesign'
-          size={40}
-          
-         />
+        
         <Card containerStyle={styles.cardstyle}
         
         />
         </View>
 
-        <View style={{flex:1, flexDirection:'row',marginLeft:40}}>
+        <View style={{flex:1, flexDirection:'row'}}>
        
         <Card containerStyle={styles.cardstyle}
         
@@ -68,13 +49,7 @@ const  ProductionOrder = ({navigation}) => {
         </View>
         
         <View style={{flex:1, flexDirection:'row'}}>
-        <Icon
-          style={{marginTop:10}}
-          name='edit'
-          type='antdesign'
-          size={40}
-          
-         />
+        
         <Card containerStyle={styles.cardstyle}
         
         />
@@ -83,7 +58,7 @@ const  ProductionOrder = ({navigation}) => {
 
         <Button
         raised
-        title= "Production Confirm"
+        title= "Submit"
         onPress={() => navigation.navigate('ProductionConfirm')}
         containerStyle = {{marginVertical: 10, marginHorizontal:10}}  
         buttonStyle={{backgroundColor:'green', borderRadius:7}}
@@ -92,12 +67,12 @@ const  ProductionOrder = ({navigation}) => {
 
        </Card>
 
-     </ScrollView>
-    );
-  }
 
+    </ScrollView>
+  );
+};
 
-  const styles = StyleSheet.create ({
+const styles = StyleSheet.create ({
     container:{
       flex: 1,
       padding:15,
@@ -105,10 +80,8 @@ const  ProductionOrder = ({navigation}) => {
     },
     stext:{
       color: 'black',
-      fontWeight: 'bold',
-      fontSize: 30,
-      marginBottom:20,
-      marginLeft:'auto', marginRight:'auto'
+      fontSize: 20,
+      marginLeft:15
     },
     textshow:{
       fontSize:20, 
@@ -122,4 +95,4 @@ const  ProductionOrder = ({navigation}) => {
     }
   });
 
-export default  ProductionOrder
+export default ProductionConfirm;
