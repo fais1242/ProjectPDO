@@ -3,6 +3,7 @@ import React from 'react';
 import { Button, Image } from 'react-native-elements';
 
 const Login = ({navigation}) => {
+  
   return (
    <View style = {styles.container}>
         <Text>

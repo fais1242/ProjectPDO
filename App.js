@@ -9,7 +9,6 @@ import ProductionConfirm from './Screen/ProductionConfirm';
 import History from './Screen/History';
 import Login from './Screen/Login';
 import Home from './Screen/Home';
-import { Divider } from 'react-native-elements/dist/divider/Divider';
 
 const Stack = createNativeStackNavigator();
 
@@ -29,9 +28,11 @@ const App = () =>{
           options={{title:'HOME'}}
           />
 
+          
           <Stack.Screen name="ProductionConfirm" component={ProductionConfirm}
            options={{title:'PRODUCTION CONFIRM' }}
-          />
+          /> 
+
 
           <Stack.Screen name="Production" component={ProductionOrder}
            options={{title:'PRODUCTION ORDER'}}

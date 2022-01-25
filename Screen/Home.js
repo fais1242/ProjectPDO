@@ -46,6 +46,9 @@ const Home = ({navigation}) => {
 
        </View>
       </Card>
+
+      <View style={{padding:15}}>
+
     <View style = {{
       flex:1,
       flexDirection:'row',
@@ -80,6 +83,8 @@ const Home = ({navigation}) => {
         buttonStyle={styles.butstyle}
         titleStyle={styles.textshow}
       />
+
+      </View>
       
     </View>
 

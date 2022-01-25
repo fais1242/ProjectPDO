@@ -68,30 +68,32 @@ const ProductionConfirm = () => {
             backgroundColor:'#EEF1F3',
             flex:1,
             height:50,}}
+           placeholder='Hour'
            inputContainerStyle={{borderBottomWidth:0}}
            keyboardType='numeric'
            
            />
-           <Text style={{fontSize:20}}>
+           {/* <Text style={{fontSize:20,}}>
              H
-           </Text>
+           </Text> */}
 
 
            <Text style={{fontSize:40,paddingHorizontal:5,color:'black'}}>
              :
            </Text>
-                       <Input 
+            <Input 
            containerStyle={{
              borderRadius:5, 
             backgroundColor:'#EEF1F3',
             flex:1,
             height:50,}}
+            placeholder='Minutes'
            inputContainerStyle={{borderBottomWidth:0}}
            keyboardType='numeric'
            />
-           <Text style={{fontSize:20}} >
+           {/* <Text style={{fontSize:20}} >
            Min
-           </Text>
+           </Text> */}
 
 
             </View>
