@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
-import { Button, Image, Card, Divider } from 'react-native-elements';
+import { Button, Image, Card, Divider, Icon } from 'react-native-elements';
 
 
 
@@ -9,9 +9,9 @@ const Home = ({navigation}) => {
   return (
     <ScrollView style={ styles.container }>
 
-      <Divider color='white'width={1.5}/>
+      <Divider color='white'width={1.5} style={{marginHorizontal:20}} />
 
-      <Card containerStyle={{borderRadius:5, marginBottom:10}}>
+      <Card containerStyle={{borderRadius:10, marginBottom:10}}>
 
         <View style ={{flex:1, flexDirection:'row'}}>
 
@@ -58,7 +58,6 @@ const Home = ({navigation}) => {
         titleStyle={styles.textshow}
       />
 
-
        <Button
         title="Production Order"
         onPress={() => navigation.navigate('Production')}
@@ -92,7 +91,7 @@ const Home = ({navigation}) => {
 const styles = StyleSheet.create ({
   container:{
     flex: 1,
-    padding:15,
+    padding:1,
     backgroundColor: '#FFB23E'
   },
   stext:{
@@ -106,7 +105,7 @@ const styles = StyleSheet.create ({
   butstyle:{
     width:160, 
     height:200, 
-    borderRadius:10, 
+    borderRadius:20, 
     backgroundColor:'white',
   },
   textshow:{

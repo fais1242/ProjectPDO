@@ -24,23 +24,27 @@ const App = () =>{
           headerTitleAlign:'center'
            }}>
 
-          <Stack.Screen name="ProductionConfirm" component={ProductionConfirm}
-           options={{title:'PRODUCTION CONFIRM' }}
-          />
+
           <Stack.Screen name="Home" component={Home} 
           options={{title:'HOME'}}
           />
+
+          <Stack.Screen name="ProductionConfirm" component={ProductionConfirm}
+           options={{title:'PRODUCTION CONFIRM' }}
+          />
+
+          <Stack.Screen name="Production" component={ProductionOrder}
+           options={{title:'PRODUCTION ORDER'}}
+          />
+
           <Stack.Screen name="Scanner" component={Scanner} 
            options={{title:'SCAN QRCODE' }}
           />
-          <Stack.Screen name="Production" component={ProductionOrder}
-          options={{title:'PRODUCTION ORDER'}}
-           />
-       
-         
+    
           <Stack.Screen name="History" component={History}
            options={{title:'HISTOY' }}
           />
+          
         </Stack.Navigator>
     </NavigationContainer>
 
