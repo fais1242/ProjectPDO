@@ -88,7 +88,7 @@ const ProductionConfirm = ({navigation}) => {
            </Text> */}
 
             <Text style={{fontSize: 40, paddingHorizontal: 5, color: 'black'}}>
-              :
+              :m
             </Text>
             <Input
               containerStyle={{
