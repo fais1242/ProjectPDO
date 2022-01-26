@@ -1,8 +1,7 @@
 import * as React from 'react';
-import { View, Text, StyleSheet, ScrollView } from 'react-native';
-import { Button, Image } from 'react-native-elements';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Scanner from './Screen/Scanner';
 import ProductionOrder from './Screen/ProductionOrder';
 import ProductionConfirm from './Screen/ProductionConfirm';
@@ -12,62 +11,62 @@ import Home from './Screen/Home';
 
 const Stack = createNativeStackNavigator();
 
-const App = () =>{
-  return(
-      <NavigationContainer >
-        <Stack.Navigator screenOptions={{ 
-          headerStyle: { backgroundColor: '#FFB23E'},
+const App = () => {
+  return (
+    <NavigationContainer>
+      <Stack.Navigator
+        screenOptions={{
+          headerStyle: {backgroundColor: '#FFB23E'},
           headerTintColor: '#fff',
-          headerTitleStyle: { fontWeight: 'bold',},
+          headerTitleStyle: {fontWeight: 'bold'},
           headerShadowVisible: false,
-          headerTitleAlign:'center'
-           }}>
+          headerTitleAlign: 'center',
+        }}>
+        <Stack.Screen
+          name="ProductionConfirm"
+          component={ProductionConfirm}
+          options={{title: 'PRODUCTION CONFIRM'}}
+        />
 
+        <Stack.Screen name="Home" component={Home} options={{title: 'HOME'}} />
 
-          <Stack.Screen name="Home" component={Home} 
-          options={{title:'HOME'}}
-          />
+        <Stack.Screen
+          name="Production"
+          component={ProductionOrder}
+          options={{title: 'PRODUCTION ORDER'}}
+        />
 
-          
-          <Stack.Screen name="ProductionConfirm" component={ProductionConfirm}
-           options={{title:'PRODUCTION CONFIRM' }}
-          /> 
+        <Stack.Screen
+          name="Scanner"
+          component={Scanner}
+          options={{title: 'SCAN QRCODE'}}
+        />
 
-
-          <Stack.Screen name="Production" component={ProductionOrder}
-           options={{title:'PRODUCTION ORDER'}}
-          />
-
-          <Stack.Screen name="Scanner" component={Scanner} 
-           options={{title:'SCAN QRCODE' }}
-          />
-    
-          <Stack.Screen name="History" component={History}
-           options={{title:'HISTOY' }}
-          />
-          
-        </Stack.Navigator>
+        <Stack.Screen
+          name="History"
+          component={History}
+          options={{title: 'HISTOY'}}
+        />
+      </Stack.Navigator>
     </NavigationContainer>
-
   );
 };
 
-const styles = StyleSheet.create ({
-  container:{
-    flex: 1,  
-    padding:35,
-    backgroundColor: 'lightblue'
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 35,
+    backgroundColor: 'lightblue',
   },
-  stext:{
+  stext: {
     color: 'black',
     fontWeight: 'bold',
     fontSize: 30,
-    marginBottom:20,
-    marginLeft:'auto', marginRight:'auto'
+    marginBottom: 20,
+    marginLeft: 'auto',
+    marginRight: 'auto',
   },
-  button:{
-  }
+  button: {},
 });
-
 
 export default App;
