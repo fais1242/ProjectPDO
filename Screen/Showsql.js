@@ -3,20 +3,21 @@ import {Button, Image, Card, Divider, Icon, Input} from 'react-native-elements';
 import {StyleSheet, View, Text, Alert} from 'react-native';
 import SQLite from 'react-native-sqlite-storage';
 
-const db = SQLite.openDatabase(
-  {
-    name: 'MainDB.db',
-    location: 'default',
-    createFromLocation: '~MainDB.db'
-  },
-  () => {},
-  error => {
-    console.log(error);
-  },
-);
 export default function Showsql({navigation, route}) {
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
+
+  const db = SQLite.openDatabase(
+    {
+      name: 'MainDB.db',
+      location: 'default',
+      createFromLocation: '~MainDB.db',
+    },
+    () => {},
+    error => {
+      console.log(error);
+    },
+  );
 
   useEffect(() => {
     getData();

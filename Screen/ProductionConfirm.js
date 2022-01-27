@@ -4,87 +4,74 @@ import {Picker} from '@react-native-picker/picker';
 import React, {useEffect, useState} from 'react';
 import SQLite from 'react-native-sqlite-storage';
 
-const db = SQLite.openDatabase(
-  {
-    name: 'MainDB.db',
-    location: 'default',
-    createFromLocation: '~MainDB.db'
-  },
-  () => {},
-  error => {
-    console.log(error);
-  },
-);
-
 const ProductionConfirm = ({navigation}) => {
-  
-  
+  const db = SQLite.openDatabase(
+    {
+      name: 'MainDB.db',
+      location: 'default',
+      createFromLocation: '~MainDB.db',
+    },
+    () => {},
+    error => {
+      console.log(error);
+    },
+  );
+
   useEffect(() => {
     createTable();
     getData();
   }, []);
 
   const createTable = () => {
-    db.transaction((tx) => {
-        tx.executeSql(
-            "CREATE TABLE IF NOT EXISTS "
-            + "Users "
-            + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Age INTEGER);"
-        )
-    })
-}
-
+    db.transaction(tx => {
+      tx.executeSql(
+        'CREATE TABLE IF NOT EXISTS ' +
+          'Users ' +
+          '(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Age INTEGER);',
+      );
+    });
+  };
 
   const getData = () => {
     try {
-        // AsyncStorage.getItem('UserData')
-        //     .then(value => {
-        //         if (value != null) {
-        //             navigation.navigate('Home');
-        //         }
-        //     })
-        db.transaction((tx) => {
-            tx.executeSql(
-                "SELECT Name, Age FROM Users",
-                [],
-                (tx, results) => {
-                    var len = results.rows.length;
-                    if (len > 0) {
-                        navigation.navigate('Showsql');
-                    }
-                }
-            )
-        })
+
+      db.transaction(tx => {
+        tx.executeSql('SELECT Name, Age FROM Users', [], (tx, results) => {
+          var len = results.rows.length;
+          if (len > 0) {
+            navigation.navigate('Showsql');
+          }
+        });
+      });
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-}
+  };
 
   const setData = async () => {
     if (name.length == 0 || age.length == 0) {
-        Alert.alert('Warning!', 'Please write your data.')
+      Alert.alert('Warning!', 'Please write your data.');
     } else {
-        try {
-            await db.transaction(async (tx) => {
-                // await tx.executeSql(
-                //     "INSERT INTO Users (Name, Age) VALUES ('" + name + "'," + age + ")"
-                // );
-                await tx.executeSql(
-                    "INSERT INTO Users (Name, Age) VALUES (?,?)",
-                    [name, age]
-                );
-            })
-            navigation.navigate('Showsql');
-        } catch (error) {
-            console.log(error);
-        }
+      try {
+        await db.transaction(async tx => {
+          // await tx.executeSql(
+          //     "INSERT INTO Users (Name, Age) VALUES ('" + name + "'," + age + ")"
+          // );
+          await tx.executeSql('INSERT INTO Users (Name, Age) VALUES (?,?)', [
+            name,
+            age,
+          ]);
+        });
+        navigation.navigate('Showsql');
+      } catch (error) {
+        console.log(error);
+      }
     }
-}
+  };
   const [selectedValue, setSelectedValue] = useState('Start');
 
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
-
 
   const buttonalert = () =>
     Alert.alert('WARNING', 'Confirm ?', [
@@ -115,7 +102,7 @@ const ProductionConfirm = ({navigation}) => {
           <Input
             containerStyle={styles.textInput}
             inputContainerStyle={{borderBottomWidth: 0}}
-            onChangeText={(value) => setName(value)}
+            onChangeText={value => setName(value)}
           />
         </View>
 
@@ -125,7 +112,7 @@ const ProductionConfirm = ({navigation}) => {
           <Input
             containerStyle={styles.textInput}
             inputContainerStyle={{borderBottomWidth: 0}}
-            onChangeText={(value) => setAge(value)}
+            onChangeText={value => setAge(value)}
           />
         </View>
 
