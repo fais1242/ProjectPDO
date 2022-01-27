@@ -8,6 +8,7 @@ import ProductionConfirm from './Screen/ProductionConfirm';
 import History from './Screen/History';
 import Login from './Screen/Login';
 import Home from './Screen/Home';
+import Showsql from './Screen/Showsql'
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +47,11 @@ const App = () => {
           name="History"
           component={History}
           options={{title: 'HISTOY'}}
+        />
+         <Stack.Screen
+          name="Showsql"
+          component={Showsql}
+          options={{title: 'Showsql'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
