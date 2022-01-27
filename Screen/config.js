@@ -10,14 +10,23 @@ import {
   Platform,
 } from 'react-native';
 import React from 'react';
-import {Button} from 'react-native-elements';
+import {Button,Card} from 'react-native-elements';
 import * as Animation from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import Feather from 'react-native-vector-icons/Feather';
 import {useTheme} from 'react-native-paper';
 import {AuthContext} from '../components/context';
 import Users from '../model/users';
+import { Divider } from 'react-native-elements/dist/divider/Divider';
+import FontAwesome5Icon from 'react-native-vector-icons/FontAwesome5';
+import { icon } from '@fortawesome/fontawesome-svg-core';
+import { Icon } from 'react-native-elements/dist/icons/Icon';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+
 
 const Login = () => {
   const [data, setData] = React.useState({
@@ -61,27 +70,20 @@ const Login = () => {
 
   return (
     <View style={styles.container}>
+      <Divider style={{marginHorizontal: 40}} color='white' width={1.5}/>
       <View style={styles.header}>
-        <Image
-          source={require('../assets/logo2.png')}
-          style={{ width: 360, height: 160 }}
-          resizeMode="stretch"
-        />
-        <View style={styles.header}>
-          <Text style={styles.text_header}>by Design</Text>
-        </View>
-      </View>
-      <View style={styles.footer}>
-        <Text style={styles.text_footer}>Username</Text>
-        <View style={styles.action}>
-          <FontAwesome
-          name="user-o" 
-          color="#05375a" 
-          size={20} 
-          />
-          
+        <Card containerStyle={{
+          borderRadius: 10, marginbutton: 10
+        }}>
+          <Text style={styles.text_footer}>Customer Tenant</Text>
+          <View style={styles.action}>
+            <FontAwesome
+                name="user-o" 
+                color="#05375a" 
+                size={20} 
+            />
           <TextInput
-            placeholder="Your Username"
+            placeholder="Your Customer Tenant"
             style={styles.TextInput}
             autoCapitalize="none"
             onChangeText={val => textInputChange(val)}
@@ -93,8 +95,37 @@ const Login = () => {
             size={20} 
             />
           ) : null}
+        </View> 
+        <Text
+          style={[
+            styles.text_footer,
+            {
+              marginTop: 15,
+            },
+          ]}>
+        </Text>
+    
+        <Text style={styles.text_footer}>Username</Text>
+        <View style={styles.action}>
+          <FontAwesome
+          name="user-o" 
+          color="#05375a" 
+          size={20} 
+            />
+          <TextInput
+            placeholder="Your Username"
+            style={styles.TextInput}
+            autoCapitalize="none"
+            onChangeText={val => textInputChange(val)}
+          />
+          {data.check_textInputChange ? (
+            <Feather 
+            name="check-circle" 
+            color="#05375a" 
+            size={20} 
+              />
+          ) : null}
         </View>
-
         <Text
           style={[
             styles.text_footer,
@@ -109,7 +140,7 @@ const Login = () => {
           name="lock" 
           color="#05375a" 
           size={20} 
-            />
+          />
           <TextInput
             placeholder="Your Password"
             secureTextEntry={data.secureTextEntry ? true : false}
@@ -123,16 +154,25 @@ const Login = () => {
               name="eye-off" 
               color="grey" 
               size={20} 
-              />
+                />
             ) : (
               <Feather 
               name="eye" 
               color="grey" 
               size={20} 
-              />
+                />
             )}
           </TouchableOpacity>
         </View>
+        <Text
+          style={[
+            styles.text_footer,
+            {
+              marginTop: 15,
+            },
+          ]}>
+        </Text>
+        
         <View style={styles.button}>
           <LinearGradient colors={['#08d4c4', '#01ab9d']} style={styles.signIn}>
             <Text
@@ -146,8 +186,11 @@ const Login = () => {
             </Text>
           </LinearGradient>
         </View>
+
+          
+        </Card>
       </View>
-    </View>
+      </View>
   );
 };
 export default Login;
@@ -164,16 +207,9 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     paddingHorizontal: 20,
-    paddingBottom: 10,
+    paddingBottom: 50,
   },
-  footer: {
-    flex: 1.5,
-    backgroundColor: '#fff',
-    borderTopLeftRadius: 30,
-    borderTopRightRadius: 30,
-    paddingHorizontal: 20,
-    paddingVertical: 30,
-  },
+ 
   text_header: {
     color: '#fff',
     fontWeight: 'bold',
@@ -199,7 +235,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     flex: 1,
-    marginTop: Platform.OS === 'android' ? 0 : -12,
+    marginTop: Platform.OS === 'ios' ? 0 : -12,
     paddingLeft: 10,
     color: '#05375a',
   },

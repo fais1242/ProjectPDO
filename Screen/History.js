@@ -2,12 +2,13 @@ import { View, Text } from 'react-native';
 import React from 'react';
 
 
-const History = () => {
+
+function History() {
   return (
-    <View>
-      <Text>home</Text>
+    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+      <Text>Scan QR code</Text>
     </View>
   );
-};
+}
 
-export default History;
+export default  History
