@@ -9,7 +9,6 @@ const ProductionConfirm = ({navigation}) => {
     {
       name: 'MainDB.db',
       location: 'default',
-      createFromLocation: '~MainDB.db',
     },
     () => {},
     error => {
@@ -27,7 +26,7 @@ const ProductionConfirm = ({navigation}) => {
       tx.executeSql(
         'CREATE TABLE IF NOT EXISTS ' +
           'Users ' +
-          '(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Age INTEGER);',
+          '(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Age INTEGER, Pat TEXT);',
       );
     });
   };
@@ -36,10 +35,10 @@ const ProductionConfirm = ({navigation}) => {
     try {
 
       db.transaction(tx => {
-        tx.executeSql('SELECT Name, Age FROM Users', [], (tx, results) => {
+        tx.executeSql('SELECT Name, Age, Pat FROM Users', [], (tx, results) => {
           var len = results.rows.length;
           if (len > 0) {
-            navigation.navigate('Showsql');
+            navigation.navigate('Shoesql2');
           }
         });
       });
@@ -54,15 +53,13 @@ const ProductionConfirm = ({navigation}) => {
     } else {
       try {
         await db.transaction(async tx => {
-          // await tx.executeSql(
-          //     "INSERT INTO Users (Name, Age) VALUES ('" + name + "'," + age + ")"
-          // );
-          await tx.executeSql('INSERT INTO Users (Name, Age) VALUES (?,?)', [
+          await tx.executeSql('INSERT INTO Users (Name, Age, Pat) VALUES (?,?,?)', [
             name,
             age,
+            pat
           ]);
         });
-        navigation.navigate('Showsql');
+        navigation.navigate('Shoesql2');
       } catch (error) {
         console.log(error);
       }
@@ -72,20 +69,7 @@ const ProductionConfirm = ({navigation}) => {
 
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
-
-  const buttonalert = () =>
-    Alert.alert('WARNING', 'Confirm ?', [
-      {
-        text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
-        style: 'cancel',
-      },
-      {
-        text: 'OK',
-        onPress: () => navigation.navigate('Home'),
-      },
-    ]);
-
+  const [pat, setPat] = useState('');
   return (
     <ScrollView style={styles.container}>
       <Divider color="white" width={1.5} style={{marginHorizontal: 20}} />
@@ -122,6 +106,8 @@ const ProductionConfirm = ({navigation}) => {
           <Input
             containerStyle={styles.textInput}
             inputContainerStyle={{borderBottomWidth: 0}}
+            onChangeText={value => setPat(value)}
+
           />
         </View>
 
