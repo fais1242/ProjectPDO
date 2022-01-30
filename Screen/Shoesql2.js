@@ -18,6 +18,7 @@ const Shoesql2 = ({navigation}) => {
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [pat, setPat] = useState('');
+  const [cat, setCat] = useState('');
 
   useEffect(() => {
     getData();
@@ -26,15 +27,17 @@ const Shoesql2 = ({navigation}) => {
   const getData = () => {
     try {
       db.transaction(tx => {
-        tx.executeSql('SELECT Name, Age, Pat FROM Users', [], (tx, results) => {
+        tx.executeSql('SELECT Name, Age, Pat, Cat FROM Users', [], (tx, results) => {
           var len = results.rows.length;
           if (len > 0) {
             var userName = results.rows.item(0).Name;
             var userAge = results.rows.item(0).Age;
             var userPat = results.rows.item(0).Pat;
+            var userCat = results.rows.item(0).Cat;
             setName(userName);
             setAge(userAge);
             setPat(userPat);
+            setCat(userCat);
           }
         });
       });
@@ -68,6 +71,8 @@ const Shoesql2 = ({navigation}) => {
         <Text style={[styles.text]}>Welcome {name} !</Text>
         <Text style={[styles.text]}>Your age is {age}</Text>
         <Text style={[styles.text]}>{pat}</Text>
+        <Text style={[styles.text]}>{cat}</Text>
+
         <Input
           style={styles.input}
           placeholder="Enter your name"

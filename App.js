@@ -8,7 +8,7 @@ import ProductionConfirm from './Screen/ProductionConfirm';
 import History from './Screen/History';
 import Login from './Screen/Login';
 import Home from './Screen/Home';
-import Showsql from './Screen/Showsql'
+import Showsql from './Screen/Showsql';
 import Shoesql2 from './Screen/Shoesql2';
 
 const Stack = createNativeStackNavigator();
@@ -24,12 +24,6 @@ const App = () => {
           headerShadowVisible: false,
           headerTitleAlign: 'center',
         }}>
-        <Stack.Screen
-          name="ProductionConfirm"
-          component={ProductionConfirm}
-          options={{title: 'PRODUCTION CONFIRM'}}
-        />
-
         <Stack.Screen name="Home" component={Home} options={{title: 'HOME'}} />
 
         <Stack.Screen
@@ -49,12 +43,18 @@ const App = () => {
           component={History}
           options={{title: 'HISTOY'}}
         />
-         {/* <Stack.Screen
+
+        <Stack.Screen
+          name="ProductionConfirm"
+          component={ProductionConfirm}
+          options={{title: 'PRODUCTION CONFIRM'}}
+        />
+        <Stack.Screen
           name="Showsql"
           component={Showsql}
           options={{title: 'Showsql'}}
-        /> */}
-          <Stack.Screen
+        />
+        <Stack.Screen
           name="Shoesql2"
           component={Shoesql2}
           options={{title: 'Shoesql2'}}

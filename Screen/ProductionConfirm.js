@@ -7,7 +7,7 @@ import SQLite from 'react-native-sqlite-storage';
 const ProductionConfirm = ({navigation}) => {
   const db = SQLite.openDatabase(
     {
-      name: 'MainDB.db',
+      name: 'ainDB.db',
       location: 'default',
     },
     () => {},
@@ -24,9 +24,9 @@ const ProductionConfirm = ({navigation}) => {
   const createTable = () => {
     db.transaction(tx => {
       tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS ' +
+        'CREATE TABLE' +
           'Users ' +
-          '(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Age INTEGER, Pat TEXT);',
+          '(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Age INTEGER, Pat TEXT, Cat TEXT);',
       );
     });
   };
@@ -35,7 +35,7 @@ const ProductionConfirm = ({navigation}) => {
     try {
 
       db.transaction(tx => {
-        tx.executeSql('SELECT Name, Age, Pat FROM Users', [], (tx, results) => {
+        tx.executeSql('SELECT Name, Age, Pat, Cat FROM Users', [], (tx, results) => {
           var len = results.rows.length;
           if (len > 0) {
             navigation.navigate('Shoesql2');
@@ -53,10 +53,11 @@ const ProductionConfirm = ({navigation}) => {
     } else {
       try {
         await db.transaction(async tx => {
-          await tx.executeSql('INSERT INTO Users (Name, Age, Pat) VALUES (?,?,?)', [
+          await tx.executeSql('INSERT INTO Users (Name, Age, Pat, Cat) VALUES (?,?,?,?)', [
             name,
             age,
-            pat
+            pat,
+            cat
           ]);
         });
         navigation.navigate('Shoesql2');
@@ -65,11 +66,14 @@ const ProductionConfirm = ({navigation}) => {
       }
     }
   };
+
   const [selectedValue, setSelectedValue] = useState('Start');
 
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [pat, setPat] = useState('');
+  const [cat, setCat] = useState('');
+
   return (
     <ScrollView style={styles.container}>
       <Divider color="white" width={1.5} style={{marginHorizontal: 20}} />
@@ -117,6 +121,8 @@ const ProductionConfirm = ({navigation}) => {
           <Input
             containerStyle={styles.textInput}
             inputContainerStyle={{borderBottomWidth: 0}}
+            onChangeText={value => setCat(value)}
+
           />
         </View>
 
