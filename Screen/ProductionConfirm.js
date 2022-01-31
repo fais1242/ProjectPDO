@@ -7,7 +7,7 @@ import SQLite from 'react-native-sqlite-storage';
 const ProductionConfirm = ({navigation}) => {
   const db = SQLite.openDatabase(
     {
-      name: 'ainDB.db',
+      name: 'CainDB.db',
       location: 'default',
     },
     () => {},
@@ -18,61 +18,51 @@ const ProductionConfirm = ({navigation}) => {
 
   useEffect(() => {
     createTable();
-    getData();
   }, []);
 
   const createTable = () => {
-    db.transaction(tx => {
+    db.transaction((tx) => {
       tx.executeSql(
-        'CREATE TABLE' +
-          'Users ' +
-          '(ID INTEGER PRIMARY KEY AUTOINCREMENT, Name TEXT, Age INTEGER, Pat TEXT, Cat TEXT);',
+        "CREATE TABLE IF NOT EXISTS" +
+          "Users" +
+          "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Output INTEGER, Scarp INTEGER, IdenID TEXT, IdenDes TEXT, DurationH INTEGER, DurationM INTEGER, Status TEXT, Processby TEXT);",
       );
     });
   };
 
-  const getData = () => {
-    try {
-
-      db.transaction(tx => {
-        tx.executeSql('SELECT Name, Age, Pat, Cat FROM Users', [], (tx, results) => {
-          var len = results.rows.length;
-          if (len > 0) {
-            navigation.navigate('Shoesql2');
-          }
-        });
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const setData = async () => {
-    if (name.length == 0 || age.length == 0) {
+    if (output.length == 0 || scarp.length == 0) {
       Alert.alert('Warning!', 'Please write your data.');
     } else {
       try {
         await db.transaction(async tx => {
-          await tx.executeSql('INSERT INTO Users (Name, Age, Pat, Cat) VALUES (?,?,?,?)', [
-            name,
-            age,
-            pat,
-            cat
+          await tx.executeSql("INSERT INTO Users (Output, Scarp, IdenID, IdenDes, DurationH, DurationM, Status, Processby) VALUES (?,?,?,?,?,?,?,?)", [
+            output,
+            scarp,
+            idenID,
+            idenD,
+            durationH,
+            durationM,
+            selectedValue,
+            Processby,
           ]);
         });
-        navigation.navigate('Shoesql2');
+        navigation.navigate('Showsql');
       } catch (error) {
         console.log(error);
       }
     }
   };
-
   const [selectedValue, setSelectedValue] = useState('Start');
 
-  const [name, setName] = useState('');
-  const [age, setAge] = useState('');
-  const [pat, setPat] = useState('');
-  const [cat, setCat] = useState('');
+  const [output, setoutput] = useState('');
+  const [scarp, setscarp] = useState('');
+  const [idenID, setidenID] = useState('');
+  const [idenD, setidenD] = useState('');
+  const [durationH, setdurationH] = useState('');
+  const [durationM, setdurationM] = useState('');
+  const [Processby, setprocessby] = useState('');
 
   return (
     <ScrollView style={styles.container}>
@@ -90,7 +80,7 @@ const ProductionConfirm = ({navigation}) => {
           <Input
             containerStyle={styles.textInput}
             inputContainerStyle={{borderBottomWidth: 0}}
-            onChangeText={value => setName(value)}
+            onChangeText={value => setoutput(value)}
           />
         </View>
 
@@ -100,7 +90,7 @@ const ProductionConfirm = ({navigation}) => {
           <Input
             containerStyle={styles.textInput}
             inputContainerStyle={{borderBottomWidth: 0}}
-            onChangeText={value => setAge(value)}
+            onChangeText={value => setscarp(value)}
           />
         </View>
 
@@ -110,8 +100,7 @@ const ProductionConfirm = ({navigation}) => {
           <Input
             containerStyle={styles.textInput}
             inputContainerStyle={{borderBottomWidth: 0}}
-            onChangeText={value => setPat(value)}
-
+            onChangeText={value => setidenID(value)}
           />
         </View>
 
@@ -121,8 +110,7 @@ const ProductionConfirm = ({navigation}) => {
           <Input
             containerStyle={styles.textInput}
             inputContainerStyle={{borderBottomWidth: 0}}
-            onChangeText={value => setCat(value)}
-
+            onChangeText={value => setidenD(value)}
           />
         </View>
 
@@ -138,7 +126,7 @@ const ProductionConfirm = ({navigation}) => {
               }}
               placeholder="Hour"
               inputContainerStyle={{borderBottomWidth: 0}}
-              keyboardType="numeric"
+              onChangeText={value => setdurationH(value)}
             />
             {/* <Text style={{fontSize:20,}}>
              H
@@ -156,7 +144,7 @@ const ProductionConfirm = ({navigation}) => {
               }}
               placeholder="Minutes"
               inputContainerStyle={{borderBottomWidth: 0}}
-              keyboardType="numeric"
+              onChangeText={value => setdurationM(value)}
             />
             {/* <Text style={{fontSize:20}} >
            Min
@@ -182,6 +170,7 @@ const ProductionConfirm = ({navigation}) => {
           <Input
             containerStyle={styles.textInput}
             inputContainerStyle={{borderBottomWidth: 0}}
+            onChangeText={value => setprocessby(value)}
           />
         </View>
 

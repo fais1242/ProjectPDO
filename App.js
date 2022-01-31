@@ -9,7 +9,6 @@ import History from './Screen/History';
 import Login from './Screen/Login';
 import Home from './Screen/Home';
 import Showsql from './Screen/Showsql';
-import Shoesql2 from './Screen/Shoesql2';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,18 +23,17 @@ const App = () => {
           headerShadowVisible: false,
           headerTitleAlign: 'center',
         }}>
+        <Stack.Screen
+          name="Scanner"
+          component={Scanner}
+          options={{title: 'SCAN QRCODE'}}
+        />
         <Stack.Screen name="Home" component={Home} options={{title: 'HOME'}} />
 
         <Stack.Screen
           name="Production"
           component={ProductionOrder}
           options={{title: 'PRODUCTION ORDER'}}
-        />
-
-        <Stack.Screen
-          name="Scanner"
-          component={Scanner}
-          options={{title: 'SCAN QRCODE'}}
         />
 
         <Stack.Screen
@@ -53,11 +51,6 @@ const App = () => {
           name="Showsql"
           component={Showsql}
           options={{title: 'Showsql'}}
-        />
-        <Stack.Screen
-          name="Shoesql2"
-          component={Shoesql2}
-          options={{title: 'Shoesql2'}}
         />
       </Stack.Navigator>
     </NavigationContainer>
