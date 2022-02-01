@@ -23,19 +23,19 @@ const App = () => {
           headerShadowVisible: false,
           headerTitleAlign: 'center',
         }}>
+        <Stack.Screen name="Home" component={Home} options={{title: 'HOME'}} />
+
         <Stack.Screen
           name="Scanner"
           component={Scanner}
           options={{title: 'SCAN QRCODE'}}
         />
-        <Stack.Screen name="Home" component={Home} options={{title: 'HOME'}} />
 
         <Stack.Screen
           name="Production"
           component={ProductionOrder}
           options={{title: 'PRODUCTION ORDER'}}
         />
-
         <Stack.Screen
           name="History"
           component={History}
@@ -56,22 +56,5 @@ const App = () => {
     </NavigationContainer>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 35,
-    backgroundColor: 'lightblue',
-  },
-  stext: {
-    color: 'black',
-    fontWeight: 'bold',
-    fontSize: 30,
-    marginBottom: 20,
-    marginLeft: 'auto',
-    marginRight: 'auto',
-  },
-  button: {},
-});
 
 export default App;

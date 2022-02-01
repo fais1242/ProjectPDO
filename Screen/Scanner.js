@@ -1,13 +1,34 @@
-import {View, Text, ScrollView, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  Linking,
+} from 'react-native';
 import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
 import React, {useState, useEffect} from 'react';
-import SQLite from 'react-native-sqlite-storage';
+import QRCodeScanner from 'react-native-qrcode-scanner';
+import {RNCamera} from 'react-native-camera';
 
-const Scanner = ({navigation})=>{
-  return(
-<ScrollView style={styles.container}>
+const Scanner = ({navigation}) => {
+  onSuccess = e => {
+    Linking.openURL(e.data).catch(err =>
+      console.error('An error occured', err),
+    );
+  };
+  return (
+    <View style={styles.container}>
       <Divider color="white" width={1.5} style={{marginHorizontal: 20}} />
-    </ScrollView>
+        <QRCodeScanner
+          onRead={this.onSuccess}
+          cameraStyle={{width: 300, height: 200}}
+          containerStyle={{backgroundColor:'#ffff',alignItems: 'center', justifyContent: 'center',marginVertical:"30%",marginHorizontal:"5%", borderRadius:10}}
+          flashMode={RNCamera.Constants.FlashMode.torch}
+          showMarker={true}
+        />
+
+    </View>
   );
 };
 
@@ -29,12 +50,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'black',
   },
-  cardstyle: {
-    borderRadius: 5,
-    marginBottom: 10,
-    backgroundColor: '#EEF1F3',
-    flex: 1,
-  },
+
 });
 
-export default  Scanner
+export default Scanner;

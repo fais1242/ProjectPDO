@@ -45,6 +45,12 @@ const Home = ({navigation}) => {
             containerStyle={{marginVertical: 10, marginHorizontal: 10}}
             buttonStyle={styles.butstyle}
             titleStyle={styles.textshow}
+            iconPosition='top'
+            icon={  <Icon
+              name='qrcode-scan'
+              type='material-community'
+              size={80}
+            />}
           />
 
           <Button
@@ -53,6 +59,12 @@ const Home = ({navigation}) => {
             containerStyle={{marginVertical: 10, marginHorizontal: 10}}
             buttonStyle={styles.butstyle}
             titleStyle={styles.textshow}
+            iconPosition='top'
+            icon={  <Icon
+              name='clipboard-text-outline'
+              type='material-community'
+              size={80}
+            />}
           />
         </View>
 
@@ -68,6 +80,12 @@ const Home = ({navigation}) => {
             containerStyle={{marginVertical: 10, marginHorizontal: 10}}
             buttonStyle={styles.butstyle}
             titleStyle={styles.textshow}
+            iconPosition='top'
+            icon={  <Icon
+              name='history'
+              type='material-community'
+              size={80}
+            />}
           />
         </View>
       </View>
@@ -98,6 +116,7 @@ const styles = StyleSheet.create({
   textshow: {
     fontSize: 20,
     color: 'black',
+    marginTop:10
   },
 });
 

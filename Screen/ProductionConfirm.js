@@ -21,15 +21,14 @@ const ProductionConfirm = ({navigation}) => {
   }, []);
 
   const createTable = () => {
-    db.transaction((tx) => {
+    db.transaction(tx => {
       tx.executeSql(
-        "CREATE TABLE IF NOT EXISTS" +
-          "Users" +
-          "(ID INTEGER PRIMARY KEY AUTOINCREMENT, Output INTEGER, Scarp INTEGER, IdenID TEXT, IdenDes TEXT, DurationH INTEGER, DurationM INTEGER, Status TEXT, Processby TEXT);",
+        'CREATE TABLE IF NOT EXISTS' +
+          'Users' +
+          '(ID INTEGER PRIMARY KEY AUTOINCREMENT, Output INTEGER, Scarp INTEGER, IdenID TEXT, IdenDes TEXT, DurationH INTEGER, DurationM INTEGER, Status TEXT, Processby TEXT);',
       );
     });
   };
-
 
   const setData = async () => {
     if (output.length == 0 || scarp.length == 0) {
@@ -37,16 +36,19 @@ const ProductionConfirm = ({navigation}) => {
     } else {
       try {
         await db.transaction(async tx => {
-          await tx.executeSql("INSERT INTO Users (Output, Scarp, IdenID, IdenDes, DurationH, DurationM, Status, Processby) VALUES (?,?,?,?,?,?,?,?)", [
-            output,
-            scarp,
-            idenID,
-            idenD,
-            durationH,
-            durationM,
-            selectedValue,
-            Processby,
-          ]);
+          await tx.executeSql(
+            'INSERT INTO Users (Output, Scarp, IdenID, IdenDes, DurationH, DurationM, Status, Processby) VALUES (?,?,?,?,?,?,?,?)',
+            [
+              output,
+              scarp,
+              idenID,
+              idenD,
+              durationH,
+              durationM,
+              selectedValue,
+              Processby,
+            ],
+          );
         });
         navigation.navigate('Showsql');
       } catch (error) {

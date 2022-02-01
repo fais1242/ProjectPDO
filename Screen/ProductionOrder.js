@@ -62,9 +62,8 @@ const ProductionOrder = ({navigation}) => {
       <Divider color="white" width={1.5} style={{marginHorizontal: 20}} />
 
       <Card containerStyle={{borderRadius: 10, marginBottom: 10}}>
-        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={styles.showlist}>
           <Icon
-            style={{marginTop: 20}}
             name="filetext1"
             type="antdesign"
             size={40}
@@ -80,9 +79,8 @@ const ProductionOrder = ({navigation}) => {
           </Card>
         </View>
 
-        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={styles.showlist}>
           <Icon
-            style={{marginTop: 20}}
             name="inbox"
             type="antdesign"
             size={40}
@@ -92,9 +90,8 @@ const ProductionOrder = ({navigation}) => {
           </Card>
         </View>
 
-        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={styles.showlist}>
           <Icon
-            style={{marginTop: 20}}
             name="calendar"
             type="antdesign"
             size={40}
@@ -110,9 +107,8 @@ const ProductionOrder = ({navigation}) => {
           </Card>
         </View>
 
-        <View style={{flex: 1, flexDirection: 'row'}}>
+        <View style={styles.showlist}>
           <Icon
-            style={{marginTop: 20}}
             name="edit"
             type="antdesign"
             size={40}
@@ -167,6 +163,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#EEF1F3',
     flex: 1,
   },
+  showlist:{
+    flex: 1, 
+    flexDirection: 'row', 
+    justifyContent:'space-between', 
+    alignItems:'center'
+  }
 });
 
 export default ProductionOrder;
