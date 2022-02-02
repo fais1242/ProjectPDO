@@ -1,6 +1,7 @@
 import {View, Text, ScrollView, StyleSheet, Alert} from 'react-native';
 import {Button, Image, Card, Divider, Icon, Input} from 'react-native-elements';
 import {Picker} from '@react-native-picker/picker';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import React, {useEffect, useState} from 'react';
 import SQLite from 'react-native-sqlite-storage';
 
@@ -124,7 +125,7 @@ const ProductionConfirm = ({navigation}) => {
                 borderRadius: 5,
                 backgroundColor: '#EEF1F3',
                 flex: 1,
-                height: 50,
+                height: hp('6.5%'),
               }}
               placeholder="Hour"
               inputContainerStyle={{borderBottomWidth: 0}}
@@ -142,7 +143,7 @@ const ProductionConfirm = ({navigation}) => {
                 borderRadius: 5,
                 backgroundColor: '#EEF1F3',
                 flex: 1,
-                height: 50,
+                height:hp('6.5%'),
               }}
               placeholder="Minutes"
               inputContainerStyle={{borderBottomWidth: 0}}

@@ -1,11 +1,15 @@
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import React from 'react';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
 
 const Home = ({navigation}) => {
   return (
     <ScrollView style={styles.container}>
-      <Divider color="white" width={1.5} style={{marginHorizontal: 20}} />
+      {/* <Divider color="white" width={1.5} style={{marginHorizontal: 20}} /> */}
 
       <Card containerStyle={{borderRadius: 10, marginBottom: 10}}>
         <View style={{flex: 1, flexDirection: 'row'}}>
@@ -27,7 +31,7 @@ const Home = ({navigation}) => {
               source={{
                 uri: 'https://icon-library.com/images/users-icon-png/users-icon-png-17.jpg',
               }}
-              style={{width: 50, height: 50}}
+              style={{width: wp('10%'), height: hp('5%')}}
             />
           </View>
         </View>
@@ -45,12 +49,10 @@ const Home = ({navigation}) => {
             containerStyle={{marginVertical: 10, marginHorizontal: 10}}
             buttonStyle={styles.butstyle}
             titleStyle={styles.textshow}
-            iconPosition='top'
-            icon={  <Icon
-              name='qrcode-scan'
-              type='material-community'
-              size={80}
-            />}
+            iconPosition="top"
+            icon={
+              <Icon name="qrcode-scan" type="material-community" size={80} />
+            }
           />
 
           <Button
@@ -59,12 +61,14 @@ const Home = ({navigation}) => {
             containerStyle={{marginVertical: 10, marginHorizontal: 10}}
             buttonStyle={styles.butstyle}
             titleStyle={styles.textshow}
-            iconPosition='top'
-            icon={  <Icon
-              name='clipboard-text-outline'
-              type='material-community'
-              size={80}
-            />}
+            iconPosition="top"
+            icon={
+              <Icon
+                name="clipboard-text-outline"
+                type="material-community"
+                size={80}
+              />
+            }
           />
         </View>
 
@@ -78,14 +82,15 @@ const Home = ({navigation}) => {
             title="History"
             onPress={() => navigation.navigate('History')}
             containerStyle={{marginVertical: 10, marginHorizontal: 10}}
-            buttonStyle={styles.butstyle}
+            buttonStyle={{
+              width: wp('85%'),
+              height: hp('25%'),
+              borderRadius: 20,
+              backgroundColor: 'white',
+            }}
             titleStyle={styles.textshow}
-            iconPosition='top'
-            icon={  <Icon
-              name='history'
-              type='material-community'
-              size={80}
-            />}
+            iconPosition="top"
+            icon={<Icon name="history" type="material-community" size={80} />}
           />
         </View>
       </View>
@@ -108,15 +113,15 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
   },
   butstyle: {
-    width: 160,
-    height: 200,
+    width: wp('40%'),
+    height: hp('25%'),
     borderRadius: 20,
     backgroundColor: 'white',
   },
   textshow: {
     fontSize: 20,
     color: 'black',
-    marginTop:10
+    marginTop: 10,
   },
 });
 

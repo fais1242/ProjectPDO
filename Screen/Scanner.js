@@ -10,6 +10,10 @@ import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
 import React, {useState, useEffect} from 'react';
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import {RNCamera} from 'react-native-camera';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 
 const Scanner = ({navigation}) => {
   onSuccess = e => {
@@ -18,17 +22,24 @@ const Scanner = ({navigation}) => {
     );
   };
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <Divider color="white" width={1.5} style={{marginHorizontal: 20}} />
-        <QRCodeScanner
-          onRead={this.onSuccess}
-          cameraStyle={{width: 300, height: 200}}
-          containerStyle={{backgroundColor:'#ffff',alignItems: 'center', justifyContent: 'center',marginVertical:"30%",marginHorizontal:"5%", borderRadius:10}}
-          flashMode={RNCamera.Constants.FlashMode.torch}
-          showMarker={true}
-        />
-
-    </View>
+      <QRCodeScanner
+        onRead={this.onSuccess}
+        cameraStyle={{width: wp('80%'), height: hp('40%'),marginTop:'5%', marginBottom:'5%'}}
+        containerStyle={{
+          backgroundColor: '#ffff',
+          marginTop:'10%',
+          marginHorizontal: '5%',
+          borderRadius: 10,
+          paddingHorizontal:'5%',
+          width:wp('90%'),
+          height:hp('70%'),
+        }}
+        flashMode={RNCamera.Constants.FlashMode.torch}
+        showMarker={true}
+      />
+    </ScrollView>
   );
 };
 
@@ -50,7 +61,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'black',
   },
-
 });
 
 export default Scanner;

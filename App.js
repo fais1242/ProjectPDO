@@ -35,8 +35,8 @@ const App = () => {
           name="Production"
           component={ProductionOrder}
           options={{title: 'PRODUCTION ORDER'}}
-        />
-        <Stack.Screen
+        /> 
+       <Stack.Screen
           name="History"
           component={History}
           options={{title: 'HISTOY'}}
