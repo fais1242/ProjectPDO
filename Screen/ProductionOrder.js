@@ -1,62 +1,162 @@
 import {View, Text, ScrollView, StyleSheet} from 'react-native';
 import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
 import React, {useState, useEffect} from 'react';
-import SQLite from 'react-native-sqlite-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+
 
 const ProductionOrder = ({navigation}) => {
-  const db = SQLite.openDatabase(
-    {
-      name: 'CainDB.db',
-      location: 'default',
-    },
-    () => {},
-    error => {
-      console.log(error);
-    },
-  );
 
-  const [selectedValue, setSelectedValue] = useState('');
+  var Cxml2json = require('xml2js').parseString;
+  var stripNS = require('xml2js').processors.stripPrefix;
+
+  const [orderid, setorderid] = useState('');
+  const [operation, setoperation] = useState('');
   const [output, setoutput] = useState('');
-  const [scarp, setscarp] = useState('');
-  const [idenID, setidenID] = useState('');
-  const [idenD, setidenD] = useState('');
-  const [durationH, setdurationH] = useState('');
-  const [durationM, setdurationM] = useState('');
-  const [Processby, setprocessby] = useState('');
+  const [Pdate, setPdate] = useState('');
+  const [Edate, setEdate] = useState('');
+  const [plan, setplan] = useState('');
 
   useEffect(() => {
     getData();
   }, []);
 
-  const getData = () => {
+  const getData =  () => {
     try {
-      db.transaction(tx => {
-        tx.executeSql('SELECT * FROM Users', [], (tx, results) => {
-          var len = results.rows.length;
-          if (len > 0) {
-            var useroutput = results.rows.item(0).Output;
-            var userscarp = results.rows.item(0).Scarp;
-            var useridenID = results.rows.item(0).IdenID;
-            var useridenD = results.rows.item(0).IdenDes;
-            var userdurationH = results.rows.item(0).DurationH;
-            var userdurationM = results.rows.item(0).DurationM;
-            var userstatus = results.rows.item(0).Status;
-            var userprocess = results.rows.item(0).Processby;
-            setoutput(useroutput);
-            setscarp(userscarp);
-            setidenID(useridenID);
-            setidenD(useridenD);
-            setdurationH(userdurationH);
-            setdurationM(userdurationM);
-            setSelectedValue(userstatus);
-            setprocessby(userprocess);
-          }console.log('get');
-        });
-      });
-    } catch (error) {
-      console.log(error);
+      console.log('start getdata');
+      AsyncStorage.getItem('OrderData')
+      .then(value=>{
+        if (value !== null) {
+          console.log('getdata');
+          console.log(value);
+          let Order = JSON.parse(value);
+          console.log(Order)
+          setorderid(Order.OrderID)
+          console.log(orderid);
+        }
+      })
+    } catch (e) {
+      console.log(e);
     }
+
+    
   };
+
+
+    let xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:glob="http://sap.com/xi/SAPGlobal20/Global">
+  <soapenv:Header/>
+  <soapenv:Body>
+     <glob:ProductionLotByElementsQuery_sync>
+        <ProductionLotSelectionByElements>
+           <SelectionByProductionLotID>
+              <InclusionExclusionCode>i</InclusionExclusionCode>
+              <IntervalBoundaryTypeCode>1</IntervalBoundaryTypeCode>
+              <LowerBoundaryProductionLotID>${orderid}</LowerBoundaryProductionLotID>
+           </SelectionByProductionLotID>
+         </ProductionLotSelectionByElements>
+        <ProcessingConditions>
+           <QueryHitsMaximumNumberValue>1</QueryHitsMaximumNumberValue>
+           <QueryHitsUnlimitedIndicator>false</QueryHitsUnlimitedIndicator>
+           <LastReturnedObjectID/>
+        </ProcessingConditions>
+     </glob:ProductionLotByElementsQuery_sync>
+  </soapenv:Body>
+</soapenv:Envelope> `;
+  axios
+    .post(
+      `https://my334089.sapbydesign.com/sap/bc/srt/scs/sap/queryproductionlotisiin?sap-vhost=my334089.sapbydesign.com`,
+      xml,
+      {
+        headers: {
+          'Content-Type': 'text/xml',
+          Authorization: 'Basic X05UWkRFVjpXZWxjb21lMjAyMQ==',
+          
+        },
+      },
+    )
+    .then(res => {
+      console.log(res.data);
+      Cxml2json(
+        res.data,
+        {tagNameProcessors: [stripNS]},
+        function (err, result) {
+          console.log(JSON.stringify(result));
+          console.log(
+            result.Envelope.Body[0]
+              .ProductionLotByElementsResponse_sync[0]
+              .ProductionLot[0].ConfirmationGroup[1].ProductionTask[0].OperationTypeCode[0]._,
+          );
+          for (let i = 0; i < result.Envelope.Body[0]['ProductionLotByElementsResponse_sync'][0]['ProductionLot'][0]['ConfirmationGroup'].length ; i++) {
+            console.log('___'+i);
+            if (result.Envelope.Body[0]
+              .ProductionLotByElementsResponse_sync[0]
+              .ProductionLot[0].ConfirmationGroup[i].ProductionTask[0].OperationTypeCode[0]._ == 1) {
+              console.log(i);
+              setoperation(result.Envelope.Body[0]
+                .ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].ProductionTask[0].OperationTypeCode[0]._);
+              setoutput(result.Envelope.Body[0]
+                .ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[0].ProductID[0])
+                setplan(result.Envelope.Body[0]
+                  .ProductionLotByElementsResponse_sync[0]
+                  .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[0].PlannedQuantity[0]._)
+              break;
+            }
+          }
+
+          // var Porder ;
+
+          // const setData = async () => {
+          //   for (let i = 0; i < 5; i++) {
+          //     if (Porder+i == null ) {
+          //       try {
+          //         console.log('start setdata');
+          //           var Order = {
+          //           OrderID : output,
+          //         }
+          //         console.log(output);
+          //         console.log('setdata');
+          //       await AsyncStorage.setItem('OrderData', JSON.stringify(Order));
+          //       navigation.navigate('Showsql');
+          //     } catch (e) {
+          //         console.log(e);
+          //     }
+
+          //     } 
+          //   }
+          // }
+
+
+
+          const setData = async () => {
+            if (output.length == 0 ) {
+              Alert.alert('Warning!', 'Please write your data.');
+            } else {
+              try {
+                console.log('start setdata');
+                  var Order = {
+                  OrderID : output,
+                }
+                console.log(output);
+                console.log('setdata');
+              await AsyncStorage.setItem('OrderData', JSON.stringify(Order));
+              navigation.navigate('Showsql');
+            } catch (e) {
+                console.log(e);
+            }
+          }
+        }
+
+
+
+
+        },
+
+
+      );
+    });
+
   return (
     <ScrollView style={styles.container}>
       <Divider color="white" width={1.5} style={{marginHorizontal: 20}} />
@@ -69,13 +169,18 @@ const ProductionOrder = ({navigation}) => {
             size={40}
           />
           <Card containerStyle={styles.cardstyle}>
-            <Text style={styles.textshow}>Production Order ID : {idenID}</Text>
+            <Text style={styles.textshow}>Production Order ID : {orderid}</Text>
           </Card>
         </View>
 
-        <View style={{flex: 1, flexDirection: 'row', marginLeft: 40}}>
+        <View style={styles.showlist}>
+        <Icon
+            name="filetext1"
+            type="antdesign"
+            size={40}
+          />
           <Card containerStyle={styles.cardstyle}>
-            <Text style={styles.textshow}>Operation ID : {scarp}</Text>
+            <Text style={styles.textshow}>Operation ID : {operation}</Text>
           </Card>
         </View>
 
@@ -86,26 +191,31 @@ const ProductionOrder = ({navigation}) => {
             size={40}
           />
           <Card containerStyle={styles.cardstyle}>
-            <Text style={styles.textshow}>Output Product : {idenD}</Text>
+            <Text style={styles.textshow}>Output Product : {output} </Text>
+          </Card>
+        </View>
+
+        {/* <View style={styles.showlist}>
+          <Icon
+            name="calendar-check-o"
+            type="font-awesome"
+            size={40}
+          />
+          <Card containerStyle={styles.cardstyle}>
+            <Text style={styles.textshow}>Production date time : {}</Text>
           </Card>
         </View>
 
         <View style={styles.showlist}>
-          <Icon
-            name="calendar"
-            type="antdesign"
+        <Icon
+            name="calendar-times-o"
+            type="font-awesome"
             size={40}
           />
           <Card containerStyle={styles.cardstyle}>
-            <Text style={styles.textshow}>Production date time : {durationH}</Text>
+            <Text style={styles.textshow}>Expiration date time : {}</Text>
           </Card>
-        </View>
-
-        <View style={{flex: 1, flexDirection: 'row', marginLeft: 40}}>
-          <Card containerStyle={styles.cardstyle}>
-            <Text style={styles.textshow}>Expiration date time : {durationM}</Text>
-          </Card>
-        </View>
+        </View> */}
 
         <View style={styles.showlist}>
           <Icon
@@ -114,7 +224,7 @@ const ProductionOrder = ({navigation}) => {
             size={40}
           />
           <Card containerStyle={styles.cardstyle}>
-            <Text style={styles.textshow}> Planned Quatity : {output}</Text>
+            <Text style={styles.textshow}> Planned Quatity : {plan} EA</Text>
           </Card>
         </View>
 
@@ -154,7 +264,7 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
   },
   textshow: {
-    fontSize: 18,
+    fontSize: 14,
     color: 'black',
   },
   cardstyle: {

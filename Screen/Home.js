@@ -6,6 +6,7 @@ import {
 } from 'react-native-responsive-screen';
 import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
 
+
 const Home = ({navigation}) => {
   return (
     <ScrollView style={styles.container}>

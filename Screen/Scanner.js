@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Linking,
+  Alert,
 } from 'react-native';
 import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
 import React, {useState, useEffect} from 'react';
@@ -14,30 +15,53 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 const Scanner = ({navigation}) => {
-  onSuccess = e => {
-    Linking.openURL(e.data).catch(err =>
-      console.error('An error occured', err),
-    );
+
+
+  const [order, setorder] = useState('');
+
+  const onSuccess = async e => {
+    setorder(e.data);
+    console.log(e.data);
+    try {
+      console.log('start setdata');
+        var Order = {
+        OrderID : e.data,
+      }
+      console.log(Order.OrderID);
+      console.log('setdata');
+    await AsyncStorage.setItem('OrderData', JSON.stringify(Order));
+    navigation.navigate('Home');
+  } catch (e) {
+      console.log(e);
+  }
   };
+  const setData = async () => {};
+
   return (
     <ScrollView style={styles.container}>
       <Divider color="white" width={1.5} style={{marginHorizontal: 20}} />
       <QRCodeScanner
-        onRead={this.onSuccess}
-        cameraStyle={{width: wp('80%'), height: hp('40%'),marginTop:'5%', marginBottom:'5%'}}
+        cameraStyle={{
+          width: wp('80%'),
+          height: hp('40%'),
+          marginTop: '5%',
+          marginBottom: '5%',
+        }}
         containerStyle={{
           backgroundColor: '#ffff',
-          marginTop:'10%',
+          marginTop: '10%',
           marginHorizontal: '5%',
           borderRadius: 10,
-          paddingHorizontal:'5%',
-          width:wp('90%'),
-          height:hp('70%'),
+          paddingHorizontal: '5%',
+          width: wp('90%'),
+          height: hp('70%'),
         }}
-        flashMode={RNCamera.Constants.FlashMode.torch}
         showMarker={true}
+        onRead={onSuccess}
       />
     </ScrollView>
   );

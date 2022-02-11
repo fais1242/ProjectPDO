@@ -4,61 +4,82 @@ import {Picker} from '@react-native-picker/picker';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import React, {useEffect, useState} from 'react';
 import SQLite from 'react-native-sqlite-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const ProductionConfirm = ({navigation}) => {
-  const db = SQLite.openDatabase(
-    {
-      name: 'CainDB.db',
-      location: 'default',
-    },
-    () => {},
-    error => {
-      console.log(error);
-    },
-  );
 
-  useEffect(() => {
-    createTable();
-  }, []);
+  // const db = SQLite.openDatabase(
+  //   {
+  //     name: 'CainDB.db',
+  //     location: 'default',
+  //   },
+  //   () => {},
+  //   error => {
+  //     console.log(error);
+  //   },
+  // );
 
-  const createTable = () => {
-    db.transaction(tx => {
-      tx.executeSql(
-        'CREATE TABLE IF NOT EXISTS' +
-          'Users' +
-          '(ID INTEGER PRIMARY KEY AUTOINCREMENT, Output INTEGER, Scarp INTEGER, IdenID TEXT, IdenDes TEXT, DurationH INTEGER, DurationM INTEGER, Status TEXT, Processby TEXT);',
-      );
-    });
-  };
+  // useEffect(() => {
+  //   createTable();
+  // }, []);
+
+  // const createTable = () => {
+  //   db.transaction(tx => {
+  //     tx.executeSql(
+  //       'CREATE TABLE IF NOT EXISTS' +
+  //         'Users' +
+  //         '(ID INTEGER PRIMARY KEY AUTOINCREMENT, Order INTEGER, Scarp INTEGER, IdenID TEXT, IdenDes TEXT, DurationH INTEGER, DurationM INTEGER, Status TEXT, Processby TEXT);',
+  //     );
+  //   });
+  // };
+
+  // const setData = async () => {
+    // if (output.length == 0 || scarp.length == 0) {
+    //   Alert.alert('Warning!', 'Please write your data.');
+    // } else {
+    //   try {
+  //       await db.transaction(async tx => {
+  //         await tx.executeSql(
+  //           'INSERT INTO Users (Output, Scarp, IdenID, IdenDes, DurationH, DurationM, Status, Processby) VALUES (?,?,?,?,?,?,?,?)',
+  //           [
+  //             output,
+  //             scarp,
+  //             idenID,
+  //             idenD,
+  //             durationH,
+  //             durationM,
+  //             selectedValue,
+  //             Processby,
+  //           ],
+  //         );
+  //       },console.log('insert success'));
+  //       navigation.navigate('Showsql');
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  // };
 
   const setData = async () => {
-    if (output.length == 0 || scarp.length == 0) {
+    if (output.length == 0 ) {
       Alert.alert('Warning!', 'Please write your data.');
     } else {
       try {
-        await db.transaction(async tx => {
-          await tx.executeSql(
-            'INSERT INTO Users (Output, Scarp, IdenID, IdenDes, DurationH, DurationM, Status, Processby) VALUES (?,?,?,?,?,?,?,?)',
-            [
-              output,
-              scarp,
-              idenID,
-              idenD,
-              durationH,
-              durationM,
-              selectedValue,
-              Processby,
-            ],
-          );
-        });
-        navigation.navigate('Showsql');
-      } catch (error) {
-        console.log(error);
-      }
+        console.log('start setdata');
+          var Order = {
+          OrderID : output,
+        }
+        console.log(output);
+        console.log('setdata');
+      await AsyncStorage.setItem('OrderData', JSON.stringify(Order));
+      navigation.navigate('Showsql');
+    } catch (e) {
+        console.log(e);
     }
-  };
+  }
+}
+  
   const [selectedValue, setSelectedValue] = useState('Start');
-
   const [output, setoutput] = useState('');
   const [scarp, setscarp] = useState('');
   const [idenID, setidenID] = useState('');
@@ -97,7 +118,7 @@ const ProductionConfirm = ({navigation}) => {
           />
         </View>
 
-        <View style={{flex: 1}}>
+        {/* <View style={{flex: 1}}>
           <Text style={styles.stext}>Identified Stock ID</Text>
 
           <Input
@@ -115,11 +136,11 @@ const ProductionConfirm = ({navigation}) => {
             inputContainerStyle={{borderBottomWidth: 0}}
             onChangeText={value => setidenD(value)}
           />
-        </View>
+        </View> */}
 
-        <View style={{flex: 1, marginBottom: 10}}>
+        <View style={{flex: 1}}>
           <Text style={styles.stext}>Duration</Text>
-          <View style={{flexDirection: 'row'}}>
+          <View style={{flexDirection: 'row',alignItems:'center'}}>
             <Input
               containerStyle={{
                 borderRadius: 5,
