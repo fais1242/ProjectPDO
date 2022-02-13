@@ -38,8 +38,6 @@ const ProductionOrder = ({navigation}) => {
     } catch (e) {
       console.log(e);
     }
-
-    
   };
 
 
@@ -104,30 +102,6 @@ const ProductionOrder = ({navigation}) => {
               break;
             }
           }
-
-          // var Porder ;
-
-          // const setData = async () => {
-          //   for (let i = 0; i < 5; i++) {
-          //     if (Porder+i == null ) {
-          //       try {
-          //         console.log('start setdata');
-          //           var Order = {
-          //           OrderID : output,
-          //         }
-          //         console.log(output);
-          //         console.log('setdata');
-          //       await AsyncStorage.setItem('OrderData', JSON.stringify(Order));
-          //       navigation.navigate('Showsql');
-          //     } catch (e) {
-          //         console.log(e);
-          //     }
-
-          //     } 
-          //   }
-          // }
-
-
 
           const setData = async () => {
             if (output.length == 0 ) {

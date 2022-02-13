@@ -1,8 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {Button, Image, Card, Divider, Icon, Input} from 'react-native-elements';
 import {StyleSheet, View, Text, Alert, ScrollView} from 'react-native';
-import SQLite from 'react-native-sqlite-storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 
 const Showsql = ({navigation}) => {
   const [selectedValue, setSelectedValue] = useState('');
@@ -17,13 +17,14 @@ const Showsql = ({navigation}) => {
   const getData = () => {
     try {
       console.log('start getdata');
-      AsyncStorage.getItem('OrderData')
+      AsyncStorage.getItem('TestData')
       .then(value=>{
         if (value !== null) {
           console.log('getdata');
           console.log(value);
           let Order = JSON.parse(value);
           setoutput(Order.OrderID)
+          console.log(Order);
         }
       })
     } catch (e) {
@@ -78,7 +79,7 @@ const Showsql = ({navigation}) => {
 
  const removeData = async ()=>{
    try{
-     await AsyncStorage.removeItem('OrderData');
+     await AsyncStorage.removeItem('TestData');
    }catch(e){
     console.log(e);
    }

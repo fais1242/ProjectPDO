@@ -3,62 +3,12 @@ import {Button, Image, Card, Divider, Icon, Input} from 'react-native-elements';
 import {Picker} from '@react-native-picker/picker';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 import React, {useEffect, useState} from 'react';
-import SQLite from 'react-native-sqlite-storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
+
+
 
 const ProductionConfirm = ({navigation}) => {
-
-  // const db = SQLite.openDatabase(
-  //   {
-  //     name: 'CainDB.db',
-  //     location: 'default',
-  //   },
-  //   () => {},
-  //   error => {
-  //     console.log(error);
-  //   },
-  // );
-
-  // useEffect(() => {
-  //   createTable();
-  // }, []);
-
-  // const createTable = () => {
-  //   db.transaction(tx => {
-  //     tx.executeSql(
-  //       'CREATE TABLE IF NOT EXISTS' +
-  //         'Users' +
-  //         '(ID INTEGER PRIMARY KEY AUTOINCREMENT, Order INTEGER, Scarp INTEGER, IdenID TEXT, IdenDes TEXT, DurationH INTEGER, DurationM INTEGER, Status TEXT, Processby TEXT);',
-  //     );
-  //   });
-  // };
-
-  // const setData = async () => {
-    // if (output.length == 0 || scarp.length == 0) {
-    //   Alert.alert('Warning!', 'Please write your data.');
-    // } else {
-    //   try {
-  //       await db.transaction(async tx => {
-  //         await tx.executeSql(
-  //           'INSERT INTO Users (Output, Scarp, IdenID, IdenDes, DurationH, DurationM, Status, Processby) VALUES (?,?,?,?,?,?,?,?)',
-  //           [
-  //             output,
-  //             scarp,
-  //             idenID,
-  //             idenD,
-  //             durationH,
-  //             durationM,
-  //             selectedValue,
-  //             Processby,
-  //           ],
-  //         );
-  //       },console.log('insert success'));
-  //       navigation.navigate('Showsql');
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // };
 
   const setData = async () => {
     if (output.length == 0 ) {
@@ -66,19 +16,70 @@ const ProductionConfirm = ({navigation}) => {
     } else {
       try {
         console.log('start setdata');
-          var Order = {
-          OrderID : output,
+        
+         var Order = {
+          OrderID : Order.output,
         }
-        console.log(output);
+        console.log(Order.OrderID);
         console.log('setdata');
-      await AsyncStorage.setItem('OrderData', JSON.stringify(Order));
+      await AsyncStorage.setItem('TestData', JSON.stringify(Order));
+      console.log(Order);
       navigation.navigate('Showsql');
     } catch (e) {
         console.log(e);
     }
   }
 }
-  
+
+let xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:glob="http://sap.com/xi/SAPGlobal20/Global">
+<soapenv:Header/>
+<soapenv:Body>
+   <glob:ProductionLotByElementsQuery_sync>
+      <ProductionLotSelectionByElements>
+         <SelectionByProductionLotID>
+            <InclusionExclusionCode>i</InclusionExclusionCode>
+            <IntervalBoundaryTypeCode>1</IntervalBoundaryTypeCode>
+            <LowerBoundaryProductionLotID></LowerBoundaryProductionLotID>
+         </SelectionByProductionLotID>
+       </ProductionLotSelectionByElements>
+      <ProcessingConditions>
+         <QueryHitsMaximumNumberValue>1</QueryHitsMaximumNumberValue>
+         <QueryHitsUnlimitedIndicator>false</QueryHitsUnlimitedIndicator>
+         <LastReturnedObjectID/>
+      </ProcessingConditions>
+   </glob:ProductionLotByElementsQuery_sync>
+</soapenv:Body>
+</soapenv:Envelope> `;
+axios
+  .post(
+    `https://my334089.sapbydesign.com/sap/bc/srt/scs/sap/queryproductionlotisiin?sap-vhost=my334089.sapbydesign.com`,
+    xml,
+    {
+      headers: {
+        'Content-Type': 'text/xml',
+        Authorization: 'Basic X05UWkRFVjpXZWxjb21lMjAyMQ==',
+        
+      },
+    },
+  )
+  .then(res => {
+    console.log(res.data);
+    Cxml2json(
+      res.data,
+      {tagNameProcessors: [stripNS]},
+      function (err, result) {
+        console.log(JSON.stringify(result));
+        console.log(
+          result.Envelope.Body[0]
+            .ProductionLotByElementsResponse_sync[0]
+            .ProductionLot[0].ConfirmationGroup[1].ProductionTask[0].OperationTypeCode[0]._,
+        );
+      },
+    );
+  });
+
+
+
   const [selectedValue, setSelectedValue] = useState('Start');
   const [output, setoutput] = useState('');
   const [scarp, setscarp] = useState('');
