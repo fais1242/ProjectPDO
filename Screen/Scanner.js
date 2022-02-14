@@ -34,12 +34,12 @@ const Scanner = ({navigation}) => {
       console.log(Order.OrderID);
       console.log('setdata');
     await AsyncStorage.setItem('OrderData', JSON.stringify(Order));
+    Alert.alert('Scan Success');
     navigation.navigate('Home');
   } catch (e) {
       console.log(e);
   }
   };
-  const setData = async () => {};
 
   return (
     <ScrollView style={styles.container}>

@@ -32,50 +32,10 @@ const Showsql = ({navigation}) => {
     }
   };
 
-  // const db = SQLite.openDatabase(
-  //   {
-  //     name: 'CainDB.db',
-  //     location: 'default',
-  //   },
-  //   () => {},
-  //   error => {
-  //     console.log(error);
-  //   },
-  // );
-
   useEffect(() => {
     getData();
   }, []);
 
-  // const getData = () => {
-  //   try {
-  //     db.transaction(tx => {
-  //       tx.executeSql('SELECT * FROM Users', [], (tx, results) => {
-  //         var len = results.rows.length;
-  //         if (len > 0) {
-  //           var useroutput = results.rows.item(0).Output;
-  //           var userscarp = results.rows.item(0).Scarp;
-  //           var useridenID = results.rows.item(0).IdenID;
-  //           var useridenD = results.rows.item(0).IdenDes;
-  //           var userdurationH = results.rows.item(0).DurationH;
-  //           var userdurationM = results.rows.item(0).DurationM;
-  //           var userstatus = results.rows.item(0).Status;
-  //           var userprocess = results.rows.item(0).Processby;
-  //           setoutput(useroutput);
-  //           setscarp(userscarp);
-  //           setidenID(useridenID);
-  //           setidenD(useridenD);
-  //           setdurationH(userdurationH);
-  //           setdurationM(userdurationM);
-  //           setSelectedValue(userstatus);
-  //           setprocessby(userprocess);
-  //         }console.log('get');
-  //       });
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
  const removeData = async ()=>{
    try{
