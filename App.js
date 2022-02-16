@@ -9,6 +9,7 @@ import History from './Screen/History';
 import Login from './Screen/Login';
 import Home from './Screen/Home';
 import Showsql from './Screen/Showsql';
+import TestFirebase from './Screen/TestFirebase';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,6 +24,13 @@ const App = () => {
           headerShadowVisible: false,
           headerTitleAlign: 'center',
         }}>
+          
+        <Stack.Screen
+          name="TestFirebase"
+          component={TestFirebase}
+          options={{title: 'SCAN QRCODE'}}
+        />
+
         <Stack.Screen name="Home" component={Home} options={{title: 'HOME'}} />
 
         <Stack.Screen
@@ -35,8 +43,8 @@ const App = () => {
           name="Production"
           component={ProductionOrder}
           options={{title: 'PRODUCTION ORDER'}}
-        /> 
-       <Stack.Screen
+        />
+        <Stack.Screen
           name="History"
           component={History}
           options={{title: 'HISTOY'}}
