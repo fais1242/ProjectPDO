@@ -18,14 +18,14 @@ const ProductionOrder = ({navigation}) => {
   const [plan, setplan] = useState('');
   const [unit, setunit] = useState('');
 
-  // useEffect(() => {
-  //   getData();
-  // }, []);
+  useEffect(() => {
+    getData();
+  }, []);
 
-  // const getData = () => {
+  const getData = () => {
     try {
-      console.log('start getdata');
-      AsyncStorage.getItem('OrderData').then(value => {
+    console.log('start getdata');
+     AsyncStorage.getItem('OrderData').then(value => {
         if (value !== null) {
           console.log('getdata');
           console.log(value);
@@ -38,7 +38,7 @@ const ProductionOrder = ({navigation}) => {
     } catch (e) {
       console.log(e);
     }
-  // };
+  };
 
   let xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:glob="http://sap.com/xi/SAPGlobal20/Global">
   <soapenv:Header/>

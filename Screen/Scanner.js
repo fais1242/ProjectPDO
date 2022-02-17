@@ -36,6 +36,8 @@ const Scanner = ({navigation}) => {
     if (querySnapshot.size > 0) {
       console.log('record fail');
       check = true
+      Alert.alert('Order fail');
+      navigation.navigate('Home');
     }
     }
   );
