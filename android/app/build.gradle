@@ -138,6 +138,8 @@ android {
         versionCode 1
         versionName "1.0"
 
+        multiDexEnabled true ///firebase
+
     }
     splits {
         abi {
@@ -194,6 +196,8 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
+
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation platform('com.google.firebase:firebase-bom:29.1.0')
     
