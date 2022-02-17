@@ -85,7 +85,7 @@ const ProductionConfirm = ({navigation}) => {
                    <MaterialOutputUUID>${MOuuID}</MaterialOutputUUID>
                    <IdentifiedStockID>${idenID}</IdentifiedStockID>
                    <TargetLogisticsAreaID>${AreaID}</TargetLogisticsAreaID>
-                   <ConfirmedQuantity unitCode="${unit}">0</ConfirmedQuantity>
+                   <ConfirmedQuantity unitCode="${unit}">1</ConfirmedQuantity>
                 </MaterialOutput>
              </ConfirmationGroup>
           </ProductionLot>
@@ -126,7 +126,7 @@ const ProductionConfirm = ({navigation}) => {
                     Status : selectedValue,
                     Processby : Processby
                   })
-                  alert('Save ! Success')
+                  alert('Confirm ! Success')
                   navigation.navigate('Home')
                 } catch (error) {
                   console.log(error);

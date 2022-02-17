@@ -1,4 +1,4 @@
-import {View, Text, StyleSheet, ScrollView, FlatList} from 'react-native';
+import {View, Text, StyleSheet, ScrollView, FlatList, SafeAreaView, TouchableOpacity} from 'react-native';
 import React from 'react';
 import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
 
@@ -18,23 +18,27 @@ const DATA = [
 ];
 
 
-const History = () => {
+const History = (navigation) => {
 
 
-  const Item = ({ title }) => (
+  const Item = ({ title ,onPress}) => (
+    <TouchableOpacity onPress={onPress}>
     <View style={styles.cardr}>
       <Text style={styles.textshow}>{title}</Text>
     </View>
+    </TouchableOpacity>
   );
   
 
   const renderItem = ({ item }) => (
-    <Item title={item.title} />
+    <Item title={item.title} 
+    // onPress ={() => navigation.navigate('Home')}
+    />
   );
   
 
   return (
-    <ScrollView style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <Divider color="white" width={1.5} style={{marginHorizontal: 20}} />
       <Card containerStyle={styles.cardbg}>
 
@@ -43,12 +47,8 @@ const History = () => {
         renderItem={renderItem}
         keyExtractor={item => item.id}
       />
-       <View
-          style={styles.cardr}>
-          <Text style={styles.textshow}>asdfdsafdsa</Text>
-        </View>
       </Card>
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 
