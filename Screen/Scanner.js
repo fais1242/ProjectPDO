@@ -16,16 +16,34 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import firestore from '@react-native-firebase/firestore';
+
 
 
 const Scanner = ({navigation}) => {
 
-
-  const [order, setorder] = useState('');
-
+ var check = false;
   const onSuccess = async e => {
-    setorder(e.data);
-    console.log(e.data);
+
+  console.log('1 '+e.data);
+  await firestore()
+  .collection('Users')
+  .where('OrderID', '==', e.data)
+  .get()
+  .then(
+    querySnapshot => {
+      console.log('Total users: ', querySnapshot.size);
+    if (querySnapshot.size > 0) {
+      console.log('record fail');
+      check = true
+    }
+    }
+  );
+    if (check == false) {
+
+      console.log('2 '+check);
+
+      console.log(e.data);
     try {
       console.log('start setdata');
         var Order = {
@@ -33,13 +51,14 @@ const Scanner = ({navigation}) => {
       }
       console.log(Order.OrderID);
       console.log('setdata');
-    await AsyncStorage.setItem('OrderData', JSON.stringify(Order));
+    AsyncStorage.setItem('OrderData', JSON.stringify(Order));
     Alert.alert('Scan Success');
     navigation.navigate('Home');
   } catch (e) {
       console.log(e);
+  } 
   }
-  };
+  }
 
   return (
     <ScrollView style={styles.container}>

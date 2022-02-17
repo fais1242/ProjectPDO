@@ -3,6 +3,8 @@ import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
 import React, {useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import firestore from '@react-native-firebase/firestore';
+
 
 const ProductionOrder = ({navigation}) => {
   var Cxml2json = require('xml2js').parseString;
@@ -163,6 +165,20 @@ console.log(basicAuth);
       );
     });
 
+    const getOrder = ()=>{
+      console.log(orderid);
+      firestore().collection('Users').doc(orderid).set({ 
+        OrderID: orderid, 
+        Product: output,
+        Planned: plan
+  })
+  .then(() => {
+    alert('Save ! Success')
+    console.log('User added!');
+    // navigation.navigate('Showsql')
+  });
+    }
+
   const [CGuuID, setCGuuID] = useState('');
   const [PTaskID, setPTaskID] = useState('');
   const [PTaskuuID, setPTaskuuID] = useState('');
@@ -262,7 +278,7 @@ console.log(basicAuth);
         <Button
           raised
           title="Show"
-          onPress={() => navigation.navigate('Showsql')}
+          onPress={getOrder}
           containerStyle={{marginVertical: 10, marginHorizontal: 10}}
           buttonStyle={{backgroundColor: 'green', borderRadius: 7}}
           titleStyle={{fontSize: 20}}

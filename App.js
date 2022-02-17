@@ -25,11 +25,11 @@ const App = () => {
           headerTitleAlign: 'center',
         }}>
           
-        <Stack.Screen
+        {/* <Stack.Screen
           name="TestFirebase"
           component={TestFirebase}
           options={{title: 'SCAN QRCODE'}}
-        />
+        /> */}
 
         <Stack.Screen name="Home" component={Home} options={{title: 'HOME'}} />
 

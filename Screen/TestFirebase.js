@@ -3,9 +3,6 @@ import React from 'react';
 import firestore from '@react-native-firebase/firestore';
 
 
-
-
-
 const TestFirebase =  (navigation)  => {
 
 const user =  firestore().collection('Users').doc('S26dG3O2cMzNND1lclW6').get()

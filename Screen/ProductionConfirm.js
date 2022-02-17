@@ -8,6 +8,7 @@ import {
 import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import firestore from '@react-native-firebase/firestore';
 
 const ProductionConfirm = ({navigation}) => {
   var Cxml2json = require('xml2js').parseString;
@@ -38,6 +39,17 @@ const ProductionConfirm = ({navigation}) => {
       });
     } catch (e) {
       console.log(e);}
+
+      AsyncStorage.getItem('OrderData').then(value => {
+        if (value !== null) {
+          console.log('2 getdata');
+          console.log(value);
+          let Order = JSON.parse(value);
+          console.log(Order);
+          setorderid(Order.OrderID);
+          console.log(orderid);
+        }
+      })
 
 
 
@@ -104,15 +116,29 @@ const ProductionConfirm = ({navigation}) => {
               .ProductionLotResponse[0].ProductionLotLog[1].SeverityCode[0] || result.Envelope.Body[0].ProdLotBundleMaintainConfirmation_sync_V1[0]
               .ProductionLotResponse[0].ProductionLotLog[2].SeverityCode[0] == 's') {
                 Alert.alert('Confirm Success');
-                navigation.navigate('Home')
+
                 console.log('Success');
+
+                try {
+                    firestore().collection('Users').doc(orderid).update({ 
+                    OutPutQty: output, 
+                    ScrapQty: scarp,
+                    Status : selectedValue,
+                    Processby : Processby
+                  })
+                  alert('Save ! Success')
+                  navigation.navigate('Home')
+                } catch (error) {
+                  console.log(error);
+                }
+
             }else{
               console.log('Error');
 
             }
           },
         );
-      });
+      })
   };
 
   const [selectedValue, setSelectedValue] = useState('Start');
@@ -123,6 +149,8 @@ const ProductionConfirm = ({navigation}) => {
   const [durationH, setdurationH] = useState('');
   const [durationM, setdurationM] = useState('');
   const [Processby, setprocessby] = useState('');
+
+  const [orderid, setorderid] = useState('');
 
   const [CGuuID, setCGuuID] = useState('');
   const [PTaskID, setPTaskID] = useState('');
