@@ -10,13 +10,14 @@ console.log(user);
 
 firestore()
   .collection('Users')
+  .doc('691')
   .get()
-  .then(querySnapshot => {
-    console.log('Total users: ', querySnapshot.size);
+  .then(documentSnapshot => {
+    console.log(documentSnapshot.data());
 
-    querySnapshot.forEach(documentSnapshot => {
-      console.log('User ID: ', documentSnapshot.data());
-    });
+    // if (documentSnapshot.exists) {
+    //   console.log('User data: ', documentSnapshot.data());
+    // }
   });
 
 // firestore()

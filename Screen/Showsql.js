@@ -4,7 +4,7 @@ import {StyleSheet, View, Text, Alert, ScrollView} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-const Showsql = ({navigation}) => {
+const Showsql = ({navigation, route}) => {
   const [selectedValue, setSelectedValue] = useState('');
   const [output, setoutput] = useState('');
   const [scarp, setscarp] = useState('');
@@ -14,27 +14,27 @@ const Showsql = ({navigation}) => {
   const [durationM, setdurationM] = useState('');
   const [Processby, setprocessby] = useState('');
 
-  const getData = () => {
-    try {
-      console.log('start getdata');
-      AsyncStorage.getItem('TestData')
-      .then(value=>{
-        if (value !== null) {
-          console.log('getdata');
-          console.log(value);
-          let Order = JSON.parse(value);
-          setoutput(Order.OrderID)
-          console.log(Order);
-        }
-      })
-    } catch (e) {
-      console.log(e);
-    }
-  };
+//   const getData = () => {
+//     try {
+//       console.log('start getdata');
+//       AsyncStorage.getItem('TestData')
+//       .then(value=>{
+//         if (value !== null) {
+//           console.log('getdata');
+//           console.log(value);
+//           let Order = JSON.parse(value);
+//           setoutput(Order.OrderID)
+//           console.log(Order);
+//         }
+//       })
+//     } catch (e) {
+//       console.log(e);
+//     }
+//   };
 
-  useEffect(() => {
-    getData();
-  }, []);
+//   useEffect(() => {
+//     getData();
+//   }, []);
 
 
  const removeData = async ()=>{
@@ -44,10 +44,12 @@ const Showsql = ({navigation}) => {
     console.log(e);
    }
  }
+
+ const {Order} = route.params;
   return (
     <ScrollView>
       <View style={styles.body}>
-        <Text style={[styles.text]}> {output}</Text>
+        <Text style={[styles.text]}> {Order.OrderID}</Text>
         <Text style={[styles.text]}> {scarp}</Text>
         <Text style={[styles.text]}> {idenID}</Text>
         <Text style={[styles.text]}> {idenD}</Text>

@@ -1,4 +1,4 @@
-import {View, Text, ScrollView, StyleSheet, Alert} from 'react-native';
+import {View, Text, ScrollView, StyleSheet, Alert, ActivityIndicator} from 'react-native';
 import {Button, Image, Card, Divider, Icon, Input} from 'react-native-elements';
 import {Picker} from '@react-native-picker/picker';
 import {
@@ -10,48 +10,69 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import firestore from '@react-native-firebase/firestore';
 
-const ProductionConfirm = ({navigation}) => {
+const ProductionConfirm = ({navigation, route}) => {
   var Cxml2json = require('xml2js').parseString;
   var stripNS = require('xml2js').processors.stripPrefix;
 
+  const [loading, setLoading] = useState(true);
+  const [OrderID, setOrderID] = useState([]); // Initial empty array of users
 
-    try {
-      console.log('start getdata');
-      AsyncStorage.getItem('OrderDetail').then(value => {
-        if (value !== null) {
-          console.log('getdata');
-          let Order = JSON.parse(value);
-          console.log(Order);
-          setCGuuID(Order.CGuuID);
-          setPTaskID(Order.PTaskID);
-          setPTaskuuID(Order.PTaskuuID);
-          setMOuuID(Order.MOuuID);
-          setidenID(Order.IdenID);
-          setAreaID(Order.AreaID);
-          setunit(Order.Unit);
-        }
-              console.log('1 '+CGuuID);
-              console.log('2 '+PTaskID);
-              console.log('3 '+PTaskuuID);
-              console.log('4 '+MOuuID);
-              console.log('5 '+AreaID);
-              console.log('6 '+idenID);
+  
+
+  useEffect(() => {
+    firestore()
+    .collection('Users')
+    .doc(Order.OrderID)
+    .get()
+    .then(documentSnapshot => {
+        setOrderID(documentSnapshot.data());
+        // setLoading(false);
       });
-    } catch (e) {
-      console.log(e);}
 
-      AsyncStorage.getItem('OrderData').then(value => {
-        if (value !== null) {
-          console.log('2 getdata');
-          console.log(value);
-          let Order = JSON.parse(value);
-          console.log(Order);
-          setorderid(Order.OrderID);
-          console.log(orderid);
-        }
-      })
+      console.log('-------------1'+OrderID.OrderID);
+      console.log('-------------2'+JSON.stringify(OrderID));
 
+  }, []);
 
+ 
+
+    // try {
+    //   console.log('start getdata');
+    //   AsyncStorage.getItem('OrderDetail').then(value => {
+    //     if (value !== null) {
+    //       console.log('getdata');
+    //       let Order = JSON.parse(value);
+    //       console.log(Order);
+    //       setCGuuID(Order.CGuuID);
+    //       setPTaskID(Order.PTaskID);
+    //       setPTaskuuID(Order.PTaskuuID);
+    //       setMOuuID(Order.MOuuID);
+    //       setidenID(Order.IdenID);
+    //       setAreaID(Order.AreaID);
+    //       setunit(Order.Unit);
+    //     }
+    //           console.log('1 '+CGuuID);
+    //           console.log('2 '+PTaskID);
+    //           console.log('3 '+PTaskuuID);
+    //           console.log('4 '+MOuuID);
+    //           console.log('5 '+AreaID);
+    //           console.log('6 '+idenID);
+    //   });
+    // } catch (e) {
+    //   console.log(e);}
+
+      // AsyncStorage.getItem('OrderData').then(value => {
+      //   if (value !== null) {
+      //     console.log('2 getdata');
+      //     console.log(value);
+      //     let Order = JSON.parse(value);
+      //     console.log(Order);
+      //     setorderid(Order.OrderID);
+      //     console.log(orderid);
+      //   }
+      // })
+
+  const {Order} = route.params;
 
   var base64 = require('base-64');
   var utf8 = require('utf8');
@@ -64,6 +85,15 @@ const ProductionConfirm = ({navigation}) => {
   console.log(basicAuth);
 
   const setData = () => {
+              console.log('1 '+OrderID.OrderID);
+              console.log('2 '+OrderID.PTaskID);
+              console.log('3 '+OrderID.PTaskuuID);
+              console.log('4 '+OrderID.MOuuID);
+              console.log('5 '+OrderID.AreaID);
+              console.log('6 '+OrderID.IdenID);
+
+
+
     let xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:glob="http://sap.com/xi/SAPGlobal20/Global" xmlns:ymg="http://0004586690-one-off.sap.com/YMGK3T5AY_">
     <soapenv:Header/>
     <soapenv:Body>
@@ -73,19 +103,19 @@ const ProductionConfirm = ({navigation}) => {
           <ProductionLot>
              <ConfirmationGroup>
                 <!--Optional:-->
-                <ConfirmationGroupUUID>${CGuuID}</ConfirmationGroupUUID>
+                <ConfirmationGroupUUID>${OrderID.CGuuID}</ConfirmationGroupUUID>
                 <ProductionTask>
-                   <ProductionTaskID>${PTaskID}</ProductionTaskID>
-                   <ProducionTaskUUID>${PTaskuuID}</ProducionTaskUUID>
+                   <ProductionTaskID>${OrderID.PTaskID}</ProductionTaskID>
+                   <ProducionTaskUUID>${OrderID.PTaskuuID}</ProducionTaskUUID>
                    <AssignResponsibleIndicator>true</AssignResponsibleIndicator>
                 </ProductionTask>
                 
                 <!--Zero or more repetitions:-->
                 <MaterialOutput ActionCode="02">
-                   <MaterialOutputUUID>${MOuuID}</MaterialOutputUUID>
-                   <IdentifiedStockID>${idenID}</IdentifiedStockID>
-                   <TargetLogisticsAreaID>${AreaID}</TargetLogisticsAreaID>
-                   <ConfirmedQuantity unitCode="${unit}">1</ConfirmedQuantity>
+                   <MaterialOutputUUID>${OrderID.MOuuID}</MaterialOutputUUID>
+                   <IdentifiedStockID>${OrderID.IdenID}</IdentifiedStockID>
+                   <TargetLogisticsAreaID>${OrderID.AreaID}</TargetLogisticsAreaID>
+                   <ConfirmedQuantity unitCode="${OrderID.Unit}">1</ConfirmedQuantity>
                 </MaterialOutput>
              </ConfirmationGroup>
           </ProductionLot>
@@ -120,7 +150,8 @@ const ProductionConfirm = ({navigation}) => {
                 console.log('Success');
 
                 try {
-                    firestore().collection('Users').doc(orderid).update({ 
+                  console.log('           '+Order.OrderID);
+                    firestore().collection('Users').doc(Order.OrderID).update({ 
                     OutPutQty: output, 
                     ScrapQty: scarp,
                     Status : selectedValue,
@@ -134,7 +165,6 @@ const ProductionConfirm = ({navigation}) => {
 
             }else{
               console.log('Error');
-
             }
           },
         );
@@ -152,12 +182,12 @@ const ProductionConfirm = ({navigation}) => {
 
   const [orderid, setorderid] = useState('');
 
-  const [CGuuID, setCGuuID] = useState('');
-  const [PTaskID, setPTaskID] = useState('');
-  const [PTaskuuID, setPTaskuuID] = useState('');
-  const [MOuuID, setMOuuID] = useState('');
-  const [AreaID, setAreaID] = useState('');
-  const [unit, setunit] = useState('');
+  // const [CGuuID, setCGuuID] = useState('');
+  // const [PTaskID, setPTaskID] = useState('');
+  // const [PTaskuuID, setPTaskuuID] = useState('');
+  // const [MOuuID, setMOuuID] = useState('');
+  // const [AreaID, setAreaID] = useState('');
+  // const [unit, setunit] = useState('');
 
   return (
     <ScrollView style={styles.container}>

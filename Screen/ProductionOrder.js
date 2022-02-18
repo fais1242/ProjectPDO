@@ -170,12 +170,19 @@ console.log(basicAuth);
       firestore().collection('Users').doc(orderid).set({ 
         OrderID: orderid, 
         Product: output,
-        Planned: plan
+        Planned: plan,
+        CGuuID: CGuuID,
+        PTaskID: PTaskID,
+        PTaskuuID: PTaskuuID,
+        MOuuID: MOuuID,
+        IdenID: IdenID,
+        AreaID: AreaID,
+        Unit: unit,
   })
   .then(() => {
     alert('Save ! Success')
     console.log('User added!');
-    // navigation.navigate('Showsql')
+    navigation.navigate('History')
   });
     }
 
@@ -187,27 +194,27 @@ console.log(basicAuth);
   const [IdenID, setIdenID] = useState('TEST20220211');
 
 
-  const setData = () => {
-    try {
-      console.log('start setdata');
-      var Order = {
-        OrderID: orderid,
-        CGuuID: CGuuID,
-        PTaskID: PTaskID,
-        PTaskuuID: PTaskuuID,
-        MOuuID: MOuuID,
-        IdenID: IdenID,
-        AreaID: AreaID,
-        Unit: unit,
-      };
-      console.log(Order.OrderID);
-      console.log('setdata');
-      AsyncStorage.setItem('OrderDetail', JSON.stringify(Order));
-      navigation.navigate('ProductionConfirm');
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  // const setData = () => {
+  //   try {
+  //     console.log('start setdata');
+  //     var Order = {
+  //       OrderID: orderid,
+  //       CGuuID: CGuuID,
+  //       PTaskID: PTaskID,
+  //       PTaskuuID: PTaskuuID,
+  //       MOuuID: MOuuID,
+  //       IdenID: IdenID,
+  //       AreaID: AreaID,
+  //       Unit: unit,
+  //     };
+  //     console.log(Order.OrderID);
+  //     console.log('setdata');
+  //     AsyncStorage.setItem('OrderDetail', JSON.stringify(Order));
+  //     navigation.navigate('ProductionConfirm');
+  //   } catch (e) {
+  //     console.log(e);
+  //   }
+  // };
 
   return (
     <ScrollView style={styles.container}>
@@ -267,17 +274,17 @@ console.log(basicAuth);
           </Card>
         </View>
 
-        <Button
+        {/* <Button
           raised
           title="Production Confirm"
           onPress={setData}
           containerStyle={{marginVertical: 10, marginHorizontal: 10}}
           buttonStyle={{backgroundColor: 'green', borderRadius: 7}}
           titleStyle={{fontSize: 20}}
-        />
+        /> */}
         <Button
           raised
-          title="Show"
+          title="SAVE"
           onPress={getOrder}
           containerStyle={{marginVertical: 10, marginHorizontal: 10}}
           buttonStyle={{backgroundColor: 'green', borderRadius: 7}}

@@ -1,56 +1,89 @@
-import {View, Text, StyleSheet, ScrollView, FlatList, SafeAreaView, TouchableOpacity} from 'react-native';
-import React from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  FlatList,
+  SafeAreaView,
+  TouchableOpacity,
+  ActivityIndicator
+} from 'react-native';
+import React, { useState, useEffect} from 'react';
 import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
+import firestore from '@react-native-firebase/firestore';
 
-const DATA = [
-  {
-    id: '01',
-    title: 'First Item',
-  },
-  {
-    id: '02',
-    title: 'Second Item',
-  },
-  {
-    id: '03',
-    title: 'Third Item',
-  },
-];
+// const DATA = [
+//   {
+//     id: '01',
+//     title: 'First Item',
+//   },
+//   {
+//     id: '02',
+//     title: 'Second Item',
+//   },
+//   {
+//     id: '03',
+//     title: 'Third Item',
+//   },
+// ];
 
+const History = ({navigation}) => {
 
-const History = (navigation) => {
+  const [loading, setLoading] = useState(true); // Set loading to true on component mount
+  const [users, setUsers] = useState([]); // Initial empty array of users
 
-
-  const Item = ({ title ,onPress}) => (
-    <TouchableOpacity onPress={onPress}>
-    <View style={styles.cardr}>
-      <Text style={styles.textshow}>{title}</Text>
-    </View>
-    </TouchableOpacity>
-  );
+  useEffect(() => {
+    const subscriber = firestore()
+      .collection('Users')
+      .onSnapshot(querySnapshot => {
+        const users = [];
+  
+        querySnapshot.forEach(documentSnapshot => {
+          users.push({
+            ...documentSnapshot.data(),
+            // key: documentSnapshot.id,
+          });
+        });
+  
+        setUsers(users);
+        setLoading(false);
+      });
+  
+    // Unsubscribe from events when no longer in use
+    return () => subscriber();
+  }, []);
   
 
-  const renderItem = ({ item }) => (
-    <Item title={item.title} 
-    // onPress ={() => navigation.navigate('Home')}
-    />
-  );
-  
+
+  if (loading) {
+    return <ActivityIndicator />;
+  }
+
 
   return (
     <SafeAreaView style={styles.container}>
       <Divider color="white" width={1.5} style={{marginHorizontal: 20}} />
       <Card containerStyle={styles.cardbg}>
-
-      <FlatList
-        data={DATA}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-      />
+        <FlatList
+          data={users}
+          keyExtractor={item => item.id}
+          renderItem={({item}) => (
+            <TouchableOpacity
+              onPress={() => {
+                navigation.navigate('ProductionConfirm',{Order:item});
+              }}>
+              <View style={styles.cardr}>
+                <Text style={styles.textshow}>{item.OrderID}</Text>
+                <Text style={styles.textshow}>{item.Status}</Text>
+              </View>
+            </TouchableOpacity>
+          )}
+        />
       </Card>
     </SafeAreaView>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -72,8 +105,10 @@ const styles = StyleSheet.create({
   },
   cardbg: {
     backgroundColor: '#3E3D50',
+    // backgroundColor: 'white',
     borderRadius: 20,
     flex: 1,
+    bottom: 10,
   },
   cardr: {
     backgroundColor: '#ffff',
@@ -82,10 +117,10 @@ const styles = StyleSheet.create({
     borderBottomLeftRadius: 2,
     borderBottomEndRadius: 100,
     borderBottomStartRadius: 100,
-    marginBottom: "5%",
-    padding:20,
-    marginLeft:"20%"
-    },
+    marginBottom: '5%',
+    padding: 20,
+    marginLeft: '20%',
+  },
   // cardl: {
   //   backgroundColor: '#ffff',
   //   alignItems: 'flex-start',

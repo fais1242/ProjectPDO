@@ -55,7 +55,7 @@ const Scanner = ({navigation}) => {
       console.log('setdata');
     AsyncStorage.setItem('OrderData', JSON.stringify(Order));
     Alert.alert('Scan Success');
-    navigation.navigate('Home');
+    navigation.navigate('Production');
   } catch (e) {
       console.log(e);
   } 
