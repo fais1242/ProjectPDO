@@ -6,6 +6,9 @@ import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 import io.invertase.firebase.firestore.ReactNativeFirebaseFirestorePackage;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.BV.LinearGradient.LinearGradientPackage;
+import io.invertase.firebase.firestore.ReactNativeFirebaseFirestorePackage;
 import io.invertase.firebase.app.ReactNativeFirebaseAppPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
 import com.zoontek.rnpermissions.RNPermissionsPackage;
@@ -18,6 +21,7 @@ import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import androidx.multidex.MultiDexApplication;
+
 
 public class MainApplication extends MultiDexApplication implements ReactApplication {
 

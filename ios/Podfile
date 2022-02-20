@@ -26,6 +26,8 @@ target 'ProjectPDO' do
 
   pod 'RNFBFirestore', :path => '../node_modules/@react-native-firebase/firestore'
 
+  pod 'BVLinearGradient', :path => '../node_modules/react-native-linear-gradient'
+
   target 'ProjectPDOTests' do
     inherit! :complete
     # Pods for testing

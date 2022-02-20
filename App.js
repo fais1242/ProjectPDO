@@ -1,5 +1,5 @@
-import * as React from 'react';
-import {View, Text, StyleSheet, ScrollView} from 'react-native';
+import React, { useEffect } from 'react';
+import {View, Text, StyleSheet, ScrollView, ActivityIndicator} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Scanner from './Screen/Scanner';
@@ -10,12 +10,118 @@ import Login from './Screen/Login';
 import Home from './Screen/Home';
 import Showsql from './Screen/Showsql';
 import TestFirebase from './Screen/TestFirebase';
+import RootStackScreen from './Screen/RootSrackScreen';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from './components/context';
+
 
 const Stack = createNativeStackNavigator();
 
 const App = () => {
+
+  const initiaLoginState = {
+    isLoading: true,
+    userName: null,
+    userToken: null,
+  };
+
+  const loginReducer = (prevState, action) => {
+    switch( action.type ) {
+      case 'RETRIEVE_TOKEN':
+      return {
+        ...prevState,
+        userToken: action.token,
+        isLoading: false,
+      };
+      case 'LOGIN':
+      return {
+        ...prevState,
+        userName: action.id,
+        userToken: action.token,
+        isLoading: false,
+      };
+      case 'LOGOUT':
+      return {
+        ...prevState,
+        userName: null,
+        userToken: null,
+        isLoading: false,
+      };
+      case 'CONFIG':
+      return {
+        ...prevState,
+        userName: action.id,
+        userToken: action.token,
+        isLoading: false,
+      };
+    }
+  };
+
+  const [loginState, dispatch] = React. useReducer(loginReducer, initiaLoginState);
+
+  const authContext = React.useMemo(() => ({
+    signIn: async(foundUser) => {
+      // setUserToken('fgkj');
+      // setIsLoading(false);
+      const userToken = String(foundUser[0].userToken);
+      const userName = foundUser[0].username;
+      
+      try {
+        await AsyncStorage.setItem('userToken', userToken);
+      } catch(e) {
+        console.log(e);
+      }
+      // console.log('user token: ', userToken);
+      dispatch({ type: 'LOGIN', id: userName, token: userToken });
+    },
+    signOut: async() => {
+      // setUserToken(null);
+      // setIsLoading(false);
+      try {
+        await AsyncStorage.removeItem('userToken');
+      }catch(e) {
+        console.log(e);
+      }
+      dispatch({ type: 'LOGOUT'  });
+    },
+    conFig: () => {
+      setUserToken('fgkj');
+      setIsLoading(false);
+    },
+  }), []);
+
+  useEffect(() => {
+    setTimeout(async() => {
+      // setIsLoading(false);
+      let userToken;
+      userToken = null; 
+      try {
+        userToken = await AsyncStorage.getItem('userToken');
+      }catch(e) {
+        console.log(e);
+      }
+      // console.log('user token: ',userToken);
+      dispatch({ type: "RETRIEVE_TOKEN", token: userToken });
+    }, 1000);
+  },[]);
+
+  if( loginState.isLoading ) {
+    return(
+      <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+        <ActivityIndicator size="large"/>
+      </View>
+    );
+  }
+
+
+
   return (
+  <AuthContext.Provider value={authContext}>
+
     <NavigationContainer>
+    { loginState.userToken !== null ? (
+
+
       <Stack.Navigator
         screenOptions={{
           headerStyle: {backgroundColor: '#FFB23E'},
@@ -61,7 +167,12 @@ const App = () => {
           options={{title: 'Showsql'}}
         />
       </Stack.Navigator>
+    ):
+    <RootStackScreen/>
+    }
     </NavigationContainer>
+    </AuthContext.Provider>
+
   );
 };
 
