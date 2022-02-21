@@ -26,14 +26,16 @@ const Scanner = ({navigation}) => {
   const [loading, setLoading] = useState(true);
 
   // useEffect(() => {
-
-
+  //   if (loading) {
+  //     onSuccess();
+  //     return <ActivityIndicator />;
+  //     setLoading(false);
+  //   }
   // }, []);
 
  var check = false;
   const onSuccess = async e => {
-
-    if (loading) {
+  Alert.alert('Scan Success')
   console.log('1 '+e.data);
   await firestore()
   .collection('Users')
@@ -63,18 +65,12 @@ const Scanner = ({navigation}) => {
       console.log(Order.OrderID);
       console.log('setdata');
     AsyncStorage.setItem('OrderData', JSON.stringify(Order));
-    Alert.alert('Scan Success');
-    setLoading(false);
     navigation.navigate('Production');
   } catch (e) {
       console.log(e);
   } 
   }
-  return <ActivityIndicator />;
-}
   }
-
-
 
 
   return (
