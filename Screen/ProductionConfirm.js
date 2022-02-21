@@ -116,9 +116,9 @@ const ProductionConfirm = ({navigation, route}) => {
                 <!--Zero or more repetitions:-->
                 <MaterialOutput ActionCode="02">
                    <MaterialOutputUUID>${OrderID.MOuuID}</MaterialOutputUUID>
-                   <IdentifiedStockID>${OrderID.IdenID}</IdentifiedStockID>
+                   <IdentifiedStockID>${idenID}</IdentifiedStockID>
                    <TargetLogisticsAreaID>${OrderID.AreaID}</TargetLogisticsAreaID>
-                   <ConfirmedQuantity unitCode="${OrderID.Unit}">1</ConfirmedQuantity>
+                   <ConfirmedQuantity unitCode="${OrderID.Unit}">${output}</ConfirmedQuantity>
                 </MaterialOutput>
              </ConfirmationGroup>
           </ProductionLot>
@@ -196,6 +196,7 @@ const ProductionConfirm = ({navigation, route}) => {
   return (
     <ScrollView style={styles.container}>
       <Divider color="white" width={1.5} style={{marginHorizontal: 20}} />
+      <Animatable.View style={{flex: 1}} animation="fadeInUp">
       <Card
         containerStyle={{
           borderRadius: 10,
@@ -317,6 +318,7 @@ const ProductionConfirm = ({navigation, route}) => {
           }}
         />
       </Card>
+      </Animatable.View>
     </ScrollView>
   );
 };

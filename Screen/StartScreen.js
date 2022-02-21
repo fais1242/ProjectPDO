@@ -12,6 +12,7 @@ import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useTheme } from '@react-navigation/native';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 const StartScreen = ({navigation}) => {
     const { colors } = useTheme();
@@ -67,58 +68,60 @@ const {height} = Dimensions.get("screen");
 const height_logo = height * 0.28;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1, 
-    backgroundColor: '#FFB23E'
-  },
-  header: {
-      flex: 1,
-      justifyContent: 'center',
-      alignItems: 'center',
-      marginTop: 50
-  },
-  text_header: {
-      color:'#fff',
-      marginVertical:35,
-      marginLeft: 20,
-      fontSize:20
-      
-  },
-  footer: {
-      flex: 1,
-      backgroundColor: '#fff',
-      borderTopLeftRadius: 30,
-      borderTopRightRadius: 30,
-      paddingVertical: 50,
-      paddingHorizontal: 30
-  },
-  logo: {
-      width: 360,
-      height: 120
-  },
-  title: {
-      color: '#05375a',
-      fontSize: 30,
-      fontWeight: 'bold'
-  },
-  text: {
-      color: 'grey',
-      marginTop:5
-  },
-  button: {
-      alignItems: 'flex-end',
-      marginTop: 30
-  },
-  signIn: {
-      width: 150,
-      height: 40,
-      justifyContent: 'center',
-      alignItems: 'center',
-      borderRadius: 50,
-      flexDirection: 'row'
-  },
-  textSign: {
-      color: 'white',
-      fontWeight: 'bold'
-  }
-});
+    container: {
+      flex: 1, 
+      backgroundColor: '#FFB23E'
+    },
+    header: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 50,
+        height: hp('20%'),
+        width: wp('100%')   
+    },
+    text_header: {
+        color:'#fff',
+        marginVertical:35,
+        marginLeft: 20,
+        fontSize:20
+        
+    },
+    footer: {
+        height: hp('35%'),
+        width: wp('100%'),
+        backgroundColor: '#fff',
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        paddingVertical: 50,
+        paddingHorizontal: 30
+    },
+    logo: {
+      height: hp('18%'),
+      width: wp('90%') 
+    },
+    title: {
+        color: '#05375a',
+        fontSize: 30,
+        fontWeight: 'bold'
+    },
+    text: {
+        color: 'grey',
+        marginTop:5
+    },
+    button: {
+        alignItems: 'flex-end',
+        marginTop: 30
+    },
+    signIn: {
+        height: hp('5%'),
+        width: wp('35%'), 
+        justifyContent: 'center',
+        alignItems: 'center',
+        borderRadius: 50,
+        flexDirection: 'row'
+    },
+    textSign: {
+        color: 'white',
+        fontWeight: 'bold'
+    }
+  });

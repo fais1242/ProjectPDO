@@ -67,6 +67,9 @@ const History = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <Divider color="white" width={1.5} style={{marginHorizontal: 20}} />
+      <Animatable.View style={{flex:1}}
+      animation="bounceIn"
+      duration={3000}>
       <Card containerStyle={styles.cardbg}
       >
         <FlatList
@@ -78,7 +81,7 @@ const History = ({navigation}) => {
                 navigation.navigate('ProductionShow',{Order:item});
               }}>
               <Animatable.View style={styles.cardr}
-              animation="fadeInUpBig">
+              animation="fadeInDownBig">
                 <Text style={styles.textshow}>OrderID :  {item.OrderID}</Text>
                 <Text style={styles.textshow}>Status :  {item.Status}</Text>
               </Animatable.View>
@@ -86,6 +89,7 @@ const History = ({navigation}) => {
           )}
         />
       </Card>
+      </Animatable.View>
     </SafeAreaView>
   );
 };

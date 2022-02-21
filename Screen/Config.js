@@ -23,6 +23,7 @@ import { useTheme } from 'react-native-paper';
 import SQlite from 'react-native-sqlite-storage';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 // import { log } from 'react-native-sqlite-storage/lib/sqlite.core';
   //var xmls='';
@@ -294,23 +295,24 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
       backgroundColor: '#FFB23E'
     },
     header: {
-        
-        flex: 1,
+        height: hp('10%'),
+        width: wp('100%'),
         justifyContent: 'flex-end',
         paddingHorizontal: 20
     },
     footer: {
-        flex: 3,
+        height: hp('60%'),
+        width: wp('100%'),
         backgroundColor: '#fff',
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         paddingHorizontal: 20,
-        paddingVertical: 30
+        paddingVertical: 5
     },
     logo: {
       marginLeft: 60,
-      width: 220,
-      height: 120
+      height: hp('12%'),
+      width: wp('50%'),
     },
     text_header: {
         color: '#fff',
@@ -350,11 +352,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
     },
     button: {
         alignItems: 'center',
-        marginTop: 30
+        marginTop: 10
     },
     signIn: {
-        width: '100%',
-        height: 50,
+        height: hp('7%'),
+        width: wp('90%'),
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10

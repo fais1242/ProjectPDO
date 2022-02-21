@@ -127,7 +127,7 @@ const App = () => {
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        {/* { loginState.userToken !== null ? ( */}
+        { loginState.userToken !== null ? (
 
         <Stack.Navigator
           screenOptions={{
@@ -182,9 +182,9 @@ const App = () => {
             options={{title: 'Showsql'}}
           />
         </Stack.Navigator>
-        {/*  ):
+        ):
      <RootStackScreen/>
-     } */}
+     }
       </NavigationContainer>
     </AuthContext.Provider>
   );

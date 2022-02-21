@@ -19,6 +19,7 @@ import { Button } from 'react-native-elements';
 import { AuthContext } from '../components/context';
 import Icon from 'react-native-vector-icons/Feather';
 import axios from 'axios';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 // import Users from '../model/users';
 // import { Icon } from 'react-native-paper/lib/typescript/components/Avatar/Avatar';
 
@@ -324,7 +325,7 @@ const Login =  ({navigation}) => {
                   >
                       <Text style={[styles.textSign, {
                           color:'#fff'
-                      }]}>CONFIRM</Text>
+                      }]}>LOGIN</Text>
                   </LinearGradient>
                   </TouchableOpacity>
               </View>
@@ -337,39 +338,38 @@ export default Login;
 
 const styles = StyleSheet.create({
     container: {
-      flex: 1, 
-      backgroundColor: '#FFB23E'
+        flex: 1, 
+        backgroundColor: '#FFB23E'
     },
     title_header: {
         paddingHorizontal: 0,
         paddingBottom: 0,
         marginTop: 0,
         marginLeft: 'auto',
-        marginRight: '2%',
-        marginBottom:10
+        marginRight: 30
     },
     header: {
-        flex: 3,
+        height: hp('35%'),
+        width: wp('100%'),
         justifyContent: 'flex-end',
-        // paddingHorizontal: 'auto',
-        // paddingBottom: 30,
-        // marginTop: 180
-        alignItems:'center'
-
+        paddingHorizontal: 20,
+        paddingBottom: 20,
+        
     },
     logo: {
         marginLeft: 10,
-        width: 330,
-        height: 220,
-        marginBottom: 20,
+        height: hp('30%'),
+        width: wp('85%'),
+        marginBottom: 10,
       },
     footer: {
-        flex: 3,
+        height: hp('60%'),
+        width: wp('100%'),
         backgroundColor: '#fff',
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         paddingHorizontal: 20,
-        paddingVertical: 30
+        paddingVertical: 0
     },
     text_header: {
         color: '#fff',
@@ -407,11 +407,11 @@ const styles = StyleSheet.create({
     },
     button: {
         alignItems: 'center',
-        marginTop: 40
+        marginTop: 30
     },
     signIn: {
-        width: '100%',
-        height: 50,
+        height: hp('7%'),
+        width: wp('90%'),
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 10

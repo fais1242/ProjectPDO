@@ -13,7 +13,6 @@ import firestore from '@react-native-firebase/firestore';
 import LinearGradient from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
 
-
 const ProductionOrder = ({navigation}) => {
   var Cxml2json = require('xml2js').parseString;
   var stripNS = require('xml2js').processors.stripPrefix;
@@ -30,7 +29,7 @@ const ProductionOrder = ({navigation}) => {
 
   useEffect(() => {
     getData();
-  },[]);
+  }, []);
 
   const getData = () => {
     try {
@@ -45,8 +44,7 @@ const ProductionOrder = ({navigation}) => {
           console.log(orderid);
         }
       });
-      setLoading(false)
-
+      setLoading(false);
     } catch (e) {
       console.log(e);
     }
@@ -101,7 +99,7 @@ const ProductionOrder = ({navigation}) => {
         {tagNameProcessors: [stripNS]},
         function (err, result) {
           console.log(JSON.stringify(result));
-          var i ;
+          var i;
           for (
             let index = 0;
             index <
@@ -111,8 +109,8 @@ const ProductionOrder = ({navigation}) => {
             index++
           ) {
             console.log('___' + index);
-            i = index
-          };
+            i = index;
+          }
           if (
             result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
               .ProductionLot[0].ConfirmationGroup[i].ProductionTask[0]
@@ -139,11 +137,10 @@ const ProductionOrder = ({navigation}) => {
                 .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
                 .PlannedQuantity[0].$.unitCode,
             );
-    
+
             setCGuuID(
               result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
-                .ProductionLot[0].ConfirmationGroup[i]
-                .ConfirmationGroupUUID[0],
+                .ProductionLot[0].ConfirmationGroup[i].ConfirmationGroupUUID[0],
             );
             setPTaskID(
               result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
@@ -170,14 +167,14 @@ const ProductionOrder = ({navigation}) => {
                 .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
                 .IdentifiedStockID[0],
             );
-    
+
             console.log('1' + CGuuID);
             console.log('2' + PTaskID);
             console.log('3' + PTaskuuID);
             console.log('4' + MOuuID);
             console.log('5' + AreaID);
             console.log('6' + IdenID);
-            setLoading(false)
+            setLoading(false);
           }
         },
       );
@@ -187,9 +184,8 @@ const ProductionOrder = ({navigation}) => {
   // }
 
   const getOrder = () => {
-
     setLoading(true);
-    
+
     console.log(orderid);
     firestore()
       .collection('Users')
@@ -205,8 +201,8 @@ const ProductionOrder = ({navigation}) => {
         IdenID: IdenID,
         AreaID: AreaID,
         Unit: unit,
-        Status:'NotStart',
-        Operation:operation
+        Status: 'NotStart',
+        Operation: operation,
       })
       .then(() => {
         setLoading(false);
@@ -249,29 +245,32 @@ const ProductionOrder = ({navigation}) => {
     <ScrollView style={styles.container}>
       <Divider color="white" width={1.5} style={{marginHorizontal: 20}} />
 
-      <Card containerStyle={{borderRadius: 10, marginBottom: 10}}>
-        <View style={styles.showlist}>
-          <Icon name="filetext1" type="antdesign" size={40} />
-          <Card containerStyle={styles.cardstyle}>
-            <Text style={styles.textshow}>Production Order ID : {orderid}</Text>
-          </Card>
-        </View>
+      <Animatable.View style={{flex: 1}} animation="fadeInUp">
+        <Card containerStyle={{borderRadius: 10, marginBottom: 10}}>
+          <View style={styles.showlist}>
+            <Icon name="filetext1" type="antdesign" size={40} />
+            <Card containerStyle={styles.cardstyle}>
+              <Text style={styles.textshow}>
+                Production Order ID : {orderid}
+              </Text>
+            </Card>
+          </View>
 
-        <View style={styles.showlist}>
-          <Icon name="filetext1" type="antdesign" size={40} />
-          <Card containerStyle={styles.cardstyle}>
-            <Text style={styles.textshow}>Operation ID : {operation}</Text>
-          </Card>
-        </View>
+          <View style={styles.showlist}>
+            <Icon name="filetext1" type="antdesign" size={40} />
+            <Card containerStyle={styles.cardstyle}>
+              <Text style={styles.textshow}>Operation ID : {operation}</Text>
+            </Card>
+          </View>
 
-        <View style={styles.showlist}>
-          <Icon name="inbox" type="antdesign" size={40} />
-          <Card containerStyle={styles.cardstyle}>
-            <Text style={styles.textshow}>Output Product : {output} </Text>
-          </Card>
-        </View>
+          <View style={styles.showlist}>
+            <Icon name="inbox" type="antdesign" size={40} />
+            <Card containerStyle={styles.cardstyle}>
+              <Text style={styles.textshow}>Output Product : {output} </Text>
+            </Card>
+          </View>
 
-        {/* <View style={styles.showlist}>
+          {/* <View style={styles.showlist}>
           <Icon
             name="calendar-check-o"
             type="font-awesome"
@@ -293,17 +292,17 @@ const ProductionOrder = ({navigation}) => {
           </Card>
         </View> */}
 
-        <View style={styles.showlist}>
-          <Icon name="edit" type="antdesign" size={40} />
-          <Card containerStyle={styles.cardstyle}>
-            <Text style={styles.textshow}>
-              {' '}
-              Planned Quatity : {plan} {unit}
-            </Text>
-          </Card>
-        </View>
+          <View style={styles.showlist}>
+            <Icon name="edit" type="antdesign" size={40} />
+            <Card containerStyle={styles.cardstyle}>
+              <Text style={styles.textshow}>
+                {' '}
+                Planned Quatity : {plan} {unit}
+              </Text>
+            </Card>
+          </View>
 
-        {/* <Button
+          {/* <Button
           raised
           title="Production Confirm"
           onPress={setData}
@@ -311,19 +310,20 @@ const ProductionOrder = ({navigation}) => {
           buttonStyle={{backgroundColor: 'green', borderRadius: 7}}
           titleStyle={{fontSize: 20}}
         /> */}
-        <Button
-          raised
-          title="SAVE"
-          onPress={getOrder}
-          containerStyle={{marginVertical: 10, marginHorizontal: 10}}
-          buttonStyle={{borderRadius: 7}}
-          titleStyle={{fontSize: 20}}
-          ViewComponent={LinearGradient} // Don't forget this!
-              linearGradientProps={{
-                colors: ['#00CC00', '#009900', '#00FF00'],
-              }}
-        />
-      </Card>
+          <Button
+            raised
+            title="SAVE"
+            onPress={getOrder}
+            containerStyle={{marginVertical: 10, marginHorizontal: 10}}
+            buttonStyle={{borderRadius: 7}}
+            titleStyle={{fontSize: 20}}
+            ViewComponent={LinearGradient} // Don't forget this!
+            linearGradientProps={{
+              colors: ['#00CC00', '#009900', '#00FF00'],
+            }}
+          />
+        </Card>
+      </Animatable.View>
     </ScrollView>
   );
 };
