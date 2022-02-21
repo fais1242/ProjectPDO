@@ -119,7 +119,7 @@ const App = () => {
   <AuthContext.Provider value={authContext}>
 
     <NavigationContainer>
-    { loginState.userToken !== null ? (
+    {/* { loginState.userToken !== null ? ( */}
 
 
       <Stack.Navigator
@@ -148,7 +148,7 @@ const App = () => {
         <Stack.Screen
           name="Production"
           component={ProductionOrder}
-          options={{title: 'PRODUCTION ORDER'}}
+          options={{title: 'LIST PRODUCTION'}}
         />
         <Stack.Screen
           name="History"
@@ -167,9 +167,9 @@ const App = () => {
           options={{title: 'Showsql'}}
         />
       </Stack.Navigator>
-    ):
-    <RootStackScreen/>
-    }
+    {/*  ):
+     <RootStackScreen/>
+     } */}
     </NavigationContainer>
     </AuthContext.Provider>
 

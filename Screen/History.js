@@ -41,7 +41,7 @@ const History = ({navigation}) => {
         querySnapshot.forEach(documentSnapshot => {
           users.push({
             ...documentSnapshot.data(),
-            // key: documentSnapshot.id,
+            key: documentSnapshot.id,
           });
         });
   

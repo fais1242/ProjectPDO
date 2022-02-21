@@ -345,14 +345,17 @@ const styles = StyleSheet.create({
         paddingBottom: 0,
         marginTop: 0,
         marginLeft: 'auto',
-        marginRight: 30
+        marginRight: '2%',
+        marginBottom:10
     },
     header: {
-        flex: 1,
+        flex: 3,
         justifyContent: 'flex-end',
-        paddingHorizontal: 20,
-        paddingBottom: 30,
-        marginTop: 180
+        // paddingHorizontal: 'auto',
+        // paddingBottom: 30,
+        // marginTop: 180
+        alignItems:'center'
+
     },
     logo: {
         marginLeft: 10,

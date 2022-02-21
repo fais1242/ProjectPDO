@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Linking,
   Alert,
+  ActivityIndicator
 } from 'react-native';
 import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
 import React, {useState, useEffect} from 'react';
@@ -22,9 +23,17 @@ import firestore from '@react-native-firebase/firestore';
 
 const Scanner = ({navigation}) => {
 
+  const [loading, setLoading] = useState(true);
+
+  // useEffect(() => {
+
+
+  // }, []);
+
  var check = false;
   const onSuccess = async e => {
 
+    if (loading) {
   console.log('1 '+e.data);
   await firestore()
   .collection('Users')
@@ -55,12 +64,18 @@ const Scanner = ({navigation}) => {
       console.log('setdata');
     AsyncStorage.setItem('OrderData', JSON.stringify(Order));
     Alert.alert('Scan Success');
+    setLoading(false);
     navigation.navigate('Production');
   } catch (e) {
       console.log(e);
   } 
   }
+  return <ActivityIndicator />;
+}
   }
+
+
+
 
   return (
     <ScrollView style={styles.container}>

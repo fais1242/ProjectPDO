@@ -5,20 +5,30 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
+import LinearGradient from 'react-native-linear-gradient';
+import * as Animatable from 'react-native-animatable';
 
 
 const Home = ({navigation}) => {
   return (
     <ScrollView style={styles.container}>
+      <View style={styles.header}>
+        <Animatable.Image
+          animation="bounceIn"
+          duraton="1500"
+          source={require('../assets/logo2.png')}
+          style={styles.logo}
+          resizeMode="stretch"
+          
+        />
+      </View>
       {/* <Divider color="white" width={1.5} style={{marginHorizontal: 20}} /> */}
 
       <Card containerStyle={{borderRadius: 10, marginBottom: 10}}>
         <View style={{flex: 1, flexDirection: 'row'}}>
           <View style={{flex: 3}}>
-            <Text style={styles.textshow}>Name :</Text>
-            <Text style={styles.textshow}>Company:</Text>
-            <Text style={styles.textshow}>Email:</Text>
-            <Text style={styles.textshow}>Phone:</Text>
+            <Text style={styles.textname}>First Name :</Text>
+            <Text style={styles.textname}>Last Name :</Text>
           </View>
 
           <View
@@ -28,18 +38,33 @@ const Home = ({navigation}) => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <Image
+            {/* <Image
               source={{
                 uri: 'https://icon-library.com/images/users-icon-png/users-icon-png-17.jpg',
               }}
               style={{width: wp('10%'), height: hp('5%')}}
+            /> */}
+
+            <Button
+              buttonStyle={{
+                borderRadius: 15,
+              }}
+              ViewComponent={LinearGradient} // Don't forget this!
+              linearGradientProps={{
+                colors: ['#CC3300', '#990000', '#CC3300'],
+              }}
+              onPress={() => {
+                signOut();
+              }}
+              title={'Logout'}
             />
           </View>
         </View>
       </Card>
 
       <View style={{padding: 15}}>
-        <View
+        <Animatable.View
+         animation="fadeInUpBig"
           style={{
             flex: 1,
             flexDirection: 'row',
@@ -57,8 +82,8 @@ const Home = ({navigation}) => {
           />
 
           <Button
-            title="Production Order"
-            onPress={() => navigation.navigate('Production')}
+            title="List Production"
+            onPress={() => navigation.navigate('History')}
             containerStyle={{marginVertical: 10, marginHorizontal: 10}}
             buttonStyle={styles.butstyle}
             titleStyle={styles.textshow}
@@ -71,9 +96,9 @@ const Home = ({navigation}) => {
               />
             }
           />
-        </View>
+        </Animatable.View>
 
-        <View
+        {/* <View
           style={{
             flex: 1,
             flexDirection: 'row',
@@ -93,7 +118,7 @@ const Home = ({navigation}) => {
             iconPosition="top"
             icon={<Icon name="history" type="material-community" size={80} />}
           />
-        </View>
+        </View> */}
       </View>
     </ScrollView>
   );
@@ -124,6 +149,19 @@ const styles = StyleSheet.create({
     color: 'black',
     marginTop: 10,
   },
+  textname: {
+    fontSize: 15,
+    color: 'black',
+  },
+  header: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+},
+logo: {
+  width: wp('100%'),
+  height: hp('20%'),
+},
 });
 
 export default Home;
