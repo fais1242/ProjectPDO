@@ -11,6 +11,10 @@ import {
 import React, { useState, useEffect} from 'react';
 import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
 import firestore from '@react-native-firebase/firestore';
+import LinearGradient from 'react-native-linear-gradient';
+import * as Animatable from 'react-native-animatable';
+
+
 
 // const DATA = [
 //   {
@@ -63,19 +67,21 @@ const History = ({navigation}) => {
   return (
     <SafeAreaView style={styles.container}>
       <Divider color="white" width={1.5} style={{marginHorizontal: 20}} />
-      <Card containerStyle={styles.cardbg}>
+      <Card containerStyle={styles.cardbg}
+      >
         <FlatList
           data={users}
           keyExtractor={item => item.id}
           renderItem={({item}) => (
             <TouchableOpacity
               onPress={() => {
-                navigation.navigate('ProductionConfirm',{Order:item});
+                navigation.navigate('ProductionShow',{Order:item});
               }}>
-              <View style={styles.cardr}>
-                <Text style={styles.textshow}>{item.OrderID}</Text>
-                <Text style={styles.textshow}>{item.Status}</Text>
-              </View>
+              <Animatable.View style={styles.cardr}
+              animation="fadeInUpBig">
+                <Text style={styles.textshow}>OrderID :  {item.OrderID}</Text>
+                <Text style={styles.textshow}>Status :  {item.Status}</Text>
+              </Animatable.View>
             </TouchableOpacity>
           )}
         />
@@ -112,14 +118,15 @@ const styles = StyleSheet.create({
   },
   cardr: {
     backgroundColor: '#ffff',
-    alignItems: 'flex-end',
-    borderTopLeftRadius: 100,
-    borderBottomLeftRadius: 2,
-    borderBottomEndRadius: 100,
-    borderBottomStartRadius: 100,
+    alignItems:'flex-start',
+    // borderTopLeftRadius: 100,
+    // borderBottomLeftRadius: 2,
+    // borderBottomEndRadius: 100,
+    // borderBottomStartRadius: 100,
+    borderRadius:5,
     marginBottom: '5%',
     padding: 20,
-    marginLeft: '20%',
+    // marginLeft: '20%',
   },
   // cardl: {
   //   backgroundColor: '#ffff',

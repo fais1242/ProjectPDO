@@ -1,9 +1,17 @@
-import {View, Text, ScrollView, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  ActivityIndicator,
+} from 'react-native';
 import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
 import React, {useState, useEffect} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import firestore from '@react-native-firebase/firestore';
+import LinearGradient from 'react-native-linear-gradient';
+import * as Animatable from 'react-native-animatable';
 
 
 const ProductionOrder = ({navigation}) => {
@@ -18,14 +26,16 @@ const ProductionOrder = ({navigation}) => {
   const [plan, setplan] = useState('');
   const [unit, setunit] = useState('');
 
+  const [loading, setLoading] = useState(false);
+
   useEffect(() => {
     getData();
-  }, []);
+  },[]);
 
   const getData = () => {
     try {
-    console.log('start getdata');
-     AsyncStorage.getItem('OrderData').then(value => {
+      console.log('start getdata');
+      AsyncStorage.getItem('OrderData').then(value => {
         if (value !== null) {
           console.log('getdata');
           console.log(value);
@@ -35,6 +45,8 @@ const ProductionOrder = ({navigation}) => {
           console.log(orderid);
         }
       });
+      setLoading(false)
+
     } catch (e) {
       console.log(e);
     }
@@ -60,115 +72,130 @@ const ProductionOrder = ({navigation}) => {
   </soapenv:Body>
 </soapenv:Envelope> `;
 
-var base64 = require('base-64');
-var utf8 = require('utf8');
-var user = '_NTZDEV';
-var pass = 'Welcome2021';
-var createuser = (user + ':' + pass);
-var bytes = utf8.encode(createuser);
-var encoded = base64.encode(bytes);
-var basicAuth = 'Basic ' + encoded;
-console.log(basicAuth);
-
+  var base64 = require('base-64');
+  var utf8 = require('utf8');
+  var user = '_NTZDEV';
+  var pass = 'Welcome2021';
+  var createuser = user + ':' + pass;
+  var bytes = utf8.encode(createuser);
+  var encoded = base64.encode(bytes);
+  var basicAuth = 'Basic ' + encoded;
+  console.log(basicAuth);
 
   axios
     .post(
       `https://my334089.sapbydesign.com/sap/bc/srt/scs/sap/queryproductionlotisiin?sap-vhost=my334089.sapbydesign.com`,
       xml,
       {
-        
         headers: {
           'Content-Type': 'text/xml',
-          Authorization:basicAuth,
+          Authorization: basicAuth,
           // 'Basic X05UWkRFVjpXZWxjb21lMjAyMQ==',
         },
       },
     )
     .then(res => {
-      console.log(res.data);
+      // console.log(res.data);
       Cxml2json(
         res.data,
         {tagNameProcessors: [stripNS]},
         function (err, result) {
           console.log(JSON.stringify(result));
+          var i ;
           for (
-            let i = 0;
-            i <
+            let index = 0;
+            index <
             result.Envelope.Body[0]['ProductionLotByElementsResponse_sync'][0][
               'ProductionLot'
             ][0]['ConfirmationGroup'].length;
-            i++
+            index++
           ) {
-            console.log('___' + i);
-            if (
+            console.log('___' + index);
+            i = index
+          };
+          if (
+            result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+              .ProductionLot[0].ConfirmationGroup[i].ProductionTask[0]
+              .OperationTypeCode[0]._ == 1
+          ) {
+            console.log(i);
+            setoperation(
               result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
                 .ProductionLot[0].ConfirmationGroup[i].ProductionTask[0]
-                .OperationTypeCode[0]._ == 1
-            ) {
-              console.log(i);
-              setoperation(
-                result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
-                  .ProductionLot[0].ConfirmationGroup[i].ProductionTask[0]
-                  .OperationTypeCode[0]._,
-              );
-              setoutput(
-                result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
-                  .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
-                  .ProductID[0],
-              );
-              setplan(
-                result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
-                  .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
-                  .PlannedQuantity[0]._,
-              );
-              setunit(
-                result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
-                  .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
-                  .PlannedQuantity[0].$.unitCode,
-              );
-
-              setCGuuID(
-                result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
-                  .ProductionLot[0].ConfirmationGroup[i].ConfirmationGroupUUID[0]
-              );
-              setPTaskID(
-                result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
-                  .ProductionLot[0].ConfirmationGroup[i].ProductionTask[0].ProductionTaskID[0]
-              );
-              setPTaskuuID(
-                result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
-                  .ProductionLot[0].ConfirmationGroup[i].ProductionTask[0].ProducionTaskUUID[0]
-              );
-              setMOuuID(
-                result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
-                  .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
-                  .MaterialOutputUUID[0]
-              );
-              setAreaID(
-                result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
-                  .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
-                  .TargetLogisticsAreaID[0]
-              );
-
-              console.log('1'+CGuuID);
-              console.log('2'+PTaskID);
-              console.log('3'+PTaskuuID);
-              console.log('4'+MOuuID);
-              console.log('5'+AreaID);
-              console.log('5'+IdenID);
-
-
-              break;
-            }
+                .OperationTypeCode[0]._,
+            );
+            setoutput(
+              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
+                .ProductID[0],
+            );
+            setplan(
+              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
+                .PlannedQuantity[0]._,
+            );
+            setunit(
+              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
+                .PlannedQuantity[0].$.unitCode,
+            );
+    
+            setCGuuID(
+              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i]
+                .ConfirmationGroupUUID[0],
+            );
+            setPTaskID(
+              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].ProductionTask[0]
+                .ProductionTaskID[0],
+            );
+            setPTaskuuID(
+              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].ProductionTask[0]
+                .ProducionTaskUUID[0],
+            );
+            setMOuuID(
+              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
+                .MaterialOutputUUID[0],
+            );
+            setAreaID(
+              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
+                .TargetLogisticsAreaID[0],
+            );
+            setIdenID(
+              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
+                .IdentifiedStockID[0],
+            );
+    
+            console.log('1' + CGuuID);
+            console.log('2' + PTaskID);
+            console.log('3' + PTaskuuID);
+            console.log('4' + MOuuID);
+            console.log('5' + AreaID);
+            console.log('6' + IdenID);
+            setLoading(false)
           }
         },
       );
     });
+  // if (loading) {
+  //   return <ActivityIndicator />;
+  // }
 
-    const getOrder = ()=>{
-      console.log(orderid);
-      firestore().collection('Users').doc(orderid).set({ 
-        OrderID: orderid, 
+  const getOrder = () => {
+
+    setLoading(true);
+    
+    console.log(orderid);
+    firestore()
+      .collection('Users')
+      .doc(orderid)
+      .set({
+        OrderID: orderid,
         Product: output,
         Planned: plan,
         CGuuID: CGuuID,
@@ -178,21 +205,23 @@ console.log(basicAuth);
         IdenID: IdenID,
         AreaID: AreaID,
         Unit: unit,
-  })
-  .then(() => {
-    alert('Save ! Success')
-    console.log('User added!');
-    navigation.navigate('History')
-  });
-    }
+        Status:'NotStart',
+        Operation:operation
+      })
+      .then(() => {
+        setLoading(false);
+        alert('Save ! Success');
+        console.log('User added!');
+        navigation.navigate('History');
+      });
+  };
 
   const [CGuuID, setCGuuID] = useState('');
   const [PTaskID, setPTaskID] = useState('');
   const [PTaskuuID, setPTaskuuID] = useState('');
   const [MOuuID, setMOuuID] = useState('');
   const [AreaID, setAreaID] = useState('');
-  const [IdenID, setIdenID] = useState('TEST20220211');
-
+  const [IdenID, setIdenID] = useState('');
 
   // const setData = () => {
   //   try {
@@ -287,8 +316,12 @@ console.log(basicAuth);
           title="SAVE"
           onPress={getOrder}
           containerStyle={{marginVertical: 10, marginHorizontal: 10}}
-          buttonStyle={{backgroundColor: 'green', borderRadius: 7}}
+          buttonStyle={{borderRadius: 7}}
           titleStyle={{fontSize: 20}}
+          ViewComponent={LinearGradient} // Don't forget this!
+              linearGradientProps={{
+                colors: ['#00CC00', '#009900', '#00FF00'],
+              }}
         />
       </Card>
     </ScrollView>

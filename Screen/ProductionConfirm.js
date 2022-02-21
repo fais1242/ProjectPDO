@@ -9,6 +9,8 @@ import React, {useEffect, useState} from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 import firestore from '@react-native-firebase/firestore';
+import LinearGradient from 'react-native-linear-gradient';
+import * as Animatable from 'react-native-animatable';
 
 const ProductionConfirm = ({navigation, route}) => {
   var Cxml2json = require('xml2js').parseString;
@@ -27,6 +29,7 @@ const ProductionConfirm = ({navigation, route}) => {
     .then(documentSnapshot => {
         setOrderID(documentSnapshot.data());
         // setLoading(false);
+        // setidenID(OrderID.IdenID)
       });
 
       console.log('-------------1'+OrderID.OrderID);
@@ -154,8 +157,9 @@ const ProductionConfirm = ({navigation, route}) => {
                     firestore().collection('Users').doc(Order.OrderID).update({ 
                     OutPutQty: output, 
                     ScrapQty: scarp,
-                    Status : selectedValue,
-                    Processby : Processby
+                    Status: selectedValue,
+                    Processby: Processby,
+                    IdenID:idenID
                   })
                   alert('Confirm ! Success')
                   navigation.navigate('Home')
@@ -219,17 +223,18 @@ const ProductionConfirm = ({navigation, route}) => {
           />
         </View>
 
-        {/* <View style={{flex: 1}}>
+        <View style={{flex: 1}}>
           <Text style={styles.stext}>Identified Stock ID</Text>
 
           <Input
+            placeholder={OrderID.IdenID}
             containerStyle={styles.textInput}
             inputContainerStyle={{borderBottomWidth: 0}}
             onChangeText={value => setidenID(value)}
           />
         </View>
 
-        <View style={{flex: 1}}>
+        {/* <View style={{flex: 1}}>
           <Text style={styles.stext}>Identified Stock Descrition</Text>
 
           <Input
@@ -304,8 +309,12 @@ const ProductionConfirm = ({navigation, route}) => {
           title="Submit"
           onPress={setData}
           containerStyle={{marginVertical: 10, marginHorizontal: 10}}
-          buttonStyle={{backgroundColor: 'green', borderRadius: 7}}
+          buttonStyle={{borderRadius: 7}}
           titleStyle={{fontSize: 20}}
+          ViewComponent={LinearGradient} // Don't forget this!
+          linearGradientProps={{
+            colors: ['#00CC00', '#009900', '#00FF00'],
+          }}
         />
       </Card>
     </ScrollView>
