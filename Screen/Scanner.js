@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 1,
-    backgroundColor: '#FFB23E',
+    backgroundColor: '#FFB970',
   },
   stext: {
     color: 'black',

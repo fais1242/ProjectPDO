@@ -113,7 +113,7 @@ const ProductionShow = ({navigation, route}) => {
             }}
             ViewComponent={LinearGradient} // Don't forget this!
             linearGradientProps={{
-              colors: ['#00CC00', '#009900', '#00FF00'],
+              colors: ['#08d4c4', '#01ab9d'],
             }}
             containerStyle={{marginVertical: 10, marginHorizontal: 10}}
             buttonStyle={{borderRadius: 7}}
@@ -137,7 +137,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 1,
-    backgroundColor: '#FFB23E',
+    backgroundColor: '#FFB970',
   },
   stext: {
     color: 'black',

@@ -19,7 +19,7 @@ const StartScreen = ({navigation}) => {
 
     return (
       <View style={styles.container}>
-          <StatusBar backgroundColor='#FFB23E' barStyle="light-content"/>
+          <StatusBar backgroundColor='#FFB970' barStyle="light-content"/>
         <View style={styles.header}>
             <Animatable.Image 
                 animation="bounceIn"
@@ -70,7 +70,7 @@ const height_logo = height * 0.28;
 const styles = StyleSheet.create({
     container: {
       flex: 1, 
-      backgroundColor: '#FFB23E'
+      backgroundColor: '#FFB970'
     },
     header: {
         justifyContent: 'center',
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         paddingVertical: 50,
-        paddingHorizontal: 30
+        paddingHorizontal: 25
     },
     logo: {
       height: hp('18%'),
@@ -110,7 +110,7 @@ const styles = StyleSheet.create({
     },
     button: {
         alignItems: 'flex-end',
-        marginTop: 30
+        marginTop: 25
     },
     signIn: {
         height: hp('5%'),
@@ -122,6 +122,6 @@ const styles = StyleSheet.create({
     },
     textSign: {
         color: 'white',
-        fontWeight: 'bold'
+        // fontWeight: 'bold'
     }
   });

@@ -34,7 +34,6 @@ const ProductionConfirm = ({navigation, route}) => {
 
       console.log('-------------1'+OrderID.OrderID);
       console.log('-------------2'+JSON.stringify(OrderID));
-
   }, []);
 
  
@@ -118,14 +117,14 @@ const ProductionConfirm = ({navigation, route}) => {
                    <MaterialOutputUUID>${OrderID.MOuuID}</MaterialOutputUUID>
                    <IdentifiedStockID>${idenID}</IdentifiedStockID>
                    <TargetLogisticsAreaID>${OrderID.AreaID}</TargetLogisticsAreaID>
-                   <ConfirmedQuantity unitCode="${OrderID.Unit}">${output}</ConfirmedQuantity>
+                   <ConfirmedQuantity unitCode="${OrderID.Unit}">1</ConfirmedQuantity>
                 </MaterialOutput>
              </ConfirmationGroup>
           </ProductionLot>
        </glob:ProductionLotsBundleMaintainRequest_sync_V1>
     </soapenv:Body>
     </soapenv:Envelope> `;
-
+    // ${output}
     axios
       .post(
         `https://my334089.sapbydesign.com/sap/bc/srt/scs/sap/manageproductionlotsin?sap-vhost=my334089.sapbydesign.com`,
@@ -154,13 +153,31 @@ const ProductionConfirm = ({navigation, route}) => {
 
                 try {
                   console.log('           '+Order.OrderID);
-                    firestore().collection('Users').doc(Order.OrderID).update({ 
+                  firestore().collection('Users').doc(Order.OrderID).update({ 
                     OutPutQty: output, 
                     ScrapQty: scarp,
                     Status: selectedValue,
                     Processby: Processby,
                     IdenID:idenID
-                  })
+                  })   
+                //   if (idenID == '') {
+                //   firestore().collection('Users').doc(Order.OrderID).update({ 
+                //     OutPutQty: output, 
+                //     ScrapQty: scarp,
+                //     Status: selectedValue,
+                //     Processby: Processby,
+                //     IdenID:OrderID.IdenID
+                //   })
+                // } else {
+                //   firestore().collection('Users').doc(Order.OrderID).update({ 
+                //     OutPutQty: output, 
+                //     ScrapQty: scarp,
+                //     Status: selectedValue,
+                //     Processby: Processby,
+                //     IdenID:idenID
+                //   })   
+                // }
+                   
                   alert('Confirm ! Success')
                   navigation.navigate('Home')
                 } catch (error) {
@@ -314,7 +331,7 @@ const ProductionConfirm = ({navigation, route}) => {
           titleStyle={{fontSize: 20}}
           ViewComponent={LinearGradient} // Don't forget this!
           linearGradientProps={{
-            colors: ['#00CC00', '#009900', '#00FF00'],
+            colors: ['#08d4c4', '#01ab9d'],
           }}
         />
       </Card>
@@ -327,7 +344,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 1,
-    backgroundColor: '#FFB23E',
+    backgroundColor: '#FFB970',
   },
   stext: {
     color: 'black',

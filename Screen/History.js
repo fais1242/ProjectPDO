@@ -68,13 +68,14 @@ const History = ({navigation}) => {
     <SafeAreaView style={styles.container}>
       <Divider color="white" width={1.5} style={{marginHorizontal: 20}} />
       <Animatable.View style={{flex:1}}
-      animation="bounceIn"
-      duration={3000}>
+      animation="fadeIn"
+      // duration={4000}
+      >
       <Card containerStyle={styles.cardbg}
       >
         <FlatList
           data={users}
-          keyExtractor={item => item.id}
+          key={item => item.id}
           renderItem={({item}) => (
             <TouchableOpacity
               onPress={() => {
@@ -99,7 +100,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 1,
-    backgroundColor: '#FFB23E',
+    backgroundColor: '#FFB970',
   },
   stext: {
     color: 'black',

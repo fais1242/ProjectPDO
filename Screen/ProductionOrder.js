@@ -319,7 +319,7 @@ const ProductionOrder = ({navigation}) => {
             titleStyle={{fontSize: 20}}
             ViewComponent={LinearGradient} // Don't forget this!
             linearGradientProps={{
-              colors: ['#00CC00', '#009900', '#00FF00'],
+              colors: ['#08d4c4', '#01ab9d'],
             }}
           />
         </Card>
@@ -332,7 +332,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 1,
-    backgroundColor: '#FFB23E',
+    backgroundColor: '#FFB970',
   },
   stext: {
     color: 'black',

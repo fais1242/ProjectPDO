@@ -182,9 +182,7 @@ const Login =  ({navigation}) => {
             
             .then (res => { 
               console.log(res.data); 
-             // const data = 
-              // convert.xml2json(res.data, { compact: true, spaces: 1 })
-               //console.log(data);
+
                try {
                 console.log('start setdata');
                   var configID = {
@@ -210,7 +208,16 @@ const Login =  ({navigation}) => {
                 console.log(result.Envelope.Body[0].MobileUserLoginQueryByUserPasswordSimpleByConfirmation_sync[0].ProcessingConditions[0].ReturnedQueryHitsNumberValue[0]);
                   console.log(JSON.stringify(result));
                 if  (result.Envelope.Body[0].MobileUserLoginQueryByUserPasswordSimpleByConfirmation_sync[0].ProcessingConditions[0].ReturnedQueryHitsNumberValue[0] == 1) {
-                  Alert.alert('Successfully', 'ยินต้อนรับเข้าสู่ระบบ By Design'), navigation.navigate('Home')
+                    var username = {
+                        fname : result.Envelope.Body[0].MobileUserLoginQueryByUserPasswordSimpleByConfirmation_sync[0].MobileUserLogin[0].FirstName[0],
+                        lname : result.Envelope.Body[0].MobileUserLoginQueryByUserPasswordSimpleByConfirmation_sync[0].MobileUserLogin[0].LastName[0],
+
+                      }
+                      console.log(username);
+                      console.log('setdata');
+                     AsyncStorage.setItem('usernameDB', JSON.stringify(username));
+                    Alert.alert('Successfully', 'ยินต้อนรับเข้าสู่ระบบ By Design')
+                    ,signIn({Lusername,Lpassword})
                 }else{
                   Alert.alert('Warning!', 'Username หรือ password ไม่ถูกต้อง')
                 }
@@ -228,7 +235,7 @@ const Login =  ({navigation}) => {
       
       return (
           <View style={styles.container}>
-              <StatusBar backgroundColor='#FFB23E' barStyle="light-content"/>
+              <StatusBar backgroundColor='#FFB970' barStyle="light-content"/>
             <View style={ styles.title_header}>
                 <TouchableOpacity onPress={() => navigation.navigate('Config')}>
                 <Feather
@@ -277,7 +284,7 @@ const Login =  ({navigation}) => {
   
               <Text style={[styles.text_footer, {
                   color: colors.text,
-                  marginTop: 35
+                  marginTop: 20
               }]}>Password</Text>
               <View style={styles.action}>
                   <Feather 
@@ -339,14 +346,12 @@ export default Login;
 const styles = StyleSheet.create({
     container: {
         flex: 1, 
-        backgroundColor: '#FFB23E'
+        backgroundColor: '#FFB970'
     },
     title_header: {
-        paddingHorizontal: 0,
-        paddingBottom: 0,
-        marginTop: 0,
         marginLeft: 'auto',
-        marginRight: 30
+        marginRight: '3%',
+        marginBottom:'2%'
     },
     header: {
         height: hp('35%'),
@@ -417,7 +422,7 @@ const styles = StyleSheet.create({
         borderRadius: 10
     },
     textSign: {
-        fontSize: 18,
-        fontWeight: 'bold'
+        fontSize: 20,
+        // fontWeight: 'bold'
     }
   });

@@ -72,30 +72,30 @@ const App = () => {
       signIn: async foundUser => {
         // setUserToken('fgkj');
         // setIsLoading(false);
-        const userToken = String(foundUser[0].userToken);
-        const userName = foundUser[0].username;
+        // const userToken = String(foundUser[0].userToken);
+        // const userName = foundUser[0].username;
 
-        try {
-          await AsyncStorage.setItem('userToken', userToken);
-        } catch (e) {
-          console.log(e);
-        }
+        // try {
+        //   await AsyncStorage.setItem('userToken', userToken);
+        // } catch (e) {
+        //   console.log(e);
+        // }
         // console.log('user token: ', userToken);
-        dispatch({type: 'LOGIN', id: userName, token: userToken});
+        dispatch({type: 'LOGIN', id: 'userName', token: 'userToken'});
       },
       signOut: async () => {
         // setUserToken(null);
         // setIsLoading(false);
-        try {
-          await AsyncStorage.removeItem('userToken');
-        } catch (e) {
-          console.log(e);
-        }
+        // try {
+        //   await AsyncStorage.removeItem('userToken');
+        // } catch (e) {
+        //   console.log(e);
+        // }
         dispatch({type: 'LOGOUT'});
       },
       conFig: () => {
         setUserToken('fgkj');
-        setIsLoading(false);
+        // setIsLoading(false);
       },
     }),
     [],
@@ -131,7 +131,7 @@ const App = () => {
 
         <Stack.Navigator
           screenOptions={{
-            headerStyle: {backgroundColor: '#FFB23E'},
+            headerStyle: {backgroundColor: '#FFB970'},
             headerTintColor: '#fff',
             headerTitleStyle: {fontWeight: 'bold'},
             headerShadowVisible: false,
@@ -146,7 +146,9 @@ const App = () => {
           <Stack.Screen
             name="Home"
             component={Home}
-            options={{title: 'HOME'}}
+            options={{title: 'HOME'
+             ,headerShown:true
+          }}
           />
 
           <Stack.Screen

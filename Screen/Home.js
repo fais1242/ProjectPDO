@@ -1,15 +1,47 @@
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
-import React from 'react';
-import {
+import React, {useState, useEffect} from 'react';import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
 import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
+import { AuthContext } from '../components/context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 const Home = ({navigation}) => {
+  const { signOut } = React.useContext(AuthContext);
+
+  const [fname,setfname] = useState('');
+  const [lname,setlname] = useState('');
+
+
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = () => {
+    try {
+      console.log('start getdata');
+      AsyncStorage.getItem('usernameDB').then(value => {
+        if (value !== null) {
+          console.log('getdata');
+          console.log(value);
+          let Username = JSON.parse(value);
+          console.log(Username);
+          setfname(Username.fname);
+          setlname(Username.lname)
+        }
+      });
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
@@ -24,11 +56,11 @@ const Home = ({navigation}) => {
       </View>
       {/* <Divider color="white" width={1.5} style={{marginHorizontal: 20}} /> */}
 
-      <Card containerStyle={{borderRadius: 10, marginBottom: 10}}>
+      <Card containerStyle={{borderRadius: 10, marginBottom: 10,}}>
         <View style={{flex: 1, flexDirection: 'row'}}>
           <View style={{flex: 3}}>
-            <Text style={styles.textname}>First Name :</Text>
-            <Text style={styles.textname}>Last Name :</Text>
+            <Text style={styles.textname}>First Name : {fname}</Text>
+            <Text style={styles.textname}>Last Name : {lname}</Text>
           </View>
 
           <View
@@ -46,12 +78,12 @@ const Home = ({navigation}) => {
             /> */}
 
             <Button
-              buttonStyle={{
-                borderRadius: 15,
+              buttonStyle={{ 
+                borderRadius: 13,
               }}
               ViewComponent={LinearGradient} // Don't forget this!
               linearGradientProps={{
-                colors: ['#CC3300', '#990000', '#CC3300'],
+                colors: ['#CC3300', '#990000'],
               }}
               onPress={() => {
                 signOut();
@@ -128,7 +160,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 1,
-    backgroundColor: '#FFB23E',
+    backgroundColor: '#FFB970',
   },
   stext: {
     color: 'black',
@@ -157,6 +189,8 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop:'10%',
+    marginBottom:'10%'
 },
 logo: {
   width: wp('100%'),

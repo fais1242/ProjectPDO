@@ -23,42 +23,39 @@ import { useTheme } from 'react-native-paper';
 import SQlite from 'react-native-sqlite-storage';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {Icon} from 'react-native-elements';
 import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
+import { white } from 'react-native-paper/lib/typescript/styles/colors';
 
-// import { log } from 'react-native-sqlite-storage/lib/sqlite.core';
-  //var xmls='';
-  // let xmls='<soap:Envelope xmlns:soap="http://www.w3.org/2003/05/soap-envelope"\ xmlns:glob="http://sap.com/xi/SAPGlobal20/Global">\
-  //             <soapenv:Header/>\
-  //             <soapenv:Body>\
-  //             <glob:MobileUserLoginQueryByUserPasswordSimpleByRequest_sync>\
-  //             <MobileUserLoginSimpleSelectionBy>\
-  //                <SelectionByUserName>\
-  //                   <InclusionExclusionCode>I</InclusionExclusionCode>\
-  //                   <IntervalBoundaryTypeCode>1</IntervalBoundaryTypeCode>\
-  //                   <LowerBoundaryUserName>TESTID</LowerBoundaryUserName>\
-  //                </SelectionByUserName>\
-  //                <SelectionByPassword>\
-  //                   <InclusionExclusionCode>I</InclusionExclusionCode>\
-  //                   <IntervalBoundaryTypeCode>1</IntervalBoundaryTypeCode>\
-  //                   <LowerBoundaryPassword>12345</LowerBoundaryPassword>\
-  //                </SelectionByPassword>\
-  //             </MobileUserLoginSimpleSelectionBy>\
-  //          </glob:MobileUserLoginQueryByUserPasswordSimpleByRequest_sync>\
-  //             </soapenv:Body>\
-  //           </soapenv:Envelope>';
-  
-  // axios({
-  //   method: 'get',
-  //   url: 'https://my334089.sapbydesign.com/sap/bc/srt/scs/sap/yyd61neday_mobileprdcfauth?sap-vhost=my334089.sapbydesign.com',xmls,
-  //   auth:{
-  //     username: '_NTZ_KAN',
-  //     password: 'Welcome2021'
-  //   }
-  // }).then((Response)=>{
-  //     console.log(Response.data);
-  //   }).catch(err=>{console.log(err)});
   
   const Config = ({navigation}) => {
+
+    const [suser,setsuser]= useState('');
+    const [spass,setspass]= useState('');
+
+
+    useEffect(() => {
+        getData();
+      }, []);
+    
+      const getData = () => {
+        try {
+          console.log('start getdata');
+          AsyncStorage.getItem('ConfigDb').then(value => {
+            if (value !== null) {
+              console.log('getdata');
+              console.log(value);
+              let Config = JSON.parse(value);
+              console.log(Config);
+              setsuser(Config.Username);
+              setspass(Config.Password)
+            }
+          });
+          setLoading(false);
+        } catch (e) {
+          console.log(e);
+        }
+      }
 
     const { colors } = useTheme();
     const [data, setData] = React.useState({
@@ -159,6 +156,14 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
       )};
     };
 
+    // const removeData = async ()=>{
+    //     try{
+    //       await AsyncStorage.removeItem('ConfigDb');
+    //     }catch(e){
+    //      console.log(e);
+    //     }
+    //   }
+
         
   
     const [Url, seturl] = useState('https://my334089.sapbydesign.com');
@@ -167,7 +172,12 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
     
     return (
       <View style={styles.container}>
-          <StatusBar backgroundColor='#FFB23E' barStyle="light-content"/>
+          {/* <StatusBar backgroundColor='#FFB23E' barStyle="light-content"/> */}
+          {/* <View style={ styles.title_header}>
+                <TouchableOpacity onPress={removeData}>
+                <Icon name="delete" type="antdesign" size={30} color='white' />
+                </TouchableOpacity>
+            </View> */}
         <View style={styles.header}>
             <Animatable.Image 
               animation="bounceIn"
@@ -188,7 +198,8 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
             }]}
         >
             <Text style={[styles.text_footer, {
-                color: colors.text
+                color: colors.text,
+                marginTop: 10
             }]}>Customer Tenant URL</Text>
             <View style={styles.action}>
                 <FontAwesome 
@@ -210,7 +221,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 
             <Text style={[styles.text_footer, {
                 color: colors.text,
-                marginTop: 35
+                marginTop: 5
             }]}>Username</Text>
             <View style={styles.action}>
                 <FontAwesome 
@@ -224,6 +235,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
                     style={[styles.textInput, {
                         color: colors.text
                     }]}
+                    // value={suser}
                     autoCapitalize="none"
                     onChangeText={(value) => setusername(value)}
                 />
@@ -232,7 +244,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 
             <Text style={[styles.text_footer, {
                 color: colors.text,
-                marginTop: 35
+                marginTop: 5
             }]}>Password</Text>
             <View style={styles.action}>
                 <Feather 
@@ -247,6 +259,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
                     style={[styles.textInput, {
                         color: colors.text
                     }]}
+                    // value={spass}
                     autoCapitalize="none"
                     onChangeText={(value) => setpassword(value)}
                 />
@@ -292,13 +305,13 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
   const styles = StyleSheet.create({
     container: {
       flex: 1, 
-      backgroundColor: '#FFB23E'
+      backgroundColor: '#FFB970'
     },
     header: {
-        height: hp('10%'),
+        height: hp('15%'),
         width: wp('100%'),
         justifyContent: 'flex-end',
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
     },
     footer: {
         height: hp('60%'),
@@ -352,7 +365,7 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
     },
     button: {
         alignItems: 'center',
-        marginTop: 10
+        marginTop: 5
     },
     signIn: {
         height: hp('7%'),
@@ -363,7 +376,12 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
     },
     textSign: {
         fontSize: 18,
-        fontWeight: 'bold'
+        // fontWeight: 'bold'
+    },
+    title_header: {
+        marginLeft: 'auto',
+        marginRight: '3%',
+        // marginBottom:'2%'
     }
   });
 
