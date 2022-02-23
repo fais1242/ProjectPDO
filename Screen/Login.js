@@ -7,7 +7,8 @@ import {
     Platform,
     StyleSheet ,
     StatusBar,
-    Alert
+    Alert,
+    ScrollView
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
@@ -234,7 +235,7 @@ const Login =  ({navigation}) => {
         const [Password, setpassword] = useState('');    
       
       return (
-          <View style={styles.container}>
+          <ScrollView style={styles.container}>
               <StatusBar backgroundColor='#FFB970' barStyle="light-content"/>
             <View style={ styles.title_header}>
                 <TouchableOpacity onPress={() => navigation.navigate('Config')}>
@@ -337,7 +338,7 @@ const Login =  ({navigation}) => {
                   </TouchableOpacity>
               </View>
           </Animatable.View>
-        </View>
+        </ScrollView>
       );
     };
 
@@ -368,7 +369,7 @@ const styles = StyleSheet.create({
         marginBottom: 10,
       },
     footer: {
-        height: hp('60%'),
+        height: hp('47.5%'),
         width: wp('100%'),
         backgroundColor: '#fff',
         borderTopLeftRadius: 30,

@@ -93,7 +93,7 @@ const ProductionOrder = ({navigation}) => {
       },
     )
     .then(res => {
-      // console.log(res.data);
+      console.log(res.data);
       Cxml2json(
         res.data,
         {tagNameProcessors: [stripNS]},
@@ -122,22 +122,6 @@ const ProductionOrder = ({navigation}) => {
                 .ProductionLot[0].ConfirmationGroup[i].ProductionTask[0]
                 .OperationTypeCode[0]._,
             );
-            setoutput(
-              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
-                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
-                .ProductID[0],
-            );
-            setplan(
-              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
-                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
-                .PlannedQuantity[0]._,
-            );
-            setunit(
-              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
-                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
-                .PlannedQuantity[0].$.unitCode,
-            );
-
             setCGuuID(
               result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
                 .ProductionLot[0].ConfirmationGroup[i].ConfirmationGroupUUID[0],
@@ -152,21 +136,141 @@ const ProductionOrder = ({navigation}) => {
                 .ProductionLot[0].ConfirmationGroup[i].ProductionTask[0]
                 .ProducionTaskUUID[0],
             );
+            // setoutput(
+            //   result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+            //     .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[0]
+            //     .ProductID[0],
+            // );
+            // setplan(
+            //   result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+            //     .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[0]
+            //     .PlannedQuantity[0]._,
+            // );
+            // setunit(
+            //   result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+            //     .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[0]
+            //     .PlannedQuantity[0].$.unitCode,
+            // );
+            // setMOuuID(
+            //   result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+            //     .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[0]
+            //     .MaterialOutputUUID[0],
+            // );
+            // setAreaID(
+            //   result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+            //     .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[0]
+            //     .TargetLogisticsAreaID[0],
+            // );
+            // setIdenID(
+            //   result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+            //     .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[0]
+            //     .IdentifiedStockID[0],
+            // );
+            var j = 0 ;
+            if ( result.Envelope.Body[0]['ProductionLotByElementsResponse_sync'][0]['ProductionLot'][0]
+            ['ConfirmationGroup'][i]['MaterialOutput'].length == 1) {
+            setoutput(
+            result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
+                .ProductID[0],
+            );
+            setplan(
+              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
+                .PlannedQuantity[0]._,
+            );
+            setunit(
+              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
+                .PlannedQuantity[0].$.unitCode,
+            );
             setMOuuID(
               result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
-                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
                 .MaterialOutputUUID[0],
             );
             setAreaID(
               result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
-                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
                 .TargetLogisticsAreaID[0],
             );
             setIdenID(
               result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
-                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
                 .IdentifiedStockID[0],
             );
+            } else  {
+              for (let index = 0; index < result.Envelope.Body[0]['ProductionLotByElementsResponse_sync'][0]['ProductionLot'][0]
+              ['ConfirmationGroup'][i]['MaterialOutput'].length; index++) {
+                
+                j++;
+
+                if (  result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                  .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
+                  .TotalConfirmedQuantity[0]._ > 0) {
+            setoutput(
+              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
+                .ProductID[0],
+            );
+            setplan(
+              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
+                .PlannedQuantity[0]._,
+            );
+            setunit(
+              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
+                .PlannedQuantity[0].$.unitCode,
+            );
+            setMOuuID(
+              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
+                .MaterialOutputUUID[0],
+            );
+            setAreaID(
+              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
+                .TargetLogisticsAreaID[0],
+            );
+            setIdenID(
+              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
+                .IdentifiedStockID[0],
+            );
+                }   
+              }
+            }
+            // setoutput(
+            //   result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+            //     .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
+            //     .ProductID[0],
+            // );
+            // setplan(
+            //   result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+            //     .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
+            //     .PlannedQuantity[0]._,
+            // );
+            // setunit(
+            //   result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+            //     .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
+            //     .PlannedQuantity[0].$.unitCode,
+            // );
+            // setMOuuID(
+            //   result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+            //     .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
+            //     .MaterialOutputUUID[0],
+            // );
+            // setAreaID(
+            //   result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+            //     .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
+            //     .TargetLogisticsAreaID[0],
+            // );
+            // setIdenID(
+              // result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+              //   .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[1]
+              //   .IdentifiedStockID[0],
+            // );
 
             console.log('1' + CGuuID);
             console.log('2' + PTaskID);

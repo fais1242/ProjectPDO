@@ -94,6 +94,7 @@ const Scanner = ({navigation}) => {
         }}
         showMarker={true}
         onRead={onSuccess}
+        fadeIn={true}
       />
     </ScrollView>
   );

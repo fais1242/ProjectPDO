@@ -17,6 +17,9 @@ const Home = ({navigation}) => {
   const [fname,setfname] = useState('');
   const [lname,setlname] = useState('');
 
+  // const [filc,setfilc] = useState('');
+
+
 
 
   useEffect(() => {

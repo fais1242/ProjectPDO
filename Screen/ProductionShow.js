@@ -105,6 +105,16 @@ const ProductionShow = ({navigation, route}) => {
             </Card>
           </View>
 
+          <View style={styles.showlist}>
+            <Icon name="file-download-done" type="materialicons" size={40} />
+            <Card containerStyle={styles.cardstyle}>
+              <Text style={styles.textshow}>
+                {' '}
+                Confirm Quatity : {OrderID.OutPutQty} {OrderID.Unit}
+              </Text>
+            </Card>
+          </View>
+
           <Button
             raised
             title="Production Confirm"

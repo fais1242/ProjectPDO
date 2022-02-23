@@ -19,6 +19,9 @@ const ProductionConfirm = ({navigation, route}) => {
   const [loading, setLoading] = useState(true);
   const [OrderID, setOrderID] = useState([]); // Initial empty array of users
 
+  const [fname,setfname] = useState('');
+  const [lname,setlname] = useState('');
+
   
 
   useEffect(() => {
@@ -31,10 +34,35 @@ const ProductionConfirm = ({navigation, route}) => {
         // setLoading(false);
         // setidenID(OrderID.IdenID)
       });
+      getData();
 
       console.log('-------------1'+OrderID.OrderID);
       console.log('-------------2'+JSON.stringify(OrderID));
   }, []);
+
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
+
+  const getData = () => {
+    try {
+      console.log('start getdata');
+      AsyncStorage.getItem('usernameDB').then(value => {
+        if (value !== null) {
+          console.log('getdata');
+          console.log(value);
+          let Username = JSON.parse(value);
+          console.log(Username);
+          setfname(Username.fname);
+          setlname(Username.lname)
+        }
+      });
+      setLoading(false);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
  
 
@@ -87,6 +115,12 @@ const ProductionConfirm = ({navigation, route}) => {
   console.log(basicAuth);
 
   const setData = () => {
+
+    var total = parseInt(output)+parseInt(OrderID.OutPutQty) ;
+
+    console.log(total);
+
+    
               console.log('1 '+OrderID.OrderID);
               console.log('2 '+OrderID.PTaskID);
               console.log('3 '+OrderID.PTaskuuID);
@@ -152,31 +186,31 @@ const ProductionConfirm = ({navigation, route}) => {
                 console.log('Success');
 
                 try {
-                  console.log('           '+Order.OrderID);
+                  // console.log('           '+Order.OrderID);
+                  // firestore().collection('Users').doc(Order.OrderID).update({ 
+                  //   OutPutQty: output, 
+                  //   ScrapQty: scarp,
+                  //   Status: selectedValue,
+                  //   Processby: Processby,
+                  //   IdenID:idenID
+                  // })   
+                  if (idenID == '') {
                   firestore().collection('Users').doc(Order.OrderID).update({ 
-                    OutPutQty: output, 
+                    OutPutQty: total, 
+                    ScrapQty: scarp,
+                    Status: selectedValue,
+                    Processby: Processby,
+                    IdenID:OrderID.IdenID
+                  })
+                } else {
+                  firestore().collection('Users').doc(Order.OrderID).update({ 
+                    OutPutQty: total, 
                     ScrapQty: scarp,
                     Status: selectedValue,
                     Processby: Processby,
                     IdenID:idenID
                   })   
-                //   if (idenID == '') {
-                //   firestore().collection('Users').doc(Order.OrderID).update({ 
-                //     OutPutQty: output, 
-                //     ScrapQty: scarp,
-                //     Status: selectedValue,
-                //     Processby: Processby,
-                //     IdenID:OrderID.IdenID
-                //   })
-                // } else {
-                //   firestore().collection('Users').doc(Order.OrderID).update({ 
-                //     OutPutQty: output, 
-                //     ScrapQty: scarp,
-                //     Status: selectedValue,
-                //     Processby: Processby,
-                //     IdenID:idenID
-                //   })   
-                // }
+                }
                    
                   alert('Confirm ! Success')
                   navigation.navigate('Home')
@@ -223,23 +257,28 @@ const ProductionConfirm = ({navigation, route}) => {
         }}>
         <View style={{flex: 1}}>
           <Text style={styles.stext}>Output Production Quantity</Text>
-
+          <View style={{flexDirection:'row',alignItems:'center'}}>
           <Input
             containerStyle={styles.textInput}
-            inputContainerStyle={{borderBottomWidth: 0}}
+            inputContainerStyle={{borderBottomWidth: 1}}
             onChangeText={value => setoutput(value)}
           />
+          <Text style={styles.textshow}> {OrderID.Unit} </Text>
+          </View>
         </View>
 
-        <View style={{flex: 1}}>
+        {/* <View style={{flex: 1}}>
           <Text style={styles.stext}>Scrap Quantity</Text>
+          <View style={{flexDirection:'row',alignItems:'center'}}>
 
           <Input
             containerStyle={styles.textInput}
-            inputContainerStyle={{borderBottomWidth: 0}}
+            inputContainerStyle={{borderBottomWidth: 1}}
             onChangeText={value => setscarp(value)}
           />
-        </View>
+          <Text style={styles.textshow}> {OrderID.Unit} </Text>
+          </View>
+        </View> */}
 
         <View style={{flex: 1}}>
           <Text style={styles.stext}>Identified Stock ID</Text>
@@ -247,7 +286,7 @@ const ProductionConfirm = ({navigation, route}) => {
           <Input
             placeholder={OrderID.IdenID}
             containerStyle={styles.textInput}
-            inputContainerStyle={{borderBottomWidth: 0}}
+            inputContainerStyle={{borderBottomWidth: 1}}
             onChangeText={value => setidenID(value)}
           />
         </View>
@@ -262,7 +301,7 @@ const ProductionConfirm = ({navigation, route}) => {
           />
         </View> */}
 
-        <View style={{flex: 1}}>
+        {/* <View style={{flex: 1}}>
           <Text style={styles.stext}>Duration</Text>
           <View style={{flexDirection: 'row', alignItems: 'center'}}>
             <Input
@@ -273,12 +312,12 @@ const ProductionConfirm = ({navigation, route}) => {
                 height: hp('6.5%'),
               }}
               placeholder="Hour"
-              inputContainerStyle={{borderBottomWidth: 0}}
+              // inputContainerStyle={{borderBottomWidth: 0}}
               onChangeText={value => setdurationH(value)}
             />
-            {/* <Text style={{fontSize:20,}}>
+            <Text style={{fontSize:20,}}>
              H
-           </Text> */}
+           </Text>
 
             <Text style={{fontSize: 40, paddingHorizontal: 5, color: 'black'}}>
               :
@@ -294,11 +333,11 @@ const ProductionConfirm = ({navigation, route}) => {
               inputContainerStyle={{borderBottomWidth: 0}}
               onChangeText={value => setdurationM(value)}
             />
-            {/* <Text style={{fontSize:20}} >
+            <Text style={{fontSize:20}} >
            Min
-           </Text> */}
+           </Text>
           </View>
-        </View>
+        </View> */}
 
         <View style={{flex: 1, marginBottom: 10}}>
           <Text style={styles.stext}>Status</Text>
@@ -317,7 +356,8 @@ const ProductionConfirm = ({navigation, route}) => {
 
           <Input
             containerStyle={styles.textInput}
-            inputContainerStyle={{borderBottomWidth: 0}}
+            value={fname+'  '+ lname}
+            inputContainerStyle={{borderBottomWidth: 1}}
             onChangeText={value => setprocessby(value)}
           />
         </View>
@@ -366,6 +406,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#EEF1F3',
     height: 50,
     marginBottom: 15,
+    flex:1
   },
 });
 

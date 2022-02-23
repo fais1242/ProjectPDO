@@ -171,7 +171,7 @@ import { white } from 'react-native-paper/lib/typescript/styles/colors';
     const [Password, setpassword] = useState('');
     
     return (
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
           {/* <StatusBar backgroundColor='#FFB23E' barStyle="light-content"/> */}
           {/* <View style={ styles.title_header}>
                 <TouchableOpacity onPress={removeData}>
@@ -298,7 +298,7 @@ import { white } from 'react-native-paper/lib/typescript/styles/colors';
                 </TouchableOpacity>
             </View>
         </Animatable.View>
-      </View>
+      </ScrollView>
     );
   };
   
@@ -314,7 +314,7 @@ import { white } from 'react-native-paper/lib/typescript/styles/colors';
         paddingHorizontal: 20,
     },
     footer: {
-        height: hp('60%'),
+        height: hp('55%'),
         width: wp('100%'),
         backgroundColor: '#fff',
         borderTopLeftRadius: 30,

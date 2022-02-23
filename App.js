@@ -81,7 +81,9 @@ const App = () => {
         //   console.log(e);
         // }
         // console.log('user token: ', userToken);
-        dispatch({type: 'LOGIN', id: 'userName', token: 'userToken'});
+        dispatch({type: 'LOGIN'
+        ,id: 'userName'
+         ,token: 'userToken'});
       },
       signOut: async () => {
         // setUserToken(null);
@@ -127,66 +129,71 @@ const App = () => {
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer>
-        { loginState.userToken !== null ? (
-
-        <Stack.Navigator
-          screenOptions={{
-            headerStyle: {backgroundColor: '#FFB970'},
-            headerTintColor: '#fff',
-            headerTitleStyle: {fontWeight: 'bold'},
-            headerShadowVisible: false,
-            headerTitleAlign: 'center',
-          }}>
-          {/* <Stack.Screen
+        {loginState.userToken !== null ? (
+          <Stack.Navigator
+            initialRouteName="Home"
+            screenOptions={{
+              headerStyle: {backgroundColor: '#FFB970'},
+              headerTintColor: '#fff',
+              headerTitleStyle: {fontWeight: 'bold'},
+              headerShadowVisible: false,
+              headerTitleAlign: 'center',
+            }}>
+            {/* <Stack.Screen
           name="TestFirebase"
           component={TestFirebase}
           options={{title: 'SCAN QRCODE'}}
         /> */}
 
-          <Stack.Screen
-            name="Home"
-            component={Home}
-            options={{title: 'HOME'
-             ,headerShown:true
-          }}
-          />
+            <Stack.Screen
+              name="Home"
+              component={Home}
+              options={{title: 'HOME', headerShown: false}}
+            />
+            <Stack.Group screenOptions={{presentation: 'modal'}}>
+            <Stack.Screen
+              name="History"
+              component={History}
+              options={{title: 'LIST PRODUCTION'}}
+            />
+            </Stack.Group>
 
-          <Stack.Screen
-            name="Scanner"
-            component={Scanner}
-            options={{title: 'SCAN QRCODE'}}
-          />
+            <Stack.Screen
+                name="Scanner"
+                component={Scanner}
+                options={{title: 'SCAN QRCODE'}}
+              />
 
-          <Stack.Screen
-            name="Production"
-            component={ProductionOrder}
-            options={{title: 'PRODUCTION PREVIEW'}}
-          />
-          <Stack.Screen
-            name="ProductionShow"
-            component={ProductionShow}
-            options={{title: 'PRODUCTION SHOW'}}
-          />
-          <Stack.Screen
-            name="History"
-            component={History}
-            options={{title: 'LIST PRODUCTION'}}
-          />
+            <Stack.Screen
+              name="Production"
+              component={ProductionOrder}
+              options={{title: 'PRODUCTION PREVIEW'}}
+            />
 
-          <Stack.Screen
-            name="ProductionConfirm"
-            component={ProductionConfirm}
-            options={{title: 'PRODUCTION CONFIRM'}}
-          />
-          <Stack.Screen
-            name="Showsql"
-            component={Showsql}
-            options={{title: 'Showsql'}}
-          />
-        </Stack.Navigator>
-        ):
-     <RootStackScreen/>
-     }
+            <Stack.Screen
+              name="ProductionShow"
+              component={ProductionShow}
+              options={{title: 'PRODUCTION SHOW'}}
+            />
+
+
+
+            <Stack.Screen
+              name="ProductionConfirm"
+              component={ProductionConfirm}
+              options={{title: 'PRODUCTION CONFIRM'}}
+            />
+
+            <Stack.Screen
+              name="Showsql"
+              component={Showsql}
+              options={{title: 'Showsql'}}
+            />
+            <Stack.Group></Stack.Group>
+          </Stack.Navigator>
+        ) : (
+          <RootStackScreen />
+        )}
       </NavigationContainer>
     </AuthContext.Provider>
   );

@@ -83,8 +83,18 @@ const History = ({navigation}) => {
               }}>
               <Animatable.View style={styles.cardr}
               animation="fadeInDownBig">
+                <View style={{flexDirection:'row',alignItems:'center'}}>
+                <View style={{marginHorizontal:'1%',flex:3}}>
                 <Text style={styles.textshow}>OrderID :  {item.OrderID}</Text>
                 <Text style={styles.textshow}>Status :  {item.Status}</Text>
+                </View>
+                <Divider  width={1.5} orientation="vertical" style={{marginHorizontal:'1.5%'}} />
+                <View style={{marginHorizontal:'1%',flex:2.5}}>
+                <Text style={styles.textshow2}>Product :  {item.Product}</Text>
+                <Text style={styles.textshow2}>Planned :  {item.Planned} {item.Unit}</Text>
+                </View>
+                </View>
+
               </Animatable.View>
             </TouchableOpacity>
           )}
@@ -114,6 +124,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: 'black',
   },
+  textshow2: {
+    fontSize: 12,
+    // color: 'black',
+  },
   cardbg: {
     backgroundColor: '#3E3D50',
     // backgroundColor: 'white',
@@ -129,8 +143,10 @@ const styles = StyleSheet.create({
     // borderBottomEndRadius: 100,
     // borderBottomStartRadius: 100,
     borderRadius:5,
-    marginBottom: '5%',
-    padding: 20,
+    marginBottom: '4%',
+    paddingTop:'4%',
+    paddingBottom:'4%',
+    paddingLeft:'3%',
     // marginLeft: '20%',
   },
   // cardl: {
