@@ -16,7 +16,7 @@ const ProductionConfirm = ({navigation, route}) => {
   var Cxml2json = require('xml2js').parseString;
   var stripNS = require('xml2js').processors.stripPrefix;
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [OrderID, setOrderID] = useState([]); // Initial empty array of users
 
   const [fname,setfname] = useState('');
@@ -36,6 +36,7 @@ const ProductionConfirm = ({navigation, route}) => {
       });
       getData();
 
+
       console.log('-------------1'+OrderID.OrderID);
       console.log('-------------2'+JSON.stringify(OrderID));
   }, []);
@@ -45,7 +46,9 @@ const ProductionConfirm = ({navigation, route}) => {
   //   getData();
   // }, []);
 
-  const getData = () => {
+
+
+  const getData =  () => {
     try {
       console.log('start getdata');
       AsyncStorage.getItem('usernameDB').then(value => {
@@ -115,6 +118,8 @@ const ProductionConfirm = ({navigation, route}) => {
   console.log(basicAuth);
 
   const setData = () => {
+
+    setLoading(true)
 
     var total = parseInt(output)+parseInt(OrderID.OutPutQty) ;
 
@@ -199,7 +204,7 @@ const ProductionConfirm = ({navigation, route}) => {
                     OutPutQty: total, 
                     ScrapQty: scarp,
                     Status: selectedValue,
-                    Processby: Processby,
+                    Processby: fname+'  '+ lname,
                     IdenID:OrderID.IdenID
                   })
                 } else {
@@ -207,18 +212,23 @@ const ProductionConfirm = ({navigation, route}) => {
                     OutPutQty: total, 
                     ScrapQty: scarp,
                     Status: selectedValue,
-                    Processby: Processby,
+                    Processby: fname+'  '+ lname,
                     IdenID:idenID
                   })   
                 }
-                   
+                setLoading(false)
                   alert('Confirm ! Success')
+                  setLoading(false);
                   navigation.navigate('Home')
                 } catch (error) {
+                  setLoading(false)
+
                   console.log(error);
                 }
 
             }else{
+              setLoading(false)
+
               console.log('Error');
             }
           },
@@ -243,6 +253,14 @@ const ProductionConfirm = ({navigation, route}) => {
   // const [MOuuID, setMOuuID] = useState('');
   // const [AreaID, setAreaID] = useState('');
   // const [unit, setunit] = useState('');
+
+  if (loading) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   return (
     <ScrollView style={styles.container}>
@@ -373,6 +391,7 @@ const ProductionConfirm = ({navigation, route}) => {
           linearGradientProps={{
             colors: ['#08d4c4', '#01ab9d'],
           }}
+          
         />
       </Card>
       </Animatable.View>

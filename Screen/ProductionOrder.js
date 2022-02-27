@@ -25,11 +25,19 @@ const ProductionOrder = ({navigation}) => {
   const [plan, setplan] = useState('');
   const [unit, setunit] = useState('');
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getData();
   }, []);
+
+  if (loading) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   const getData = () => {
     try {

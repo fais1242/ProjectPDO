@@ -87,13 +87,14 @@ const styles = StyleSheet.create({
         
     },
     footer: {
-        height: hp('35%'),
-        width: wp('100%'),
+        // height: hp('35%'),
+        // width: wp('100%'),
         backgroundColor: '#fff',
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         paddingVertical: 50,
-        paddingHorizontal: 25
+        paddingHorizontal: 25,
+        flex:1
     },
     logo: {
       height: hp('18%'),
@@ -110,7 +111,7 @@ const styles = StyleSheet.create({
     },
     button: {
         alignItems: 'flex-end',
-        marginTop: 25
+        marginTop:'30%',
     },
     signIn: {
         height: hp('5%'),

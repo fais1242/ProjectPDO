@@ -24,6 +24,8 @@ const ProductionShow = ({navigation, route}) => {
 
   const [OrderID, setOrderID] = useState([]);
 
+  const [loading, setLoading] = useState(true);
+
   const {Order} = route.params;
 
   useEffect(() => {
@@ -33,12 +35,20 @@ const ProductionShow = ({navigation, route}) => {
       .get()
       .then(documentSnapshot => {
         setOrderID(documentSnapshot.data());
-        // setLoading(false);
+        setLoading(false);
       });
 
     console.log('-------------1' + OrderID.OrderID);
     console.log('-------------2' + JSON.stringify(OrderID));
   }, []);
+
+  if (loading) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   return (
     <ScrollView style={styles.container}>

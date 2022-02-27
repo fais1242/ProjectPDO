@@ -314,13 +314,16 @@ import { white } from 'react-native-paper/lib/typescript/styles/colors';
         paddingHorizontal: 20,
     },
     footer: {
-        height: hp('55%'),
-        width: wp('100%'),
+        // height: hp('50%'),
+        // width: wp('100%'),
         backgroundColor: '#fff',
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         paddingHorizontal: 20,
-        paddingVertical: 5
+        paddingVertical: 5,
+        flex:1,
+        marginTop:'20%',
+        paddingBottom:'20%'
     },
     logo: {
       marginLeft: 60,

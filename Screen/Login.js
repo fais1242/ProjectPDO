@@ -235,7 +235,7 @@ const Login =  ({navigation}) => {
         const [Password, setpassword] = useState('');    
       
       return (
-          <ScrollView style={styles.container}>
+          <ScrollView style={styles.container}>                            
               <StatusBar backgroundColor='#FFB970' barStyle="light-content"/>
             <View style={ styles.title_header}>
                 <TouchableOpacity onPress={() => navigation.navigate('Config')}>
@@ -261,6 +261,7 @@ const Login =  ({navigation}) => {
                   backgroundColor: colors.background
               }]}
           >
+              
               <Text style={[styles.text_footer, {
                   color: colors.text,
                   marginTop: 35
@@ -337,7 +338,8 @@ const Login =  ({navigation}) => {
                   </LinearGradient>
                   </TouchableOpacity>
               </View>
-          </Animatable.View>
+              
+          </Animatable.View>   
         </ScrollView>
       );
     };
@@ -369,13 +371,17 @@ const styles = StyleSheet.create({
         marginBottom: 10,
       },
     footer: {
-        height: hp('47.5%'),
-        width: wp('100%'),
+        // height: hp('47.5%'),
+        // width: wp('100%'),
+        flex:1,
         backgroundColor: '#fff',
         borderTopLeftRadius: 30,
         borderTopRightRadius: 30,
         paddingHorizontal: 20,
-        paddingVertical: 0
+        paddingVertical: 0,
+        marginTop:'15%',
+        paddingBottom:'20%'
+
     },
     text_header: {
         color: '#fff',
