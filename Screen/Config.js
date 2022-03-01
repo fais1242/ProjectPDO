@@ -111,7 +111,8 @@ import { white } from 'react-native-paper/lib/typescript/styles/colors';
      </soapenv:Envelope>`;
         await axios
           .post(
-            `${Url}/sap/bc/srt/scs/sap/yyd61neday_mobileprdcfauth?sap-vhost=my334089.sapbydesign.com`,
+            `${Url}`,
+            // /sap/bc/srt/scs/sap/yyd61neday_mobileprdcfauth?sap-vhost=my334089.sapbydesign.com
             xmls,
             {
               headers: {
@@ -166,7 +167,7 @@ import { white } from 'react-native-paper/lib/typescript/styles/colors';
 
         
   
-    const [Url, seturl] = useState('https://my334089.sapbydesign.com');
+    const [Url, seturl] = useState('https://my334089.sapbydesign.com/sap/bc/srt/scs/sap/yyd61neday_mobileprdcfauth?sap-vhost=my334089.sapbydesign.com');
     const [Username, setusername] = useState('');
     const [Password, setpassword] = useState('');
     

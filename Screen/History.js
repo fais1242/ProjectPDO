@@ -60,7 +60,7 @@ const History = ({navigation}) => {
 
 
   if (loading) {
-    return <ActivityIndicator />;
+    return <ActivityIndicator size="large" />;
   }
 
 

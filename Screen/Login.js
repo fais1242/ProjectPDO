@@ -171,7 +171,7 @@ const Login =  ({navigation}) => {
        </soapenv:Envelope>`;
           await axios
             .post(
-              `${Url}/sap/bc/srt/scs/sap/yyd61neday_mobileprdcfauth?sap-vhost=my334089.sapbydesign.com`,
+              `${Url}`,
               xmls,
               {
                 headers: {
@@ -197,9 +197,9 @@ const Login =  ({navigation}) => {
               Alert.alert('Connect Success');
               
               var Token ={
-                  useToken : 1234,
-                  id : id,
-                  ps : ps 
+                  useToken : Lusername+Lpassword,
+                  id : Lusername,
+                  ps : Lpassword 
               }
               AsyncStorage.setItem('userToken', JSON.stringify(Token));
 

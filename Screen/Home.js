@@ -39,7 +39,7 @@ const Home = ({navigation}) => {
           setlname(Username.lname)
         }
       });
-      setLoading(false);
+      // setLoading(false);
     } catch (e) {
       console.log(e);
     }
