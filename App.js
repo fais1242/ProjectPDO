@@ -82,23 +82,23 @@ const App = () => {
         // }
         // console.log('user token: ', userToken);
         dispatch({type: 'LOGIN'
-        ,id: 'userName'
+        // ,id: 'userName'
          ,token: 'userToken'});
       },
       signOut: async () => {
         // setUserToken(null);
         // setIsLoading(false);
-        // try {
-        //   await AsyncStorage.removeItem('userToken');
-        // } catch (e) {
-        //   console.log(e);
-        // }
+        try {
+          await AsyncStorage.removeItem('userToken');
+        } catch (e) {
+          console.log(e);
+        }
         dispatch({type: 'LOGOUT'});
       },
-      conFig: () => {
-        setUserToken('fgkj');
-        // setIsLoading(false);
-      },
+      // conFig: () => {
+      //   setUserToken('fgkj');
+      //   // setIsLoading(false);
+      // },
     }),
     [],
   );
@@ -113,7 +113,7 @@ const App = () => {
       } catch (e) {
         console.log(e);
       }
-      // console.log('user token: ',userToken);
+      console.log('user token: ',userToken);
       dispatch({type: 'RETRIEVE_TOKEN', token: userToken});
     }, 1000);
   }, []);

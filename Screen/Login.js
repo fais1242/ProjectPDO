@@ -56,39 +56,39 @@ const Login =  ({navigation}) => {
 
     const { signIn } = React.useContext(AuthContext);
 
-    const textInputChange = (val) => {
-        if( val.trim().length >= 4 ) {
-            setData({
-                ...data,
-                username: val,
-                check_textInputChange: true,
-                isValidUser: true
-            });
-        } else {
-            setData({
-                ...data,
-                username: val,
-                check_textInputChange: false,
-                isValidUser: false
-            });
-        }
-    }
+    // const textInputChange = (val) => {
+    //     if( val.trim().length >= 4 ) {
+    //         setData({
+    //             ...data,
+    //             username: val,
+    //             check_textInputChange: true,
+    //             isValidUser: true
+    //         });
+    //     } else {
+    //         setData({
+    //             ...data,
+    //             username: val,
+    //             check_textInputChange: false,
+    //             isValidUser: false
+    //         });
+    //     }
+    // }
 
-    const handlePasswordChange = (val) => {
-        if( val.trim().length >= 8 ) {
-            setData({
-                ...data,
-                password: val,
-                isValidPassword: true
-            });
-        } else {
-            setData({
-                ...data,
-                password: val,
-                isValidPassword: false
-            });
-        }
-    }
+    // const handlePasswordChange = (val) => {
+    //     if( val.trim().length >= 8 ) {
+    //         setData({
+    //             ...data,
+    //             password: val,
+    //             isValidPassword: true
+    //         });
+    //     } else {
+    //         setData({
+    //             ...data,
+    //             password: val,
+    //             isValidPassword: false
+    //         });
+    //     }
+    // }
 
     const updateSecureTextEntry = () => {
         setData({
@@ -97,19 +97,19 @@ const Login =  ({navigation}) => {
         });
     }
 
-    const handleValidUser = (val) => {
-        if( val.trim().length >= 4 ) {
-            setData({
-                ...data,
-                isValidUser: true
-            });
-        } else {
-            setData({
-                ...data,
-                isValidUser: false
-            });
-        }
-    }
+    // const handleValidUser = (val) => {
+    //     if( val.trim().length >= 4 ) {
+    //         setData({
+    //             ...data,
+    //             isValidUser: true
+    //         });
+    //     } else {
+    //         setData({
+    //             ...data,
+    //             isValidUser: false
+    //         });
+    //     }
+    // }
 
     const loginHandle = (userName, password) => {
 
@@ -197,7 +197,9 @@ const Login =  ({navigation}) => {
               Alert.alert('Connect Success');
               
               var Token ={
-                  useToken : 1234
+                  useToken : 1234,
+                  id : id,
+                  ps : ps 
               }
               AsyncStorage.setItem('userToken', JSON.stringify(Token));
 
