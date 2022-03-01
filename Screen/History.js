@@ -6,10 +6,11 @@ import {
   FlatList,
   SafeAreaView,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+  TextInput
 } from 'react-native';
 import React, { useState, useEffect} from 'react';
-import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
+import {Button, Image, Card, Divider, Icon, SearchBar} from 'react-native-elements';
 import firestore from '@react-native-firebase/firestore';
 import LinearGradient from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
@@ -32,9 +33,10 @@ import * as Animatable from 'react-native-animatable';
 // ];
 
 const History = ({navigation}) => {
-
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
   const [users, setUsers] = useState([]); // Initial empty array of users
+  const [search, setsearch] = useState('');
+  const [masterData, setmasterData] = useState([]);
 
   useEffect(() => {
     const subscriber = firestore()
@@ -63,10 +65,32 @@ const History = ({navigation}) => {
     return <ActivityIndicator />;
   }
 
+  // const searchFilter = (text) => {
+  //   if (text){
+  //     const newData = masterData.filter((item) => {
+  //       const itemData = item.id ? item.OrderID.toUpperCase()
+  //                   : ''.toUpperCase();
+  //       const textData = text.toUpperCase();
+  //       return itemData.indexOf(textData) > -1;
+  //     });
+  //     setUsers(newData);
+  //     setsearch(text);
+  //   } else {
+  //     setUsers(masterData);
+  //     setsearch(text);
+  //   }
+  // }
 
   return (
     <SafeAreaView style={styles.container}>
       <Divider color="white" width={1.5} style={{marginHorizontal: 20}} />
+      <TextInput
+        style={styles.textInputStyle}
+        value={search}
+        placeholder="Search Here"
+        underlineColorAndroid="transparent"
+        onChangeText={(text) => searchFilter(text)}
+      />
       <Animatable.View style={{flex:1}}
       animation="fadeIn"
       // duration={4000}
@@ -149,6 +173,14 @@ const styles = StyleSheet.create({
     paddingLeft:'3%',
     // marginLeft: '20%',
   },
+  textInputStyle: {
+    height: 50,
+    borderWidth: 1,
+    paddingLeft: 20,
+    margin: 20,
+    borderColor: '#009688',
+    backgroundColor: 'white'
+  }
   // cardl: {
   //   backgroundColor: '#ffff',
   //   alignItems: 'flex-start',

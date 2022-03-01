@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
+import {Button, Image, Card, Divider, Icon, Avatar} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
 import { AuthContext } from '../components/context';
@@ -13,7 +13,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Home = ({navigation}) => {
   const { signOut } = React.useContext(AuthContext);
-
   const [fname,setfname] = useState('');
   const [lname,setlname] = useState('');
 
@@ -61,12 +60,27 @@ const Home = ({navigation}) => {
 
       <Card containerStyle={{borderRadius: 10, marginBottom: 10,}}>
         <View style={{flex: 1, flexDirection: 'row'}}>
-          <View style={{flex: 3}}>
+        <View
+            style={{
+              flex: 1,
+              flexDirection: 'row',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Avatar
+              size='medium'
+              rounded
+              source={{
+                uri: 'https://icon-library.com/images/users-icon-png/users-icon-png-17.jpg',
+              }}
+            > 
+            </Avatar>
+        </View>
+          <View style={{flex: 2}}>
             <Text style={styles.textname}>First Name : {fname}</Text>
             <Text style={styles.textname}>Last Name : {lname}</Text>
           </View>
-
-          <View
+            <View
             style={{
               flex: 1,
               flexDirection: 'row-reverse',
@@ -86,14 +100,14 @@ const Home = ({navigation}) => {
               }}
               ViewComponent={LinearGradient} // Don't forget this!
               linearGradientProps={{
-                colors: ['#CC3300', '#990000'],
+                colors: ['#FF719B', '#E0285F'],
               }}
               onPress={() => {
                 signOut();
               }}
               title={'Logout'}
             />
-          </View>
+            </View>
         </View>
       </Card>
 

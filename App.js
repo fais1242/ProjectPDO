@@ -20,6 +20,7 @@ import TestFirebase from './Screen/TestFirebase';
 import RootStackScreen from './Screen/RootSrackScreen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {AuthContext} from './components/context';
+import Search from './Screen/Search';
 
 const Stack = createNativeStackNavigator();
 
@@ -188,6 +189,11 @@ const App = () => {
               name="Showsql"
               component={Showsql}
               options={{title: 'Showsql'}}
+            />
+            <Stack.Screen
+              name="Search"
+              component={Search}
+              options={{title: 'Search'}}
             />
             <Stack.Group></Stack.Group>
           </Stack.Navigator>

@@ -12,6 +12,7 @@ import firestore from '@react-native-firebase/firestore';
 import LinearGradient from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
 
+
 const ProductionConfirm = ({navigation, route}) => {
   var Cxml2json = require('xml2js').parseString;
   var stripNS = require('xml2js').processors.stripPrefix;
@@ -422,7 +423,7 @@ const styles = StyleSheet.create({
   },
   textInput: {
     borderRadius: 5,
-    backgroundColor: '#EEF1F3',
+    backgroundColor: '#FDFBFB',
     height: 50,
     marginBottom: 15,
     flex:1
