@@ -20,6 +20,15 @@ const StartScreen = ({navigation}) => {
     return (
       <View style={styles.container}>
           <StatusBar backgroundColor='#FFB970' barStyle="light-content"/>
+          <View style={styles.header1}>
+            <Animatable.Image 
+                animation="bounceIn"
+                duraton="1500"
+            source={require('../assets/LogoSAP.png')}
+            style={styles.logo1}
+            resizeMode="stretch"
+            />
+          </View>
         <View style={styles.header}>
             <Animatable.Image 
                 animation="bounceIn"
@@ -75,16 +84,18 @@ const styles = StyleSheet.create({
     header: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 50,
+        marginTop: -15,
         height: hp('20%'),
         width: wp('100%')   
+    },
+    header1: {
+        marginLeft: wp('75%'),
     },
     text_header: {
         color:'#fff',
         marginVertical:35,
         marginLeft: 20,
         fontSize:20
-        
     },
     footer: {
         // height: hp('35%'),
@@ -100,6 +111,10 @@ const styles = StyleSheet.create({
       height: hp('18%'),
       width: wp('90%') 
     },
+    logo1: {
+        height: hp('5%'),
+        width: wp('20%') 
+      },
     title: {
         color: '#05375a',
         fontSize: 30,

@@ -184,8 +184,8 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   textshow2: {
-    fontSize: 12,
-    // color: 'black',
+    fontSize: 16,
+    color: 'black',
   },
   cardbg: {
     backgroundColor: '#3E3D50',

@@ -3,7 +3,7 @@ import React, {useState, useEffect} from 'react';import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
+import {Button, Image, Card, Divider, Icon, Avatar} from 'react-native-elements';
 import LinearGradient from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
 import { AuthContext } from '../components/context';
@@ -51,19 +51,31 @@ const Home = ({navigation}) => {
         <Animatable.Image
           animation="bounceIn"
           duraton="1500"
-          source={require('../assets/logo2.png')}
+          source={require('../assets/ArabicaLogo2.png')}
           style={styles.logo}
           resizeMode="stretch"
           
         />
       </View>
+      <Avatar
+          containerStyle={{marginBottom: 10,marginHorizontal: 160, marginTop: -30}}
+          size="large"
+          rounded
+          source=
+          {{
+            uri:
+              'https://icon-library.com/images/users-icon-png/users-icon-png-17.jpg',
+          }}
+          >
+        <Avatar.Accessory size={23} onPress={() => {signOut();}}/>
+        </Avatar>
       {/* <Divider color="white" width={1.5} style={{marginHorizontal: 20}} /> */}
 
-      <Card containerStyle={{borderRadius: 10, marginBottom: 10,}}>
+      <Card containerStyle={{borderRadius: 30, marginBottom: 10,}}>
         <View style={{flex: 1, flexDirection: 'row'}}>
           <View style={{flex: 3}}>
-            <Text style={styles.textname}>First Name : {fname}</Text>
-            <Text style={styles.textname}>Last Name : {lname}</Text>
+            <Text style={styles.textname}>  First Name : {fname}</Text>
+            <Text style={styles.textname}>  Last Name : {lname}</Text>
           </View>
 
           <View
@@ -82,16 +94,16 @@ const Home = ({navigation}) => {
 
             <Button
               buttonStyle={{ 
-                borderRadius: 13,
+                borderRadius: 15,
               }}
               ViewComponent={LinearGradient} // Don't forget this!
               linearGradientProps={{
-                colors: ['#CC3300', '#990000'],
+                colors: ['#554F9B', '#327EB8'],
               }}
               onPress={() => {
                 signOut();
               }}
-              title={'Logout'}
+              title={'LOGOUT'}
             />
           </View>
         </View>
@@ -196,7 +208,7 @@ const styles = StyleSheet.create({
     marginBottom:'10%'
 },
 logo: {
-  width: wp('100%'),
+  width: wp('95%'),
   height: hp('20%'),
 },
 });

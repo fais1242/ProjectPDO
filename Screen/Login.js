@@ -239,14 +239,29 @@ const Login =  ({navigation}) => {
       return (
           <ScrollView style={styles.container}>                            
               <StatusBar backgroundColor='#FFB970' barStyle="light-content"/>
-            <View style={ styles.title_header}>
-                <TouchableOpacity onPress={() => navigation.navigate('Config')}>
+            <View style={{flex: 1, flexDirection: 'row', marginTop: 10, marginBottom: 40}}>
+                <View style={{
+                    flex: 0,
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    marginLeft: 165
+                    }}>
+                <Text style={{fontSize: 23,color: 'white'}}>
+                    LOGIN
+                </Text>
+                </View>
+                <View style={{
+                    flex: 1,
+                    marginLeft: 100
+                    }}>
+                <TouchableOpacity style={{marginRight: 0}} onPress={() => navigation.navigate('Config')}>
                 <Feather
                     name="settings"
                     color="white"
                     size={30}
                 />
                 </TouchableOpacity>
+                </View>
             </View>
             <View style={styles.header}>
             <Animatable.Image 
