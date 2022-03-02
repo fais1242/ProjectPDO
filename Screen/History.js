@@ -9,7 +9,7 @@ import {
   ActivityIndicator
 } from 'react-native';
 import React, { useState, useEffect} from 'react';
-import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
+import {Button, Image, Card, Divider, Icon, SearchBar} from 'react-native-elements';
 import firestore from '@react-native-firebase/firestore';
 import LinearGradient from 'react-native-linear-gradient';
 import * as Animatable from 'react-native-animatable';
@@ -31,10 +31,14 @@ import * as Animatable from 'react-native-animatable';
 //   },
 // ];
 
+
+
 const History = ({navigation}) => {
 
   const [loading, setLoading] = useState(true); // Set loading to true on component mount
   const [users, setUsers] = useState([]); // Initial empty array of users
+
+  
 
   useEffect(() => {
     const subscriber = firestore()
@@ -49,32 +53,87 @@ const History = ({navigation}) => {
           });
         });
   
-        setUsers(users);
+        setFilteredDataSource(users);
+        setMasterDataSource(users);
+        // setUsers(users);
         setLoading(false);
       });
   
     // Unsubscribe from events when no longer in use
     return () => subscriber();
   }, []);
+
+
+  const [search, setSearch] = useState("");
+  const [filteredDataSource, setFilteredDataSource] = useState([]);
+  const [masterDataSource, setMasterDataSource] = useState([]);
+
+  // const updateSearch = (search) => {
+  //   setSearch(search);
+  // };
+
+  const searchFilterFunction = (text) => {
+    // Check if searched text is not blank
+    if (text) {
+      // Inserted text is not blank
+      // Filter the masterDataSource
+      // Update FilteredDataSource
+      const newData = masterDataSource.filter(function (item) {
+        const itemData = item.OrderID
+          ? item.OrderID.toUpperCase()
+          : ''.toUpperCase();
+        const textData = text.toUpperCase();
+        return itemData.indexOf(textData) > -1;
+      });
+      setFilteredDataSource(newData);
+      setSearch(text);
+    } else {
+      // Inserted text is blank
+      // Update FilteredDataSource with masterDataSource
+      setFilteredDataSource(masterDataSource);
+      setSearch(text);
+    }
+  };
+
+
   
-
-
   if (loading) {
-    return <ActivityIndicator size="large" />;
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
 
-
+  // if (loading) {
+  //   return <ActivityIndicator size="large" />;
+  // }
   return (
     <SafeAreaView style={styles.container}>
       <Divider color="white" width={1.5} style={{marginHorizontal: 20}} />
+      
       <Animatable.View style={{flex:1}}
       animation="fadeIn"
       // duration={4000}
       >
+        
       <Card containerStyle={styles.cardbg}
       >
+        <SearchBar
+          round
+          searchIcon={{ size: 24 }}
+          onChangeText={(text) => searchFilterFunction(text)}
+          onClear={(text) => searchFilterFunction('')}
+          placeholder="Type Here..."
+          value={search}
+
+          lightTheme={true}
+          inputStyle={{color:'black'}}
+          containerStyle={{ backgroundColor:'white',borderWidth: 1, borderRadius: 5, marginBottom:'3%'}}
+        />
+        
         <FlatList
-          data={users}
+          data={filteredDataSource}
           key={item => item.id}
           renderItem={({item}) => (
             <TouchableOpacity
@@ -132,7 +191,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#3E3D50',
     // backgroundColor: 'white',
     borderRadius: 20,
-    flex: 1,
+    // flex: 1,
     bottom: 10,
   },
   cardr: {
