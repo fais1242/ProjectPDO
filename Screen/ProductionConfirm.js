@@ -202,7 +202,7 @@ const ProductionConfirm = ({navigation, route}) => {
                   if (idenID == '') {
                   firestore().collection('Users').doc(Order.OrderID).update({ 
                     OutPutQty: total, 
-                    ScrapQty: scarp,
+                    // ScrapQty: scarp,
                     Status: selectedValue,
                     Processby: fname+'  '+ lname,
                     IdenID:OrderID.IdenID
@@ -210,7 +210,7 @@ const ProductionConfirm = ({navigation, route}) => {
                 } else {
                   firestore().collection('Users').doc(Order.OrderID).update({ 
                     OutPutQty: total, 
-                    ScrapQty: scarp,
+                    // ScrapQty: scarp,
                     Status: selectedValue,
                     Processby: fname+'  '+ lname,
                     IdenID:idenID
@@ -279,6 +279,7 @@ const ProductionConfirm = ({navigation, route}) => {
           <Input
             containerStyle={styles.textInput}
             inputContainerStyle={{borderBottomWidth: 1}}
+            keyboardType='number-pad'
             onChangeText={value => setoutput(value)}
           />
           <Text style={styles.textshow}> {OrderID.Unit} </Text>
