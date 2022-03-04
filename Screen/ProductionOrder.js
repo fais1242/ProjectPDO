@@ -28,35 +28,31 @@ const ProductionOrder = ({navigation}) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getData();
+  // await getData(),
+  // setLoading(false),
+  getshow()
   }, []);
 
-  if (loading) {
-    return (
-      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <ActivityIndicator size="large" />
-      </View>
-    );
-  }
+  getshow = async () => {
 
-  const getData = () => {
+  let Order ;
+
     try {
       console.log('start getdata');
-      AsyncStorage.getItem('OrderData').then(value => {
+  await  AsyncStorage.getItem('OrderData').then(value => {
         if (value !== null) {
           console.log('getdata');
           console.log(value);
-          let Order = JSON.parse(value);
+          Order = JSON.parse(value);
           console.log(Order);
           setorderid(Order.OrderID);
           console.log(orderid);
         }
       });
-      setLoading(false);
-    } catch (e) {
+    } 
+    catch (e) {
       console.log(e);
     }
-  };
 
   let xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:glob="http://sap.com/xi/SAPGlobal20/Global">
   <soapenv:Header/>
@@ -66,7 +62,7 @@ const ProductionOrder = ({navigation}) => {
            <SelectionByProductionLotID>
               <InclusionExclusionCode>i</InclusionExclusionCode>
               <IntervalBoundaryTypeCode>1</IntervalBoundaryTypeCode>
-              <LowerBoundaryProductionLotID>${orderid}</LowerBoundaryProductionLotID>
+              <LowerBoundaryProductionLotID>${Order.OrderID}</LowerBoundaryProductionLotID>
            </SelectionByProductionLotID>
          </ProductionLotSelectionByElements>
         <ProcessingConditions>
@@ -88,7 +84,9 @@ const ProductionOrder = ({navigation}) => {
   var basicAuth = 'Basic ' + encoded;
   console.log(basicAuth);
 
-  axios
+ 
+    console.log('getshow'+Order.OrderID);
+    axios
     .post(
       `https://my334089.sapbydesign.com/sap/bc/srt/scs/sap/queryproductionlotisiin?sap-vhost=my334089.sapbydesign.com`,
       xml,
@@ -101,6 +99,7 @@ const ProductionOrder = ({navigation}) => {
       },
     )
     .then(res => {
+      // setLoading(true)
       console.log(res.data);
       Cxml2json(
         res.data,
@@ -124,6 +123,11 @@ const ProductionOrder = ({navigation}) => {
               .ProductionLot[0].ConfirmationGroup[i].ProductionTask[0]
               .OperationTypeCode[0]._ == 1
           ) {
+            // console.log('1                                            '+result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+            // .ProductionLot[0].ConfirmationGroup[1].MaterialOutput[1]
+            // .TotalConfirmedQuantity[0]._);
+            // console.log('2                                            '+ result.Envelope.Body[0]['ProductionLotByElementsResponse_sync'][0]['ProductionLot'][0]
+            // ['ConfirmationGroup'][i]['MaterialOutput'].length);
             console.log(i);
             setoperation(
               result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
@@ -207,15 +211,17 @@ const ProductionOrder = ({navigation}) => {
                 .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
                 .IdentifiedStockID[0],
             );
+            
             } else  {
               for (let index = 0; index < result.Envelope.Body[0]['ProductionLotByElementsResponse_sync'][0]['ProductionLot'][0]
               ['ConfirmationGroup'][i]['MaterialOutput'].length; index++) {
                 
                 j++;
 
-                if (  result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                if ( result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
                   .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
-                  .TotalConfirmedQuantity[0]._ > 0) {
+                  .TotalConfirmedQuantity[0]._ > '0') {
+                    console.log('total: '+j);
             setoutput(
               result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
                 .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
@@ -246,6 +252,7 @@ const ProductionOrder = ({navigation}) => {
                 .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
                 .IdentifiedStockID[0],
             );
+            break;
                 }   
               }
             }
@@ -286,11 +293,16 @@ const ProductionOrder = ({navigation}) => {
             console.log('4' + MOuuID);
             console.log('5' + AreaID);
             console.log('6' + IdenID);
-            setLoading(false);
           }
         },
-      );
-    });
+      
+        );
+        setLoading(false)
+      });
+
+  }
+
+ 
   // if (loading) {
   //   return <ActivityIndicator />;
   // }
@@ -352,6 +364,14 @@ const ProductionOrder = ({navigation}) => {
   //     console.log(e);
   //   }
   // };
+
+  if (loading) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
+  }
 
   return (
     <ScrollView style={styles.container}>

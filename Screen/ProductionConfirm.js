@@ -156,7 +156,7 @@ const ProductionConfirm = ({navigation, route}) => {
                    <MaterialOutputUUID>${OrderID.MOuuID}</MaterialOutputUUID>
                    <IdentifiedStockID>${idenID}</IdentifiedStockID>
                    <TargetLogisticsAreaID>${OrderID.AreaID}</TargetLogisticsAreaID>
-                   <ConfirmedQuantity unitCode="${OrderID.Unit}">1</ConfirmedQuantity>
+                   <ConfirmedQuantity unitCode="${OrderID.Unit}">${output}</ConfirmedQuantity>
                 </MaterialOutput>
              </ConfirmationGroup>
           </ProductionLot>

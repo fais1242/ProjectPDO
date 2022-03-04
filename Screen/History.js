@@ -124,7 +124,7 @@ const History = ({navigation}) => {
           searchIcon={{ size: 24 }}
           onChangeText={(text) => searchFilterFunction(text)}
           onClear={(text) => searchFilterFunction('')}
-          placeholder="Type Here..."
+          placeholder="Type OrderID..."
           value={search}
 
           lightTheme={true}
@@ -184,7 +184,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   textshow2: {
-    fontSize: 16,
+    fontSize: 14,
     color: 'black',
   },
   cardbg: {

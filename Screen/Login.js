@@ -8,7 +8,8 @@ import {
     StyleSheet ,
     StatusBar,
     Alert,
-    ScrollView
+    ScrollView,
+    ActivityIndicator
 } from 'react-native';
 import * as Animatable from 'react-native-animatable';
 import LinearGradient from 'react-native-linear-gradient';
@@ -143,6 +144,7 @@ const Login =  ({navigation}) => {
         if (Url.length == 0 || Username.length == 0 || Password.length == 0) {
           Alert.alert('Warning!','กรุณากรอกข้อมูล');
         } else {
+            setLoading(true);
           var createuser = Username + ':' + Password;
           var bytes = utf8.encode(createuser);
           var encoded = base64.encode(bytes);
@@ -219,9 +221,11 @@ const Login =  ({navigation}) => {
                       console.log(username);
                       console.log('setdata');
                      AsyncStorage.setItem('usernameDB', JSON.stringify(username));
+                     setLoading(false);
                     Alert.alert('Successfully', 'ยินต้อนรับเข้าสู่ระบบ By Design')
                     ,signIn({Lusername,Lpassword})
                 }else{
+                    setLoading(false);
                   Alert.alert('Warning!', 'Username หรือ password ไม่ถูกต้อง')
                 }
     
@@ -230,6 +234,17 @@ const Login =  ({navigation}) => {
            }
         )};
       };
+
+      if (loading) {
+        return (
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <ActivityIndicator size="large" />
+          </View>
+        );
+      }
+
+      const [loading, setLoading] = useState(false);
+
         const [Lusername, Loginusername] = useState('');
         const [Lpassword, Loginpassword] = useState('');
         const [Url, seturl] = useState('');
@@ -239,30 +254,6 @@ const Login =  ({navigation}) => {
       return (
           <ScrollView style={styles.container}>                            
               <StatusBar backgroundColor='#FFB970' barStyle="light-content"/>
-            <View style={{flex: 1, flexDirection: 'row', marginTop: 10, marginBottom: 40}}>
-                <View style={{
-                    flex: 0,
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    marginLeft: 165
-                    }}>
-                <Text style={{fontSize: 23,color: 'white'}}>
-                    LOGIN
-                </Text>
-                </View>
-                <View style={{
-                    flex: 1,
-                    marginLeft: 100
-                    }}>
-                <TouchableOpacity style={{marginRight: 0}} onPress={() => navigation.navigate('Config')}>
-                <Feather
-                    name="settings"
-                    color="white"
-                    size={30}
-                />
-                </TouchableOpacity>
-                </View>
-            </View>
             <View style={styles.header}>
             <Animatable.Image 
                   animation="bounceIn"
@@ -379,6 +370,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         paddingHorizontal: 20,
         paddingBottom: 20,
+        marginTop:'5%'
         
     },
     logo: {

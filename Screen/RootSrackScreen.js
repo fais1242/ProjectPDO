@@ -36,14 +36,14 @@ const RootStackScreen = ({navigation}) => (
     <RootStack.Screen
       name="Login"
       component={Login}
-      options={{
-        title: 'LOGIN',headerShown: false
-        // headerRight: ({navigation}) => (
-        //   <TouchableOpacity onPress={() => navigation.navigate('Config')}>
-        //     <Feather name="settings" color="white" size={30} />
-        //   </TouchableOpacity>
-        // ),
-      }}
+      options={({route, navigation}) =>({
+        title: 'LOGIN',headerShown: true,
+        headerRight: () => (
+          <TouchableOpacity onPress={() => navigation.navigate('Config')}>
+            <Feather name="settings" color="white" size={30} />
+          </TouchableOpacity>
+        )
+      })}
     />
     {/* <RootStack.Screen name="Home" component={Home} options={{title: 'Home',headerShown:false}} /> */}
     <RootStack.Screen

@@ -23,18 +23,15 @@ import firestore from '@react-native-firebase/firestore';
 
 const Scanner = ({navigation}) => {
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   // useEffect(() => {
-  //   if (loading) {
-  //     onSuccess();
-  //     return <ActivityIndicator />;
-  //     setLoading(false);
-  //   }
+  //   ontest();
   // }, []);
 
  var check = false;
   const onSuccess = async e => {
+  setLoading(true);
   Alert.alert('Scan Success')
   console.log('1 '+e.data);
   await firestore()
@@ -47,7 +44,8 @@ const Scanner = ({navigation}) => {
     if (querySnapshot.size > 0) {
       console.log('record fail');
       check = true
-      Alert.alert('Order fail');
+      setLoading(false);
+      Alert.alert('Order fail','Order ซ้ำ กรุณาตรวจสอบใหม่อีกครั้ง');
       navigation.navigate('Home');
     }
     }
@@ -65,11 +63,37 @@ const Scanner = ({navigation}) => {
       console.log(Order.OrderID);
       console.log('setdata');
     AsyncStorage.setItem('OrderData', JSON.stringify(Order));
+    setLoading(false);
     navigation.navigate('Production');
   } catch (e) {
       console.log(e);
   } 
   }
+  }
+
+//   const ontest = () => {
+//     try {
+//       console.log('start setdata');
+//         var Order = {
+//         OrderID : '691',
+//       }
+//       console.log(Order.OrderID);
+//       console.log('setdata');
+//     AsyncStorage.setItem('OrderData', JSON.stringify(Order));
+//     navigation.navigate('Production');
+//   } catch (e) {
+//       console.log(e);
+//   } 
+// }
+
+  
+
+  if (loading) {
+    return (
+      <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <ActivityIndicator size="large" />
+      </View>
+    );
   }
 
 
@@ -93,7 +117,7 @@ const Scanner = ({navigation}) => {
           height: hp('70%'),
         }}
         showMarker={true}
-        onRead={onSuccess}
+        // onRead={onSuccess}
         fadeIn={true}
       />
     </ScrollView>
