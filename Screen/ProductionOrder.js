@@ -258,16 +258,24 @@ const ProductionOrder = ({navigation}) => {
                 .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
                 .TargetLogisticsAreaID[0],
             );
-            setIdenID(
-              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
-                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
-                .IdentifiedStockID[0],
-            );
+            // setIdenID(
+            //   result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+            //     .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
+            //     .IdentifiedStockID[0],
+            // );
             setdesP(
               result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
                 .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
                 .MaterialOutputInspection[0].InspectionSamplingDetails[0].ProductDescription[0],
             );
+            if (result.Envelope.Body[0]['ProductionLotByElementsResponse_sync'][0]['ProductionLot'][0]
+            ['ConfirmationGroup'][i]['MaterialOutput'][j]['IdentifiedStockID'] != undefined) {
+              setIdenID(
+                result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                  .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
+                  .IdentifiedStockID[0],
+              );   
+            }
             break;
                 }   
               }
