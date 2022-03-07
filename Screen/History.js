@@ -149,7 +149,7 @@ const History = ({navigation}) => {
                 </View>
                 <Divider  width={1.5} orientation="vertical" style={{marginHorizontal:'1.5%'}} />
                 <View style={{marginHorizontal:'1%',flex:2.5}}>
-                <Text style={styles.textshow2}>Product :  {item.Product}</Text>
+                <Text style={styles.textshow2}>Product :  {item.ProductDes}</Text>
                 <Text style={styles.textshow2}>Planned :  {item.Planned} {item.Unit}</Text>
                 </View>
                 </View>

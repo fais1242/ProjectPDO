@@ -69,7 +69,7 @@ const ProductionShow = ({navigation, route}) => {
             <Icon name="filetext1" type="antdesign" size={40} />
             <Card containerStyle={styles.cardstyle}>
               <Text style={styles.textshow}>
-                Operation ID : {OrderID.Operation}
+                Product ID : {OrderID.ProductID}
               </Text>
             </Card>
           </View>
@@ -78,7 +78,7 @@ const ProductionShow = ({navigation, route}) => {
             <Icon name="inbox" type="antdesign" size={40} />
             <Card containerStyle={styles.cardstyle}>
               <Text style={styles.textshow}>
-                Output Product : {OrderID.Product}{' '}
+                Product Description : {OrderID.ProductDes}{' '}
               </Text>
             </Card>
           </View>

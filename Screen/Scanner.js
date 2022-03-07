@@ -75,7 +75,7 @@ const Scanner = ({navigation}) => {
 //     try {
 //       console.log('start setdata');
 //         var Order = {
-//         OrderID : '691',
+//         OrderID : '635',
 //       }
 //       console.log(Order.OrderID);
 //       console.log('setdata');

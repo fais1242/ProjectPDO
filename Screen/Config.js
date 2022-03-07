@@ -165,8 +165,7 @@ import { white } from 'react-native-paper/lib/typescript/styles/colors';
     //     }
     //   }
 
-        
-  
+          
     const [Url, seturl] = useState('https://my334089.sapbydesign.com/sap/bc/srt/scs/sap/yyd61neday_mobileprdcfauth?sap-vhost=my334089.sapbydesign.com');
     const [Username, setusername] = useState('');
     const [Password, setpassword] = useState('');
@@ -311,8 +310,9 @@ import { white } from 'react-native-paper/lib/typescript/styles/colors';
     header: {
         height: hp('15%'),
         width: wp('100%'),
-        justifyContent: 'flex-end',
-        paddingHorizontal: 20,
+        justifyContent: 'center',
+        // paddingHorizontal: 20,
+        alignItems:'center'
     },
     footer: {
         // height: hp('50%'),
@@ -327,16 +327,18 @@ import { white } from 'react-native-paper/lib/typescript/styles/colors';
         paddingBottom:'20%'
     },
     logo: {
-      marginLeft: 60,
+      // marginLeft: 60,
       height: hp('12%'),
       width: wp('50%'),
+      marginTop:'5%'
     },
     text_header: {
         color: '#fff',
         fontWeight: 'bold',
         fontSize: 30,
         marginVertical: 20 ,
-        marginLeft: 10
+        marginLeft: 10,
+        alignItems:'center'
 
     },
     text_footer: {

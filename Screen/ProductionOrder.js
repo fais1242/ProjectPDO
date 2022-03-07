@@ -148,6 +148,7 @@ const ProductionOrder = ({navigation}) => {
                 .ProductionLot[0].ConfirmationGroup[i].ProductionTask[0]
                 .ProducionTaskUUID[0],
             );
+
             // setoutput(
             //   result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
             //     .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[0]
@@ -206,12 +207,22 @@ const ProductionOrder = ({navigation}) => {
                 .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
                 .TargetLogisticsAreaID[0],
             );
-            setIdenID(
+            setdesP(
               result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
                 .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
-                .IdentifiedStockID[0],
+                .MaterialOutputInspection[0].InspectionSamplingDetails[0].ProductDescription[0],
             );
-            
+            console.log(result.Envelope.Body[0]['ProductionLotByElementsResponse_sync'][0]['ProductionLot'][0]
+            ['ConfirmationGroup'][i]['MaterialOutput'][j]['IdentifiedStockID']);
+
+            if (result.Envelope.Body[0]['ProductionLotByElementsResponse_sync'][0]['ProductionLot'][0]
+            ['ConfirmationGroup'][i]['MaterialOutput'][j]['IdentifiedStockID'] != undefined) {
+              setIdenID(
+                result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                  .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
+                  .IdentifiedStockID[0],
+              );   
+            }
             } else  {
               for (let index = 0; index < result.Envelope.Body[0]['ProductionLotByElementsResponse_sync'][0]['ProductionLot'][0]
               ['ConfirmationGroup'][i]['MaterialOutput'].length; index++) {
@@ -251,6 +262,11 @@ const ProductionOrder = ({navigation}) => {
               result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
                 .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
                 .IdentifiedStockID[0],
+            );
+            setdesP(
+              result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+                .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
+                .MaterialOutputInspection[0].InspectionSamplingDetails[0].ProductDescription[0],
             );
             break;
                 }   
@@ -316,7 +332,8 @@ const ProductionOrder = ({navigation}) => {
       .doc(orderid)
       .set({
         OrderID: orderid,
-        Product: output,
+        ProductID: output,
+        ProductDes:desP,
         Planned: plan,
         CGuuID: CGuuID,
         PTaskID: PTaskID,
@@ -336,6 +353,7 @@ const ProductionOrder = ({navigation}) => {
       });
   };
 
+  const [desP, setdesP] = useState('');
   const [CGuuID, setCGuuID] = useState('');
   const [PTaskID, setPTaskID] = useState('');
   const [PTaskuuID, setPTaskuuID] = useState('');
@@ -391,14 +409,14 @@ const ProductionOrder = ({navigation}) => {
           <View style={styles.showlist}>
             <Icon name="filetext1" type="antdesign" size={40} />
             <Card containerStyle={styles.cardstyle}>
-              <Text style={styles.textshow}>Operation ID : {operation}</Text>
+              <Text style={styles.textshow}>Product ID : {output}</Text>
             </Card>
           </View>
 
           <View style={styles.showlist}>
             <Icon name="inbox" type="antdesign" size={40} />
             <Card containerStyle={styles.cardstyle}>
-              <Text style={styles.textshow}>Output Product : {output} </Text>
+              <Text style={styles.textshow}>Product Description : {desP} </Text>
             </Card>
           </View>
 
