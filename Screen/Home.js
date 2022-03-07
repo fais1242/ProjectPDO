@@ -103,6 +103,7 @@ const Home = ({navigation}) => {
               onPress={() => {
                 signOut();
               }}
+              titleStyle={{fontSize:11}}
               title={'LOGOUT'}
             />
           </View>

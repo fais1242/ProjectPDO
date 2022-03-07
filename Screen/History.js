@@ -6,7 +6,8 @@ import {
   FlatList,
   SafeAreaView,
   TouchableOpacity,
-  ActivityIndicator
+  ActivityIndicator,
+  VirtualizedList
 } from 'react-native';
 import React, { useState, useEffect} from 'react';
 import {Button, Image, Card, Divider, Icon, SearchBar} from 'react-native-elements';
@@ -95,6 +96,10 @@ const History = ({navigation}) => {
     }
   };
 
+  const getItem = (data, index) => {
+    return data[index]
+  };
+
 
   
   if (loading) {
@@ -110,17 +115,14 @@ const History = ({navigation}) => {
   // }
   return (
     <SafeAreaView style={styles.container}>
-      <Divider color="white" width={1.5} style={{marginHorizontal: 20}} />
+      <Divider color="white" width={1.5} style={{marginHorizontal:'5%'}} />
       
       <Animatable.View style={{flex:1}}
       animation="fadeIn"
       // duration={4000}
       >
-        
-      <Card containerStyle={styles.cardbg}
-      >
-        <SearchBar
-          round
+        <View style={{marginHorizontal:'4%',marginVertical:'2%'}}>
+      <SearchBar
           searchIcon={{ size: 24 }}
           onChangeText={(text) => searchFilterFunction(text)}
           onClear={(text) => searchFilterFunction('')}
@@ -129,12 +131,18 @@ const History = ({navigation}) => {
 
           lightTheme={true}
           inputStyle={{color:'black'}}
-          containerStyle={{ backgroundColor:'white',borderWidth: 1, borderRadius: 5, marginBottom:'3%'}}
+          containerStyle={{borderRadius:5}}
         />
-        
-        <FlatList
+        </View>   
+      <Card containerStyle={styles.cardbg}
+      >   
+        <VirtualizedList
           data={filteredDataSource}
           key={item => item.id}
+          initialNumToRender={4}
+          // style={{alignSelf:'stretch',flex:1}}
+          getItemCount={data =>filteredDataSource.length}
+          getItem={getItem}
           renderItem={({item}) => (
             <TouchableOpacity
               onPress={() => {
@@ -191,8 +199,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#3E3D50',
     // backgroundColor: 'white',
     borderRadius: 20,
-    // flex: 1,
-    bottom: 10,
+    flex: 1,
+    // bottom: 10,
+    marginTop:1
+    
   },
   cardr: {
     backgroundColor: '#ffff',

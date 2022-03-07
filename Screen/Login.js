@@ -27,22 +27,31 @@ import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-nativ
 
 const Login =  ({navigation}) => {
 
-    try{
-        AsyncStorage.getItem('ConfigDb').then(value => {
-            if (value !== null) {
-                console.log('getdata');
-                let config = JSON.parse(value);
-                console.log(config);
-                setusername(config.Username);
-                setpassword(config.Password);
-                seturl(config.Url);
-            }
-                console.log(Username);
-                console.log(Password);
-                console.log(Url);
-        })
-    }catch (e) {
-        console.log(e);}
+    const [loading, setLoading] = useState(true);
+
+    useEffect( () => {
+        try{
+            AsyncStorage.getItem('ConfigDb').then(value => {
+                if (value !== null) {
+                    console.log('getdata');
+                    let config = JSON.parse(value);
+                    console.log(config);
+                    setusername(config.Username);
+                    setpassword(config.Password);
+                    seturl(config.Url);
+                }
+                setLoading(false)
+                    console.log(Username);
+                    console.log(Password);
+                    console.log(Url);
+            })
+        }catch (e) {
+            setLoading(false)
+            console.log(e);}
+    
+  }, []);
+
+
 
     const [data, setData] = React.useState({
         username: '',
@@ -235,21 +244,21 @@ const Login =  ({navigation}) => {
         )};
       };
 
-      if (loading) {
-        return (
-          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <ActivityIndicator size="large" />
-          </View>
-        );
-      }
-
-      const [loading, setLoading] = useState(false);
+     
 
         const [Lusername, Loginusername] = useState('');
         const [Lpassword, Loginpassword] = useState('');
         const [Url, seturl] = useState('');
         const [Username, setusername] = useState('');
-        const [Password, setpassword] = useState('');    
+        const [Password, setpassword] = useState(''); 
+
+        if (loading) {
+            return (
+              <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <ActivityIndicator size="large" />
+              </View>
+            );
+          }   
       
       return (
           <ScrollView style={styles.container}>                            
@@ -370,7 +379,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         paddingHorizontal: 20,
         paddingBottom: 20,
-        marginTop:'5%'
+        marginTop:'5%',
         
     },
     logo: {

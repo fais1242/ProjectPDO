@@ -4,6 +4,7 @@ import {
   ScrollView,
   StyleSheet,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import {Button, Image, Card, Divider, Icon} from 'react-native-elements';
 import React, {useState, useEffect} from 'react';
@@ -38,8 +39,8 @@ const ProductionOrder = ({navigation}) => {
   let Order ;
 
     try {
-      console.log('start getdata');
-  await  AsyncStorage.getItem('OrderData').then(value => {
+    console.log('start getdata');
+    await AsyncStorage.getItem('OrderData').then(value => {
         if (value !== null) {
           console.log('getdata');
           console.log(value);
@@ -107,6 +108,10 @@ const ProductionOrder = ({navigation}) => {
         function (err, result) {
           console.log(JSON.stringify(result));
           var i;
+          if (result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0].ProcessingConditions[0].ReturnedQueryHitsNumberValue[0]!= 0) {
+
+            console.log('check order');
+            
           for (
             let index = 0;
             index <
@@ -318,12 +323,18 @@ const ProductionOrder = ({navigation}) => {
             console.log('5' + AreaID);
             console.log('6' + IdenID);
           }
+        } else {
+          
+          Alert.alert('Error Order')
+          navigation.popToTop();
+          
+        }
+          
         },
-      
-        );
         setLoading(false)
-      });
+        );
 
+      });
   }
 
  

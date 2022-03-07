@@ -117,7 +117,7 @@ const Scanner = ({navigation}) => {
           height: hp('70%'),
         }}
         showMarker={true}
-        // onRead={onSuccess}
+        onRead={onSuccess}
         fadeIn={true}
       />
     </ScrollView>

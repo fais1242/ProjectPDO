@@ -86,7 +86,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: -15,
         height: hp('20%'),
-        width: wp('100%')   
+        width: wp('100%'),
+        flex:1
     },
     header1: {
         marginLeft: wp('75%'),
@@ -126,7 +127,7 @@ const styles = StyleSheet.create({
     },
     button: {
         alignItems: 'flex-end',
-        marginTop:'30%',
+        marginTop:'15%',
     },
     signIn: {
         height: hp('5%'),
