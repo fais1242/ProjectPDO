@@ -151,7 +151,7 @@ const App = () => {
         console.log(e);
       }
       console.log('user token: ', userToken);
-
+      
       try {
         await AsyncStorage.getItem('ConfigDb').then(value => {
           if (value !== null) {
@@ -170,15 +170,18 @@ const App = () => {
         console.log(e);
       }
 
-      var createuser = config.Username + ':' + config.Password;
-      var bytes = utf8.encode(createuser);
-      var encoded = base64.encode(bytes);
-      var basicAuth = 'Basic ' + encoded;
-      console.log(basicAuth);
+     
 
       if (userToken == null) {
         dispatch({type: 'RETRIEVE_TOKEN', token: userToken});
       } else {
+
+  
+        var createuser = config.Username + ':' + config.Password;
+        var bytes = utf8.encode(createuser);
+        var encoded = base64.encode(bytes);
+        var basicAuth = 'Basic ' + encoded;
+        console.log(basicAuth);
         console.log(userToken.id);
         console.log(userToken.ps);
         let xmls = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:glob="http://sap.com/xi/SAPGlobal20/Global">
