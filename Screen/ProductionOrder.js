@@ -122,7 +122,7 @@ const ProductionOrder = ({navigation}) => {
           ) {
             console.log('___' + index);
             i = index;
-          }
+          
           if (
             result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
               .ProductionLot[0].ConfirmationGroup[i].ProductionTask[0]
@@ -322,7 +322,9 @@ const ProductionOrder = ({navigation}) => {
             console.log('4' + MOuuID);
             console.log('5' + AreaID);
             console.log('6' + IdenID);
+            
           }
+        }
         } else {
           
           Alert.alert('Error Order')
