@@ -263,6 +263,9 @@ const ProductionOrder = ({navigation}) => {
                 .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
                 .TargetLogisticsAreaID[0],
             );
+            setPtotal(result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
+              .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
+              .TotalConfirmedQuantity[0]._)
             // setIdenID(
             //   result.Envelope.Body[0].ProductionLotByElementsResponse_sync[0]
             //     .ProductionLot[0].ConfirmationGroup[i].MaterialOutput[j]
@@ -362,6 +365,7 @@ const ProductionOrder = ({navigation}) => {
         MOuuID: MOuuID,
         IdenID: IdenID,
         AreaID: AreaID,
+        OutPutQty:Ptotal,
         Unit: unit,
         Status: 'NotStart',
         Operation: operation,
@@ -381,6 +385,8 @@ const ProductionOrder = ({navigation}) => {
   const [MOuuID, setMOuuID] = useState('');
   const [AreaID, setAreaID] = useState('');
   const [IdenID, setIdenID] = useState('');
+  const [Ptotal, setPtotal] = useState('0');
+
 
   // const setData = () => {
   //   try {

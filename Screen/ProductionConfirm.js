@@ -133,111 +133,330 @@ const ProductionConfirm = ({navigation, route}) => {
               console.log('5 '+OrderID.AreaID);
               console.log('6 '+OrderID.IdenID);
 
-
-
-    let xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:glob="http://sap.com/xi/SAPGlobal20/Global" xmlns:ymg="http://0004586690-one-off.sap.com/YMGK3T5AY_">
-    <soapenv:Header/>
-    <soapenv:Body>
-       <glob:ProductionLotsBundleMaintainRequest_sync_V1>
-       <BasicMessageHeader>
-    </BasicMessageHeader>
-          <ProductionLot>
-             <ConfirmationGroup>
-                <!--Optional:-->
-                <ConfirmationGroupUUID>${OrderID.CGuuID}</ConfirmationGroupUUID>
-                <ProductionTask>
-                   <ProductionTaskID>${OrderID.PTaskID}</ProductionTaskID>
-                   <ProducionTaskUUID>${OrderID.PTaskuuID}</ProducionTaskUUID>
-                   <AssignResponsibleIndicator>true</AssignResponsibleIndicator>
-                </ProductionTask>
-                
-                <!--Zero or more repetitions:-->
-                <MaterialOutput ActionCode="02">
-                   <MaterialOutputUUID>${OrderID.MOuuID}</MaterialOutputUUID>
-                   <IdentifiedStockID>${idenID}</IdentifiedStockID>
-                   <TargetLogisticsAreaID>${OrderID.AreaID}</TargetLogisticsAreaID>
-                   <ConfirmedQuantity unitCode="${OrderID.Unit}">${output}</ConfirmedQuantity>
-                </MaterialOutput>
-             </ConfirmationGroup>
-          </ProductionLot>
-       </glob:ProductionLotsBundleMaintainRequest_sync_V1>
-    </soapenv:Body>
-    </soapenv:Envelope> `;
-    // ${output}
-    axios
-      .post(
-        `https://my334089.sapbydesign.com/sap/bc/srt/scs/sap/manageproductionlotsin?sap-vhost=my334089.sapbydesign.com`,
-        xml,
-        {
-          headers: {
-            'Content-Type': 'text/xml',
-            Authorization: basicAuth,
+    var iden ;
+    if (idenID == ''&&OrderID.IdenID == ''&& output=='') {
+      Alert.alert('Inden null')
+    } else if(idenID == ''&&OrderID.IdenID != ''&& output==''){
+      iden = OrderID.IdenID
+      console.log('iden if 1'+iden);
+      let xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:glob="http://sap.com/xi/SAPGlobal20/Global" xmlns:ymg="http://0004586690-one-off.sap.com/YMGK3T5AY_">
+      <soapenv:Header/>
+      <soapenv:Body>
+         <glob:ProductionLotsBundleMaintainRequest_sync_V1>
+         <BasicMessageHeader>
+      </BasicMessageHeader>
+            <ProductionLot>
+               <ConfirmationGroup>
+                  <!--Optional:-->
+                  <ConfirmationGroupUUID>${OrderID.CGuuID}</ConfirmationGroupUUID>
+                  <ProductionTask>
+                     <ProductionTaskID>${OrderID.PTaskID}</ProductionTaskID>
+                     <ProducionTaskUUID>${OrderID.PTaskuuID}</ProducionTaskUUID>
+                     <AssignResponsibleIndicator>true</AssignResponsibleIndicator>
+                  </ProductionTask>
+                  
+                  <!--Zero or more repetitions:-->
+                  <MaterialOutput ActionCode="02">
+                     <MaterialOutputUUID>${OrderID.MOuuID}</MaterialOutputUUID>
+                     <IdentifiedStockID>${iden}</IdentifiedStockID>
+                     <TargetLogisticsAreaID>${OrderID.AreaID}</TargetLogisticsAreaID>
+                     <ConfirmedQuantity unitCode="${OrderID.Unit}">${output}</ConfirmedQuantity>
+                  </MaterialOutput>
+               </ConfirmationGroup>
+            </ProductionLot>
+         </glob:ProductionLotsBundleMaintainRequest_sync_V1>
+      </soapenv:Body>
+      </soapenv:Envelope> `;
+      // ${output}
+      axios
+        .post(
+          `https://my334089.sapbydesign.com/sap/bc/srt/scs/sap/manageproductionlotsin?sap-vhost=my334089.sapbydesign.com`,
+          xml,
+          {
+            headers: {
+              'Content-Type': 'text/xml',
+              Authorization: basicAuth,
+            },
           },
-        },
-      )
-      .then(res => {
-        console.log(res.data);
-        Cxml2json(
-          res.data,
-          {tagNameProcessors: [stripNS]},
-          function (err, result) {
-            console.log(JSON.stringify(result));
-            if (result.Envelope.Body[0].ProdLotBundleMaintainConfirmation_sync_V1[0]
-              .ProductionLotResponse[0].ProductionLotLog[0].SeverityCode[0] || result.Envelope.Body[0].ProdLotBundleMaintainConfirmation_sync_V1[0]
-              .ProductionLotResponse[0].ProductionLotLog[1].SeverityCode[0] || result.Envelope.Body[0].ProdLotBundleMaintainConfirmation_sync_V1[0]
-              .ProductionLotResponse[0].ProductionLotLog[2].SeverityCode[0] == 's') {
-                Alert.alert('Confirm Success');
-
-                console.log('Success');
-
-                try {
-                  // console.log('           '+Order.OrderID);
-                  // firestore().collection('Users').doc(Order.OrderID).update({ 
-                  //   OutPutQty: output, 
-                  //   ScrapQty: scarp,
-                  //   Status: selectedValue,
-                  //   Processby: Processby,
-                  //   IdenID:idenID
-                  // })   
-                  if (idenID == '') {
-                  firestore().collection('Users').doc(Order.OrderID).update({ 
-                    OutPutQty: total, 
-                    // ScrapQty: scarp,
-                    Status: selectedValue,
-                    Processby: fname+'  '+ lname,
-                    IdenID:OrderID.IdenID
-                  })
-                } else {
-                  firestore().collection('Users').doc(Order.OrderID).update({ 
-                    OutPutQty: total, 
-                    // ScrapQty: scarp,
-                    Status: selectedValue,
-                    Processby: fname+'  '+ lname,
-                    IdenID:idenID
-                  })   
-                }
-                setLoading(false)
-                  alert('Confirm ! Success')
-                  setLoading(false);
-                  navigation.navigate('Home')
-                } catch (error) {
+        )
+        .then(res => {
+          console.log(res.data);
+          Cxml2json(
+            res.data,
+            {tagNameProcessors: [stripNS]},
+            function (err, result) {
+              console.log(JSON.stringify(result));
+              if (result.Envelope.Body[0].ProdLotBundleMaintainConfirmation_sync_V1[0]
+                .ProductionLotResponse[0].ProductionLotLog[0].SeverityCode[0] == 'S' && 
+                result.Envelope.Body[0].ProdLotBundleMaintainConfirmation_sync_V1[0]
+                .ProductionLotResponse[0].ProductionLotLog[1].SeverityCode[0] == 'S'&& 
+                result.Envelope.Body[0].ProdLotBundleMaintainConfirmation_sync_V1[0]
+                .ProductionLotResponse[0].ProductionLotLog[2].SeverityCode[0] == 'S') {
+                  Alert.alert('Confirm Success');
+  
+                  console.log('Success');
+  
+                  try {
+                    // console.log('           '+Order.OrderID);
+                    // firestore().collection('Users').doc(Order.OrderID).update({ 
+                    //   OutPutQty: output, 
+                    //   ScrapQty: scarp,
+                    //   Status: selectedValue,
+                    //   Processby: Processby,
+                    //   IdenID:idenID
+                    // })   
+                    if (idenID == '') {
+                    firestore().collection('Users').doc(Order.OrderID).update({ 
+                      OutPutQty: total, 
+                      // ScrapQty: scarp,
+                      Status: selectedValue,
+                      Processby: fname+'  '+ lname,
+                      IdenID:OrderID.IdenID
+                    })
+                  } else {
+                    firestore().collection('Users').doc(Order.OrderID).update({ 
+                      OutPutQty: total, 
+                      // ScrapQty: scarp,
+                      Status: selectedValue,
+                      Processby: fname+'  '+ lname,
+                      IdenID:idenID
+                    })   
+                  }
                   setLoading(false)
-
-                  console.log(error);
-                }
-
-            }else{
-              setLoading(false)
-
-              console.log('Error');
-            }
+                    alert('Confirm ! Success')
+                    setLoading(false);
+                    navigation.navigate('Home')
+                  } catch (error) {
+                    setLoading(false)
+                    
+                    console.log(error);
+                    console.log('error123');
+                  }
+  
+              }else{
+                setLoading(false)
+                Alert.alert('Confirm Fail');
+                console.log('Error');
+              }
+            },
+          );
+        })
+    }else if(output==''){
+      iden = idenID
+      console.log('iden if 2'+iden);
+      let xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:glob="http://sap.com/xi/SAPGlobal20/Global" xmlns:ymg="http://0004586690-one-off.sap.com/YMGK3T5AY_">
+      <soapenv:Header/>
+      <soapenv:Body>
+         <glob:ProductionLotsBundleMaintainRequest_sync_V1>
+         <BasicMessageHeader>
+      </BasicMessageHeader>
+            <ProductionLot>
+               <ConfirmationGroup>
+                  <!--Optional:-->
+                  <ConfirmationGroupUUID>${OrderID.CGuuID}</ConfirmationGroupUUID>
+                  <ProductionTask>
+                     <ProductionTaskID>${OrderID.PTaskID}</ProductionTaskID>
+                     <ProducionTaskUUID>${OrderID.PTaskuuID}</ProducionTaskUUID>
+                     <AssignResponsibleIndicator>true</AssignResponsibleIndicator>
+                  </ProductionTask>
+                  
+                  <!--Zero or more repetitions:-->
+                  <MaterialOutput ActionCode="02">
+                     <MaterialOutputUUID>${OrderID.MOuuID}</MaterialOutputUUID>
+                     <IdentifiedStockID>${iden}</IdentifiedStockID>
+                     <TargetLogisticsAreaID>${OrderID.AreaID}</TargetLogisticsAreaID>
+                     <ConfirmedQuantity unitCode="${OrderID.Unit}">${output}</ConfirmedQuantity>
+                  </MaterialOutput>
+               </ConfirmationGroup>
+            </ProductionLot>
+         </glob:ProductionLotsBundleMaintainRequest_sync_V1>
+      </soapenv:Body>
+      </soapenv:Envelope> `;
+      // ${output}
+      axios
+        .post(
+          `https://my334089.sapbydesign.com/sap/bc/srt/scs/sap/manageproductionlotsin?sap-vhost=my334089.sapbydesign.com`,
+          xml,
+          {
+            headers: {
+              'Content-Type': 'text/xml',
+              Authorization: basicAuth,
+            },
           },
-        );
-      })
+        )
+        .then(res => {
+          console.log(res.data);
+          Cxml2json(
+            res.data,
+            {tagNameProcessors: [stripNS]},
+            function (err, result) {
+              console.log(JSON.stringify(result));
+              if (result.Envelope.Body[0].ProdLotBundleMaintainConfirmation_sync_V1[0]
+                .ProductionLotResponse[0].ProductionLotLog[0].SeverityCode[0] == 'S' && 
+                result.Envelope.Body[0].ProdLotBundleMaintainConfirmation_sync_V1[0]
+                .ProductionLotResponse[0].ProductionLotLog[1].SeverityCode[0] == 'S'&& 
+                result.Envelope.Body[0].ProdLotBundleMaintainConfirmation_sync_V1[0]
+                .ProductionLotResponse[0].ProductionLotLog[2].SeverityCode[0] == 'S') {
+                  Alert.alert('Confirm Success');
+  
+                  console.log('Success');
+  
+                  try {
+                    // console.log('           '+Order.OrderID);
+                    // firestore().collection('Users').doc(Order.OrderID).update({ 
+                    //   OutPutQty: output, 
+                    //   ScrapQty: scarp,
+                    //   Status: selectedValue,
+                    //   Processby: Processby,
+                    //   IdenID:idenID
+                    // })   
+                    if (idenID == '') {
+                    firestore().collection('Users').doc(Order.OrderID).update({ 
+                      OutPutQty: total, 
+                      // ScrapQty: scarp,
+                      Status: selectedValue,
+                      Processby: fname+'  '+ lname,
+                      IdenID:OrderID.IdenID
+                    })
+                  } else {
+                    firestore().collection('Users').doc(Order.OrderID).update({ 
+                      OutPutQty: total, 
+                      // ScrapQty: scarp,
+                      Status: selectedValue,
+                      Processby: fname+'  '+ lname,
+                      IdenID:idenID
+                    })   
+                  }
+                  setLoading(false)
+                    alert('Confirm ! Success')
+                    setLoading(false);
+                    navigation.navigate('Home')
+                  } catch (error) {
+                    setLoading(false)
+                    
+                    console.log(error);
+                    console.log('error123');
+                  }
+  
+              }else{
+                setLoading(false)
+                Alert.alert('Confirm Fail');
+                console.log('Error');
+              }
+            },
+          );
+        })
+    }else{
+      setLoading(false)
+      Alert.alert('กรุณาใส่จำนวน')
+    }
+
+    // let xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:glob="http://sap.com/xi/SAPGlobal20/Global" xmlns:ymg="http://0004586690-one-off.sap.com/YMGK3T5AY_">
+    // <soapenv:Header/>
+    // <soapenv:Body>
+    //    <glob:ProductionLotsBundleMaintainRequest_sync_V1>
+    //    <BasicMessageHeader>
+    // </BasicMessageHeader>
+    //       <ProductionLot>
+    //          <ConfirmationGroup>
+    //             <!--Optional:-->
+    //             <ConfirmationGroupUUID>${OrderID.CGuuID}</ConfirmationGroupUUID>
+    //             <ProductionTask>
+    //                <ProductionTaskID>${OrderID.PTaskID}</ProductionTaskID>
+    //                <ProducionTaskUUID>${OrderID.PTaskuuID}</ProducionTaskUUID>
+    //                <AssignResponsibleIndicator>true</AssignResponsibleIndicator>
+    //             </ProductionTask>
+                
+    //             <!--Zero or more repetitions:-->
+    //             <MaterialOutput ActionCode="02">
+    //                <MaterialOutputUUID>${OrderID.MOuuID}</MaterialOutputUUID>
+    //                <IdentifiedStockID>${iden}</IdentifiedStockID>
+    //                <TargetLogisticsAreaID>${OrderID.AreaID}</TargetLogisticsAreaID>
+    //                <ConfirmedQuantity unitCode="${OrderID.Unit}">${output}</ConfirmedQuantity>
+    //             </MaterialOutput>
+    //          </ConfirmationGroup>
+    //       </ProductionLot>
+    //    </glob:ProductionLotsBundleMaintainRequest_sync_V1>
+    // </soapenv:Body>
+    // </soapenv:Envelope> `;
+    // // ${output}
+    // axios
+    //   .post(
+    //     `https://my334089.sapbydesign.com/sap/bc/srt/scs/sap/manageproductionlotsin?sap-vhost=my334089.sapbydesign.com`,
+    //     xml,
+    //     {
+    //       headers: {
+    //         'Content-Type': 'text/xml',
+    //         Authorization: basicAuth,
+    //       },
+    //     },
+    //   )
+    //   .then(res => {
+    //     console.log(res.data);
+    //     Cxml2json(
+    //       res.data,
+    //       {tagNameProcessors: [stripNS]},
+    //       function (err, result) {
+    //         console.log(JSON.stringify(result));
+    //         if (result.Envelope.Body[0].ProdLotBundleMaintainConfirmation_sync_V1[0]
+    //           .ProductionLotResponse[0].ProductionLotLog[0].SeverityCode[0] == 'S' && 
+    //           result.Envelope.Body[0].ProdLotBundleMaintainConfirmation_sync_V1[0]
+    //           .ProductionLotResponse[0].ProductionLotLog[1].SeverityCode[0] == 'S'&& 
+    //           result.Envelope.Body[0].ProdLotBundleMaintainConfirmation_sync_V1[0]
+    //           .ProductionLotResponse[0].ProductionLotLog[2].SeverityCode[0] == 'S') {
+    //             Alert.alert('Confirm Success');
+
+    //             console.log('Success');
+
+    //             try {
+    //               // console.log('           '+Order.OrderID);
+    //               // firestore().collection('Users').doc(Order.OrderID).update({ 
+    //               //   OutPutQty: output, 
+    //               //   ScrapQty: scarp,
+    //               //   Status: selectedValue,
+    //               //   Processby: Processby,
+    //               //   IdenID:idenID
+    //               // })   
+    //               if (idenID == '') {
+    //               firestore().collection('Users').doc(Order.OrderID).update({ 
+    //                 OutPutQty: total, 
+    //                 // ScrapQty: scarp,
+    //                 Status: selectedValue,
+    //                 Processby: fname+'  '+ lname,
+    //                 IdenID:OrderID.IdenID
+    //               })
+    //             } else {
+    //               firestore().collection('Users').doc(Order.OrderID).update({ 
+    //                 OutPutQty: total, 
+    //                 // ScrapQty: scarp,
+    //                 Status: selectedValue,
+    //                 Processby: fname+'  '+ lname,
+    //                 IdenID:idenID
+    //               })   
+    //             }
+    //             setLoading(false)
+    //               alert('Confirm ! Success')
+    //               setLoading(false);
+    //               navigation.navigate('Home')
+    //             } catch (error) {
+    //               setLoading(false)
+                  
+    //               console.log(error);
+    //               console.log('error123');
+    //             }
+
+    //         }else{
+    //           setLoading(false)
+    //           Alert.alert('Confirm Fail');
+    //           console.log('Error');
+    //         }
+    //       },
+    //     );
+    //   })
   };
 
   const [selectedValue, setSelectedValue] = useState('Start');
-  const [output, setoutput] = useState('');
+  const [output, setoutput] = useState('0');
   const [scarp, setscarp] = useState('');
   const [idenID, setidenID] = useState('');
   const [idenD, setidenD] = useState('');

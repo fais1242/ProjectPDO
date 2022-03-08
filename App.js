@@ -324,7 +324,7 @@ const App = () => {
             <Stack.Screen
               name="ProductionShow"
               component={ProductionShow}
-              options={{title: 'PRODUCTION SHOW'}}
+              options={{title: 'PRODUCTION DETAIL'}}
             />
 
             <Stack.Screen
