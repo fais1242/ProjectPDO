@@ -83,6 +83,9 @@ import { white } from 'react-native-paper/lib/typescript/styles/colors';
       if (Url.length == 0 || Username.length == 0 || Password.length == 0) {
         Alert.alert('Warning!','กรุณากรอกข้อมูล');
       } else {
+        if (Username == '_NTZ_KAN'&& Password == 'Welcome2021') {
+          
+        
         var createuser = Username + ':' + Password;
         var bytes = utf8.encode(createuser);
         var encoded = base64.encode(bytes);
@@ -154,7 +157,16 @@ import { white } from 'react-native-paper/lib/typescript/styles/colors';
   
             });
          }
-      )};
+      )
+    } else {
+      if (Username == '_NTZ_KAN') {
+        Alert.alert('Passwordไม่ถูกต้อง กรุณาใส่ใหม่')
+      } else {
+        Alert.alert('Usernameไม่ถูกต้อง กรุณาใส่ใหม่')
+      }
+          
+    }
+  };
     };
 
     // const removeData = async ()=>{
