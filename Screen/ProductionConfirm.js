@@ -136,7 +136,7 @@ const ProductionConfirm = ({navigation, route}) => {
     var iden ;
     if (idenID == ''&&OrderID.IdenID == ''&& output=='') {
       Alert.alert('Inden null')
-    } else if(idenID == ''&&OrderID.IdenID != ''&& output==''){
+    } else if(idenID == ''&&OrderID.IdenID != ''&& output!=''){
       iden = OrderID.IdenID
       console.log('iden if 1'+iden);
       let xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:glob="http://sap.com/xi/SAPGlobal20/Global" xmlns:ymg="http://0004586690-one-off.sap.com/YMGK3T5AY_">
@@ -241,7 +241,7 @@ const ProductionConfirm = ({navigation, route}) => {
             },
           );
         })
-    }else if(output==''){
+    }else if(output!=''){
       iden = idenID
       console.log('iden if 2'+iden);
       let xml = `<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:glob="http://sap.com/xi/SAPGlobal20/Global" xmlns:ymg="http://0004586690-one-off.sap.com/YMGK3T5AY_">
